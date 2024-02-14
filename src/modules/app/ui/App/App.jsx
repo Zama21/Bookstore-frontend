@@ -1,8 +1,12 @@
-import { useState } from 'react';
-import { AppRouter } from '../AppRouter/AppRouter.jsx';
+import { AppRouter } from '../components/AppRouter/AppRouter.jsx';
+import { GlobalHeader } from '../components/GlobalHeader/GlobalHeader.jsx';
+import { withProviders } from '../providers/withProviders.jsx';
 
-function App() {
-    return <AppRouter />;
-}
-
-export default App;
+export const App = withProviders(() => {
+    return (
+        <>
+            <GlobalHeader />
+            <AppRouter />
+        </>
+    );
+});
