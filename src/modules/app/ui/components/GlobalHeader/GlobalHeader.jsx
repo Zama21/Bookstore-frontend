@@ -1,13 +1,19 @@
 import React from 'react';
+import cls from './GlobalHeader.module.css';
+import { Link } from 'react-router-dom';
 
 export const GlobalHeader = () => {
     return (
-        <header>
+        <header className={cls.header}>
             <div>
-                <img src='' alt='logo' />
+                <img src='' alt='Лого :)' />
             </div>
             <nav>
-                <ul></ul>
+                <ul>
+                    <li>
+                        <Link to={'/some'}>Каталог</Link>
+                    </li>
+                </ul>
             </nav>
         </header>
     );
