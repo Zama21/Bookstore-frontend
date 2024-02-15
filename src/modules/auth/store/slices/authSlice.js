@@ -1,11 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export const Role = {
+    User: 'user',
+    Admin: 'user',
+};
+
+export const AllRoles = Object.values(Role);
+
 export const authSlice = createSlice({
     name: 'user',
     initialState: {
         id: -1,
-        firstName: '',
-        lastName: '',
+        isAuthed: false,
+        roles: [],
         email: '',
         login: '',
     },
