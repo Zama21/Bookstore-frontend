@@ -3,5 +3,5 @@
     padding: 6px;
     display: flex;
     justify-content: space-between;
-    background: lightgreen;
+    align-items: center;
 }

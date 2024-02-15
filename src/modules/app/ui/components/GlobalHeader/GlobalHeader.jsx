@@ -12,6 +12,8 @@ export const GlobalHeader = () => {
                 <ul>
                     <li>
                         <Link to={'/some'}>Каталог</Link>
+                        <Link to={'/auth/login'}>Вход</Link>
+                        <Link to={'/auth/reg'}>Регистрация</Link>
                     </li>
                 </ul>
             </nav>

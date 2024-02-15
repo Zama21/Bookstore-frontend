@@ -6,8 +6,12 @@ import { FormButton } from '../../../../../shared/ui/components/FormComponents/F
 import { FormField } from '../../../../../shared/ui/components/FormComponents/FormField/FormField.jsx';
 import { Link } from 'react-router-dom';
 import { FormLink } from '../../../../../shared/ui/components/FormComponents/FormLink/FormLink.jsx';
+import { useDispatch } from 'react-redux';
+import { thunkLogin } from '../../../domain/thunks/login.js';
 
 export const LoginPage = () => {
+    const dispatch = useDispatch();
+
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
@@ -19,12 +23,30 @@ export const LoginPage = () => {
             })}
             onSubmit={(values, { setSubmitting }) => {
                 console.log('submit ', values);
+                dispatch(
+                    thunkLogin({
+                        email: values.email,
+                        password: values.password,
+                    })
+                );
             }}
         >
             {formik => (
                 <Form onSubmit={formik.handleSubmit}>
-                    <FormField name='email' type='email' label={'Email'} placeholder='example@mail.ru' />
-                    <FormField name='password' type='password' label={'Пароль'} placeholder='Пароль..' />
+                    <FormField
+                        name='email'
+                        type='email'
+                        label={'Email'}
+                        placeholder='example@mail.ru'
+                        autoComplete='username'
+                    />
+                    <FormField
+                        name='password'
+                        type='password'
+                        label={'Пароль'}
+                        placeholder='Пароль..'
+                        autoComplete='password'
+                    />
                     <FormButton type='submit'>Войти</FormButton>
                     <FormLink to={'/auth/reg'} text={'Нет аккаунта? Зарегистрируйтесь!'} />
                 </Form>

@@ -39,7 +39,7 @@ export const AppRouter = () => {
                 <Route path='/' element={<PrivateRoute roles={[Role.Admin]} />}></Route>
 
                 {/* not existing page */}
-                <Route path='*' element={<Navigate to={'/main'} />} />
+                <Route path='*' element={<Navigate to={'/'} />} />
             </Route>
         </Routes>
     );
