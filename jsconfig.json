@@ -3,8 +3,8 @@
         // "module": "ESNext",
         // "moduleResolution": "node",
         "jsx": "preserve",
-        "checkJs": true,
-        // "baseUrl": "src",
+        // "checkJs": true,
+        "baseUrl": "src",
         "paths": {
             // "modules/*": ["/src/modules/*"]
             // "@app/*": ["/src/modules/app/*"]
