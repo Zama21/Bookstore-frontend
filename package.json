@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite & npx nodemon --watch 'src/**' -e css --exec 'npm run type-css-modules'",
+        "dev:win": "vite & npx nodemon --watch 'src/**' -e css --exec 'npm run type-css-modules'",
         "build": "vite build",
         "type-css-modules": "npx tcm -p 'src/**/*.module.css'",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
