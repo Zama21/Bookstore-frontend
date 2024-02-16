@@ -35,13 +35,12 @@ export const LoginPage = () => {
                     );
                 }}
             >
-                {(formik) => (
+                {formik => (
                     <Form onSubmit={formik.handleSubmit}>
                         <FormField
                             name='emailOrUsername'
                             type='text'
                             label={'Email или username'}
-                            // placeholder=''
                             autoComplete='username'
                         />
                         <FormField
