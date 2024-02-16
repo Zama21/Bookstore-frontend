@@ -4,8 +4,8 @@
         "moduleResolution": "node",
         "esModuleInterop": true,
         "jsx": "preserve",
-        "checkJs": true,
-        // "baseUrl": "src",
+        // "checkJs": true,
+        "baseUrl": "src",
         "paths": {
             // "modules/*": ["/src/modules/*"]
             // "@app/*": ["/src/modules/app/*"]
