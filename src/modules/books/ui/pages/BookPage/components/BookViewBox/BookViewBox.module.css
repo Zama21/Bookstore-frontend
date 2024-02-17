@@ -1,7 +1,7 @@
 .wrapper {
 	background-color: #ffffff;
 	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	font-size: 1rem;
 	display: flex;
 	max-height: 500px;
@@ -13,7 +13,6 @@
 .columnSameWidth {
 	flex: 1;
 	padding: 10px;
-	border: 1px solid #ccc;
 }
 .h1 {
 	color: #333;
@@ -88,4 +87,80 @@
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+.containerFor3Column {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.headerColumn3 {
+	display: flex;
+	overflow: hidden;
+	border-radius: 10px;
+}
+.likeContainer {
+	padding: 5px;
+	color: #fff;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	background: linear-gradient(90deg, #b44577, #923a65);
+}
+
+.ratingContainer {
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-around;
+	background: linear-gradient(90deg, #923a65, #b44577);
+	color: #fff;
+	flex-grow: 1;
+}
+
+.addViewStatistics {
+	justify-content: space-evenly;
+}
+.bookPublicationStatus {
+	color: #fff;
+	background: #6fbd49;
+	justify-content: flex-start;
+	align-items: center;
+	border-radius: 10px;
+}
+
+.lifeCycleOfBook {
+	line-height: 1.5;
+}
+.publicationTitle {
+	text-align: center;
+	font-weight: 700;
+	margin-bottom: 0.5em;
+}
+.bookDate {
+	color: #999999;
+}
+
+.divider {
+	display: block;
+	border-bottom: 1px solid #000;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.mainColumn3 {
+	flex-grow: 1;
+}
+
+.footerColumn3 {
+	flex-shrink: 0;
+	background: #f1f1f1;
+	cursor: pointer;
+	padding: 10px;
+	justify-content: space-evenly;
+	border-radius: 10px;
 }

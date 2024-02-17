@@ -1,5 +1,6 @@
 import React from 'react'
 import stl from './BookViewBox.module.css'
+import BookSvgSelector from './svg/BookSvgSelector'
 
 export default function BookViewBox() {
 	return (
@@ -46,7 +47,55 @@ export default function BookViewBox() {
 					</div>
 				</div>
 			</div>
-			<div className={`${stl.column} ${stl.columnSameWidth}`}></div>
+			<div className={`${stl.column} ${stl.columnSameWidth}`}>
+				<div className={stl.containerFor3Column}>
+					<div className={stl.headerColumn3}>
+						<div className={stl.likeContainer}>
+							<BookSvgSelector nameSvg='starLike'></BookSvgSelector>
+							<span>12346</span>
+						</div>
+						<div className={stl.ratingContainer}>
+							<p>Рейтинг</p>
+							<p className='flxVrt'>
+								<BookSvgSelector nameSvg='starRating'></BookSvgSelector>
+								<span>1245</span>
+							</p>
+						</div>
+					</div>
+					<span className={stl.divider}></span>
+					<div className={stl.mainColumn3}>
+						<div className={`${stl.addViewStatistics}  flxRow`}>
+							<div className='flxVrt'>
+								<BookSvgSelector nameSvg='bookshelf'></BookSvgSelector>
+								<span>1245</span>
+							</div>
+							<div className='flxVrt'>
+								<BookSvgSelector nameSvg='eye'></BookSvgSelector>
+								<span>1245</span>
+							</div>
+						</div>
+						<span className={stl.divider}></span>
+						<div className={`${stl.bookPublicationStatus}  flxRow`}>
+							<BookSvgSelector nameSvg='tick'></BookSvgSelector>
+							<span>Полный текст</span>
+						</div>
+						<span className={stl.divider}></span>
+						<div className={stl.lifeCycleOfBook}>
+							<p className={stl.publicationTitle}>Публикация</p>
+							<p>
+								<span className={stl.bookDate}>Начата:</span> 12.06.2022
+							</p>
+							<p>
+								<span className={stl.bookDate}>Завершена:</span> 1.10.2023
+							</p>
+						</div>
+					</div>
+					<div className={`${stl.footerColumn3} flxVrt`}>
+						<BookSvgSelector nameSvg='libraryOfBooks'></BookSvgSelector>
+						<span>Добавьте в библиотеку</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	)
 }
