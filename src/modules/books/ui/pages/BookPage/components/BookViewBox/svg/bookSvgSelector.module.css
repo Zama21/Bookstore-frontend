@@ -1,0 +1,55 @@
+.path1 {
+	fill: #ffd140;
+}
+
+.path2 {
+	fill: #ffe094;
+}
+
+.path3 {
+	fill: #fff9c0;
+}
+
+.path4 {
+	fill: none;
+	stroke: #675252;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 10;
+}
+.starLike {
+	width: 30px;
+	height: 30px;
+	margin: 5px;
+}
+
+.starRating {
+	width: 15px;
+	height: 15px;
+	margin: 5px 0px 5px 0;
+}
+
+.bookshelf {
+	width: 40px;
+	height: 40px;
+}
+
+.eye {
+	width: 40px;
+	height: 40px;
+}
+
+.tick {
+	width: 20px;
+	height: 20px;
+	margin: 5px;
+}
+.tickFill {
+	fill: #fff;
+}
+
+.libraryOfBooks {
+	width: 40px;
+	height: 40px;
+}
