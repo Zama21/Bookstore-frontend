@@ -60,7 +60,7 @@ export const authSlice = createSlice({
             state.registration.success = true;
         });
         builder.addCase(thunkRegister.rejected, (state, action) => {
-            state.registration.error = action.payload[0];
+            state.registration.error = action.payload;
         });
         builder.addCase(thunkRegister.pending, (state, action) => {
             state.registration.error = '';
