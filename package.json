@@ -4,10 +4,10 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite & npx nodemon --watch 'src/**' -e css --exec 'npm run type-css-modules'",
-        "dev:win": "vite & npx nodemon --watch 'src/**' -e css --exec 'npm run type-css-modules'",
-        "build": "vite build",
-        "type-css-modules": "npx tcm -p \"src/**/*.module.css\"",
+        "dev": "concurrently \"cross-env NODE_ENV=development vite\" \" npm run type-css-modules \"",
+        "dev:unix": "vite & npx tcm --watch -p \"src/**/*.module.css\" .",
+        "build": "cross-env NODE_ENV=production vite build",
+        "type-css-modules": "npx tcm --watch -p \"src/**/*.module.css\" .",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },
@@ -28,12 +28,13 @@
         "@types/react": "^18.2.55",
         "@types/react-dom": "^18.2.19",
         "@vitejs/plugin-react-swc": "^3.5.0",
+        "concurrently": "^8.2.2",
+        "cross-env": "^7.0.3",
         "eslint": "^8.56.0",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
         "typed-css-modules": "^0.9.1",
-        "vite": "^5.1.0",
-        "vite-plugin-env-compatible": "^2.0.1"
+        "vite": "^5.1.0"
     }
 }

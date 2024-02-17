@@ -12,7 +12,7 @@ export const thunkLogin = createAsyncThunk('auth/login', async (loginData, thunk
         axiosInstance.defaults.headers['Authorization'] = `Bearer ${authToken}`;
         return res.data;
     } catch (err) {
-        console.log(err);
-        return thunkApi.rejectWithValue('какая-то ошибка');
+        // console.log(err);
+        return thunkApi.rejectWithValue(err.response.data.message);
     }
 });
