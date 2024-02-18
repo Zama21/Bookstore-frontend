@@ -1,0 +1,25 @@
+.select {
+	flex-grow: 1;
+	padding: 8px 12px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	color: #333;
+	cursor: pointer;
+	transition: border-color 0.3s ease;
+	text-align: center;
+}
+
+.select:hover {
+	border-color: #888;
+}
+
+.select option {
+	background-color: #fff;
+	color: #333;
+}
+
+.select option:hover {
+	background-color: #f0f0f0;
+}

@@ -2,14 +2,53 @@
 	margin: 0 auto;
 	margin-top: 50px;
 	max-width: 1000px;
+	padding: 15px;
+}
+.divider {
+	display: block;
+	border-bottom: 1px solid #dddddd;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .bookReadH1 {
-	margin: 10px;
+	margin: 10px 0 20px 0;
 	font-size: 1.5rem;
 }
 .bookReadH1 a {
 	color: #6a3752;
 	font-weight: bold;
 	text-decoration: underline;
+}
+
+.WrapperTableContentsAndBtn {
+	height: 40px;
+	display: flex;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.wrapperBtnZoom {
+	height: 100%;
+	border: 1px solid #dddddd;
+	border-radius: 6px;
+	margin-left: 30px;
+}
+.textZoomButton {
+	height: 100%;
+	margin: 0 10px;
+	padding: 10px;
+}
+
+.WrapperBodyText {
+	width: 100%;
+}
+
+.WrapperBodyText h2 {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.WrapperBodyText p {
+	margin-bottom: 15px;
 }
