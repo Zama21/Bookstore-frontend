@@ -1,4 +1,5 @@
 declare const styles: {
-    readonly wrapper: string;
+  readonly "select": string;
 };
 export = styles;
+
