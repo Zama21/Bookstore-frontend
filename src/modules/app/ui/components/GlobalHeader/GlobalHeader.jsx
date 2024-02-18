@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import cls from './GlobalHeader.module.css';
-
 import { Link } from 'react-router-dom';
 import { guestNavLinks, privateNavLinks } from './navLinks.js';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
