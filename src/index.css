@@ -83,3 +83,12 @@ footer {
 	display: flex;
 	flex-direction: row;
 }
+
+li {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
