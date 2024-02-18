@@ -1,0 +1,15 @@
+.wrapper {
+	margin: 0 auto;
+	margin-top: 50px;
+	max-width: 1000px;
+}
+
+.bookReadH1 {
+	margin: 10px;
+	font-size: 1.5rem;
+}
+.bookReadH1 a {
+	color: #6a3752;
+	font-weight: bold;
+	text-decoration: underline;
+}
