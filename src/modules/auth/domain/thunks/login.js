@@ -8,7 +8,7 @@ export const thunkLogin = createAsyncThunk('auth/login', async (loginData, thunk
         const { authToken, userData } = res.data;
         setAuthToken(authToken);
         axiosInstance.defaults.headers['Authorization'] = `Bearer ${authToken}`;
-        return res.data;
+        return userData;
     } catch (err) {
         return thunkApi.rejectWithValue(err.response.data.message);
     }

@@ -6,7 +6,7 @@ import { thunkLogout } from 'modules/auth/domain/thunks/logout.js';
 
 export const Role = {
     User: 'user',
-    Admin: 'user',
+    Admin: 'admin',
 };
 
 export const AllRoles = Object.values(Role);
@@ -14,12 +14,9 @@ export const AllRoles = Object.values(Role);
 export const authSlice = createSlice({
     name: 'user',
     initialState: {
-        id: -1,
+        userData: null,
         isAuthed: false,
         authIsLoading: true,
-        roles: [],
-        email: '',
-        username: '',
         registration: {
             error: '',
             success: false,
@@ -37,6 +34,13 @@ export const authSlice = createSlice({
         builder.addCase(thunkCheckAuth.fulfilled, (state, action) => {
             state.authIsLoading = false;
             state.isAuthed = true;
+
+            state.userData = {
+                email: action.payload.email,
+                username: action.payload.username,
+                id: action.payload.id,
+                roles: action.payload.roles,
+            };
         });
         builder.addCase(thunkCheckAuth.rejected, (state, action) => {
             state.isAuthed = false;
@@ -45,9 +49,9 @@ export const authSlice = createSlice({
         builder.addCase(thunkCheckAuth.pending, (state, action) => {
             state.authIsLoading = true;
         });
-
         builder.addCase(thunkLogin.fulfilled, (state, action) => {
             state.isAuthed = true;
+            state.userData = action.payload;
         });
         builder.addCase(thunkLogin.rejected, (state, action) => {
             state.isAuthed = false;
@@ -68,9 +72,7 @@ export const authSlice = createSlice({
         });
         builder.addCase(thunkLogout.fulfilled, (state, action) => {
             state.isAuthed = false;
-            state.roles = [];
-            state.email = '';
-            state.username = '';
+            state.userData = null;
         });
     },
 });

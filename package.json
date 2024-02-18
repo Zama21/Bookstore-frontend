@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "concurrently \"cross-env NODE_ENV=development vite\" \" npm run type-css-modules \"",
+        "dev": "concurrently --hide 1 \"cross-env NODE_ENV=development vite\" \" npm run type-css-modules \"",
         "dev:unix": "vite & npx tcm --watch -p \"src/**/*.module.css\" .",
         "build": "cross-env NODE_ENV=production vite build",
         "type-css-modules": "npx tcm --watch -p \"src/**/*.module.css\" .",
