@@ -7,8 +7,10 @@ declare const styles: {
   readonly "comment": string;
   readonly "commentsHead": string;
   readonly "commentsHeadTitle": string;
+  readonly "complaint": string;
   readonly "content": string;
   readonly "dateTime": string;
+  readonly "growAndFade": string;
   readonly "hide": string;
   readonly "open": string;
   readonly "replyBtnAndMetaInfo": string;

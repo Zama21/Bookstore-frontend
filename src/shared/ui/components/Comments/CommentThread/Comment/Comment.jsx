@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import CommentSvgSelector from './CommentSvgSelector'
+import Modal from 'shared/ui/components/Modal/Modal'
 
 export default function Comment({
 	stl,
@@ -52,7 +54,13 @@ export default function Comment({
 						</button>
 					)}
 					{replyCount == 0 && <span></span>}
-					<button onClick={toggleReply}>Ответить</button>
+					<div className='flxRowAndVrt'>
+						<CommentSvgSelector
+							nameSvg='complaint'
+							stl={stl}
+						></CommentSvgSelector>
+						<button onClick={toggleReply}>Ответить</button>
+					</div>
 				</div>
 			</div>
 			{replyOpen && (

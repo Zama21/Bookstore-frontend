@@ -15,6 +15,20 @@
 	padding: 10px;
 	margin-bottom: 10px;
 }
+.comment:hover .complaint {
+	fill: #923a65;
+	stroke: #923a65;
+	animation: growAndFade 7s;
+}
+
+@keyframes growAndFade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 
 .wrapperAnswerComment {
 	display: grid;
@@ -150,4 +164,20 @@
 	border-left: 10px solid transparent; /* Левая граница */
 	border-right: 10px solid transparent; /* Правая граница */
 	border-bottom: 10px solid #6a3752; /* Нижняя граница */
+}
+
+.complaint {
+	overflow: visible;
+	margin: 0 10px;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	stroke-width: 33px;
+	fill: #fff;
+	stroke: #fff;
+}
+
+.wrapperAnswerComment .complaint {
+	fill: #e8e8e8;
+	stroke: #e8e8e8;
 }
