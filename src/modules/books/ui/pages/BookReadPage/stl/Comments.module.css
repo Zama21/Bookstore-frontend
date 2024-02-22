@@ -1,0 +1,183 @@
+.commentsHead {
+	background-color: #fff;
+	padding: 20px;
+	margin-bottom: 40px;
+}
+.commentsHeadTitle {
+	font-size: 1.3rem;
+	font-weight: 500;
+	margin: 0 0 15px;
+}
+
+.comment {
+	background-color: #fff;
+	border: 1px solid #e0e0e0;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.comment:hover .complaint {
+	fill: #923a65;
+	stroke: #923a65;
+	animation: growAndFade 7s;
+}
+
+@keyframes growAndFade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.wrapperAnswerComment {
+	display: grid;
+	grid-template-rows: 0fr;
+	overflow: hidden;
+	transition: grid-template-rows 0.5s ease;
+	width: 95%;
+	margin-left: 5%;
+}
+
+.wrapperBottomComment {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.wrapperTextAreaComment {
+	margin: 10px 0;
+
+	position: relative;
+	padding: 20px 20px 12px;
+	margin: 0 0 20px;
+	border-radius: 6px;
+	background: #fff;
+	border: 1px solid #ddd;
+}
+.wrapperTextAreaComment.hide {
+	margin: 0;
+	padding: 20px 20px 0;
+}
+.wrapperTextAreaComment.hide .textAreaComment {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+.wrapperTextAreaComment.hide .replyBtnAndMetaInfo {
+	display: none;
+}
+.textAreaComment:focus {
+	outline: none; /* Убираем стандартное выделение */
+	box-shadow: 0 0 5px rgba(13, 179, 212, 0.5); /* Пример теневого выделения */
+}
+.textAreaComment:focus + .replyBtnAndMetaInfo {
+	display: block;
+}
+.textAreaComment {
+	padding: 10px;
+	font-size: 1rem;
+	width: 100%;
+	height: auto;
+	resize: none;
+	outline: none;
+	border: none;
+	margin-bottom: 20px;
+}
+.btnAdd {
+	color: #fff;
+	background: #923a65;
+	border: 1px solid #923a65;
+
+	font-weight: 100;
+	border-radius: 4px;
+	padding: 10px;
+	margin-right: 10px;
+}
+
+.wrapperAnswerComment.open {
+	grid-template-rows: 1fr;
+}
+.wrapperAnswerComment .comment {
+	background-color: #e8e8e8;
+}
+
+.wrapperNameAndDate {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: space-between;
+	padding: 5px;
+}
+
+.comment .avatar {
+	float: left;
+	margin-right: 10px;
+}
+
+.comment .avatar img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.comment .author {
+	font-weight: bold;
+}
+
+.comment .dateTime {
+	color: #999;
+	margin-bottom: 5px;
+}
+
+.comment .content {
+	margin-bottom: 10px;
+}
+
+.comment .replyCount {
+	color: #666;
+	font-size: 1rem;
+}
+.replyCount {
+	display: flex;
+	align-items: center;
+}
+
+.dateTime {
+	font-size: 0.85rem;
+}
+
+.arrowDown {
+	margin: 5px;
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent; /* Левая граница */
+	border-right: 10px solid transparent; /* Правая граница */
+	border-top: 10px solid #6a3752; /* Верхняя граница */
+}
+
+.arrowUp {
+	margin: 5px;
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent; /* Левая граница */
+	border-right: 10px solid transparent; /* Правая граница */
+	border-bottom: 10px solid #6a3752; /* Нижняя граница */
+}
+
+.complaint {
+	overflow: visible;
+	margin: 0 10px;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	stroke-width: 33px;
+	fill: #fff;
+	stroke: #fff;
+}
+
+.wrapperAnswerComment .complaint {
+	fill: #e8e8e8;
+	stroke: #e8e8e8;
+}

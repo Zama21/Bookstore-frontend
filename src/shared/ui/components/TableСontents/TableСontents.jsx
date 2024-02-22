@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import stl from './TableContents.module.css'
 
-export default function TableContents() {
+export default function TableContents({ defaultValue, data, stl }) {
 	const [selectedValue, setSelectedValue] = useState('') // начальное значение
 
 	const handleSelectChange = event => {
@@ -16,12 +15,14 @@ export default function TableContents() {
 		>
 			{selectedValue === '' && (
 				<option value='' disabled hidden>
-					Оглавление
+					{defaultValue}
 				</option>
 			)}
-			<option value='react'>Lorem</option>
-			<option value='angular'>Angular</option>
-			<option value='vue'>Vue</option>
+			{data.map(item => (
+				<option value={item} key={item}>
+					{item}
+				</option>
+			))}
 		</select>
 	)
 }
