@@ -64,6 +64,7 @@ button::-moz-focus-inner {
 main {
 	width: 100%;
 	flex-grow: 1;
+	margin-top: 50px;
 }
 
 footer {
