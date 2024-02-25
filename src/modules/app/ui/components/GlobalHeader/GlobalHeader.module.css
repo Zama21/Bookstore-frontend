@@ -53,6 +53,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	font-weight: 600;
+	max-width: 10ch;
 }
 @keyframes typing {
 	0% {
