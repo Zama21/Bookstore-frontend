@@ -9,7 +9,7 @@ html {
 
 html {
 	box-sizing: border-box;
-	font-size: 16px;
+	font-size: 18px;
 }
 
 *,
@@ -65,6 +65,7 @@ button::-moz-focus-inner {
 	width: 100%;
 	flex-grow: 1;
 	padding-top: 65px;
+	padding-bottom: 65px;
 	background-color: #f5f5f5;
 }
 

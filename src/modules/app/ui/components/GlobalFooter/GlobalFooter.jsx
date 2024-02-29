@@ -6,6 +6,8 @@ import imgYouTube from './img/youtube.png'
 import imgClassMates from './img/classmates.png'
 import imgFon from './img/fon.png'
 import LicenseAgreement from './component/licenseAgreement/LicenseAgreement'
+import AboutLitterria from './component/aboutLitterria/AboutLitterria'
+import PortalAuthors from './component/portalAuthors/PortalAuthors'
 
 export default function GlobalFooter() {
 	return (
@@ -22,8 +24,8 @@ export default function GlobalFooter() {
 						<div className={`${stl.column} ${stl.columnCenter}`}>
 							<h4 className={stl.socialNetworksTitle}>Полезная информация: </h4>
 							<LicenseAgreement />
-							<p>О Литтеррии</p>
-							<p>Авторы портала</p>
+							<AboutLitterria />
+							<PortalAuthors />
 							<p>Правила размещения авторского контента</p>
 						</div>
 						<div className={stl.smallColumn}>

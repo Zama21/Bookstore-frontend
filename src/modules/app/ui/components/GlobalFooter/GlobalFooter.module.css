@@ -23,32 +23,33 @@
 	height: 100px;
 	background: url('https://i.imgur.com/ZAts69f.png');
 	background-size: 1000px 100px;
+	animation-direction: reverse;
 }
 .wave1 {
 	opacity: 1;
 	bottom: 0;
-	background-position-x: 500px;
-	/* animation: animateWaves 4s linear infinite; */
+	/* background-position-x: 500px; */
+	animation: animateWaves 4s linear infinite;
 }
 .wave2 {
 	opacity: 0.5;
 	bottom: 10px;
-	background-position-x: 1000px;
-	/* animation: animate 3s linear infinite; */
+	/* background-position-x: 1000px; */
+	animation: animate 4s linear infinite !important;
 }
 .wave3 {
 	opacity: 0.2;
 	bottom: 15px;
-	background-position-x: 0px;
-	/* animation: animateWaves 4s linear infinite; */
+	/* background-position-x: 0px; */
+	animation: animateWaves 3s linear infinite;
 }
 .wave4 {
 	opacity: 0.7;
 	bottom: 20px;
-	background-position-x: 200px;
-	/* animation: animateWaves 4s linear infinite; */
+	/* background-position-x: 200px; */
+	animation: animate 3s linear infinite;
 }
-/* @keyframes animateWaves {
+@keyframes animateWaves {
 	0% {
 		background-position-x: 1000px;
 	}
@@ -64,7 +65,7 @@
 	100% {
 		background-positon-x: 0px;
 	}
-} */
+}
 .pageFrame {
 	display: flex;
 	justify-content: space-between;

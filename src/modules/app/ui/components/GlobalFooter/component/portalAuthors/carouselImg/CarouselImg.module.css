@@ -1,0 +1,44 @@
+.carouselContainer {
+	text-align: center;
+	text-indent: 0;
+	/* max-width: 600px; */
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.carouselContainer img {
+	position: relative;
+	bottom: 0;
+	cursor: pointer;
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 50%;
+	transition: all 0.55s ease;
+}
+
+.carouselContainer .caption {
+	font-style: italic;
+	color: #555;
+	margin-bottom: 20px;
+}
+
+.carouselContainer .thumbnails {
+	display: inline-flex;
+
+	justify-content: center;
+	user-select: none;
+
+	position: relative;
+	gap: 20px;
+	padding-top: 50px;
+	height: 250px;
+	overflow: hidden;
+	transition: transform 1.55s ease;
+}
+
+.carouselContainer .selectedImage {
+	transform: translateY(-50px);
+	width: 200px;
+	height: 200px;
+}

@@ -1,4 +1,6 @@
 declare const styles: {
+  readonly "animate": string;
+  readonly "animateWaves": string;
   readonly "column": string;
   readonly "columnCenter": string;
   readonly "footerTopWaves": string;
