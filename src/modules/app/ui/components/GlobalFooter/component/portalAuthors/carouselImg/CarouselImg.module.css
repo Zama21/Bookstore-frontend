@@ -1,0 +1,105 @@
+.carouselContainer {
+	/* text-align: center; */
+	text-indent: 0;
+	/* max-width: 600px; */
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.carouselContainer .thumbnails img {
+	position: relative;
+	bottom: 0;
+	cursor: pointer;
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 50%;
+	transition: all 0.55s ease;
+}
+
+.carouselContainer .caption {
+	/* font-style: italic;
+	color: #555; */
+	position: relative;
+	display: grid;
+	grid-template-rows: 0fr;
+	margin-bottom: 20px;
+	text-indent: 30px;
+	max-height: 188px;
+	overflow: auto;
+	transition: grid-template-rows 700ms ease;
+}
+
+.carouselContainer .caption.open {
+	grid-template-rows: 1fr;
+}
+
+.carouselContainer .thumbnails {
+	display: inline-flex;
+	user-select: none;
+
+	position: relative;
+	gap: 20px;
+	padding-top: 50px;
+	height: 250px;
+	overflow: hidden;
+	transition: transform 1.55s ease;
+}
+
+.carouselContainer .thumbnails .selectedImage {
+	transform: translateY(-50px);
+	width: 200px;
+	height: 200px;
+}
+
+.keyword {
+	font-weight: 700;
+	font-style: italic;
+}
+
+.machine {
+	position: fixed;
+	width: 70px;
+	height: 70px;
+	transition: all 700ms ease;
+}
+.machine.open {
+	transform: rotate(180deg);
+}
+.machine1 {
+	top: 0;
+	left: 0;
+}
+.machine2 {
+	top: 0;
+	right: 0;
+}
+.machine3 {
+	bottom: 0;
+	right: 0;
+}
+.machine4 {
+	bottom: 0;
+	left: 0;
+}
+/* .chain {
+	position: fixed;
+	right: -100px;
+	top: -7vh;
+	width: 40px;
+	height: 300px;
+
+	background-position: center center;
+	background-image: url('./img/chain.png');
+	background-repeat: repeat;
+	background-size: 250px 100%;
+	transition: all 700ms ease;
+} */
+
+/* .ring {
+	position: absolute;
+	left: -18px;
+	bottom: -65px;
+	width: 70px;
+	height: 70px;
+} */

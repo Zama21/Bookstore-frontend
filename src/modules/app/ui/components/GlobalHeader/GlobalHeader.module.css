@@ -1,73 +1,137 @@
 .header {
-	position: fixed;
-	transition: 0.2s;
-	width: 100%;
-	padding: 6px;
+    position: fixed;
+    transition: 0.2s;
+    width: 100%;
+    padding: 6px;
 
-	min-height: 65px;
-	height: 65px;
-	z-index: 10;
+    min-height: 65px;
+    height: 65px;
+    z-index: 10;
 
-	background: rgba(255, 255, 255, 0.2);
-	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
-	border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .header.hide {
-	transform: translateY(-100%);
+    transform: translateY(-100%);
 }
 
 .pageFrame {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin: 0 auto;
-	max-width: 1000px;
-	height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 1000px;
+    height: 100%;
 }
 
 .menu {
-	display: flex;
-	flex-direction: row;
-	gap: 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
 }
 
 .menu li:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .wrapperLogo {
-	display: flex;
-	height: 100%;
-	align-items: center;
-	overflow: hidden;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    overflow: hidden;
 }
 .nameSite {
-	font-family: 'Courier';
-	font-size: 2rem;
-	color: #333;
-	letter-spacing: 2px;
-	user-select: none;
-	animation: typing 13s infinite steps(16);
-	white-space: nowrap;
-	overflow: hidden;
-	font-weight: 600;
+    font-family: "Courier";
+    font-size: 2rem;
+    color: #333;
+    letter-spacing: 2px;
+    user-select: none;
+    /* animation: typing 13s infinite steps(16); */
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 600;
+    /* max-width: 10ch; */
 }
+.nameSite::before {
+    content: "";
+    animation: typing 13s infinite;
+}
+
 @keyframes typing {
-	0% {
-		width: 0ch;
-	}
-	30% {
-		width: 17.5ch;
-	}
-	80% {
-		width: 17.5ch;
-	}
-	90% {
-		width: 0ch;
-	}
-	100% {
-		width: 0ch;
-	}
+    0% {
+        content: "";
+    }
+    4% {
+        content: "Л";
+    }
+    8% {
+        content: "ЛИ";
+    }
+    12% {
+        content: "ЛИТ";
+    }
+    16% {
+        content: "ЛИТТ";
+    }
+    20% {
+        content: "ЛИТТЕ";
+    }
+    24% {
+        content: "ЛИТТЕР";
+    }
+    28% {
+        content: "ЛИТТЕРИ";
+    }
+    32% {
+        content: "ЛИТТЕРИЯ";
+    }
+
+    70% {
+        content: "ЛИТТЕРИЯ";
+    }
+    72.5% {
+        content: "ЛИТТЕРИ";
+    }
+    75% {
+        content: "ЛИТТЕР";
+    }
+    77.5% {
+        content: "ЛИТТЕ";
+    }
+    80% {
+        content: "ЛИТТ";
+    }
+    82.5% {
+        content: "ЛИТ";
+    }
+    85% {
+        content: "ЛИ";
+    }
+    87.5% {
+        content: "Л";
+    }
+    90% {
+        content: "";
+    }
 }
+
+/* @keyframes typing {
+    0% {
+        width: 0ch;
+    }
+    30% {
+        width: 17.5ch;
+    }
+    80% {
+        width: 17.5ch;
+    }
+    90% {
+        width: 0ch;
+    }
+    100% {
+        width: 0ch;
+    }
+} */

@@ -9,6 +9,7 @@ import { thunkLogin } from '../../../domain/thunks/login.js';
 import { AuthPageWrapper } from '../AuthPageWrapper/AuthPageWrapper.jsx';
 import { useSelector } from 'react-redux';
 import { FormError } from 'shared/ui/components/FormComponents/FormError/FormError.jsx';
+import cls from './LoginPage.module.css';
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
@@ -46,7 +47,9 @@ export const LoginPage = () => {
                             placeholder='Пароль..'
                             autoComplete='password'
                         />
-                        <FormButton type='submit'>Войти</FormButton>
+                        <FormButton className={cls.formActionButton} type='submit'>
+                            Войти
+                        </FormButton>
                         <FormLink to={'/auth/reg'} text={'Нет аккаунта? Зарегистрируйтесь!'} />
                         {loginState.error.length > 0 && <FormError message={loginState.error} />}
                     </Form>

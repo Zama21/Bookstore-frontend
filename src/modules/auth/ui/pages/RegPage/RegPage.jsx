@@ -12,6 +12,7 @@ import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormB
 import { FormLink } from 'shared/ui/components/FormComponents/FormLink/FormLink.jsx';
 import { Form } from 'shared/ui/components/FormComponents/Form/Form.jsx';
 import { authActions } from 'modules/auth/store/slices/authSlice.js';
+import cls from './RegPage.module.css';
 
 export const RegPage = () => {
     const registerState = useSelector(state => state.auth.registration);
@@ -98,7 +99,9 @@ export const RegPage = () => {
                             placeholder='Пароль..'
                             autoComplete='new-password'
                         />
-                        <FormButton type='submit'>Зарегистрироваться</FormButton>
+                        <FormButton className={cls.formActionButton} type='submit'>
+                            Зарегистрироваться
+                        </FormButton>
                         <FormLink to={'/auth/login'} text={'Уже есть аккаунт? Войдите!'} />
                         {registerState.error.length > 0 && <FormError message={registerState.error} />}
                     </Form>
