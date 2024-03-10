@@ -103,6 +103,11 @@ export const BookPage = () => {
         setIsStarred(prev => !prev);
     };
 
+    const dataSwitchingBox = {
+        description: data?.description,
+        title: data?.title,
+    };
+
     const dataBookViewBox = {
         addsToLibraryCount: data?.addsToLibraryCount,
         author: data?.author,
@@ -151,7 +156,7 @@ export const BookPage = () => {
             <div className={stl.wrapper}>
                 <BookViewBox {...dataBookViewBox} />
                 <TableContents {...tableContentsObj}></TableContents>
-                <SwitchingBox></SwitchingBox>
+                <SwitchingBox {...dataSwitchingBox}></SwitchingBox>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Veritatis labore iusto, nesciunt recusandae fugiat quo ipsum
