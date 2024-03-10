@@ -1,166 +1,242 @@
 .wrapper {
-	background-color: #ffffff;
-	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
-	margin-bottom: 30px;
-	font-size: 1rem;
-	display: flex;
-	max-height: 500px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
+    margin-bottom: 30px;
+    font-size: 1rem;
+    display: flex;
+    max-height: 500px;
 }
 .column {
-	margin: 5px;
-	position: relative;
+    margin: 5px;
+    position: relative;
 }
 .columnSameWidth {
-	flex: 1;
-	padding: 10px;
+    flex: 1;
+    padding: 10px;
 }
 .h1 {
-	color: #333;
-	font-weight: normal;
-	font-size: 1.5rem;
+    color: #333;
+    font-weight: normal;
+    font-size: 1.5rem;
 }
 
 .authorNic {
-	text-decoration: none;
-	color: #8c5271;
-	font-size: 1.1rem;
+    text-decoration: none;
+    color: #8c5271;
+    font-size: 1.1rem;
 }
 .authorNic:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .metaName {
-	color: #999999;
+    color: #999999;
 }
 
 .anchor {
-	color: #337ab7;
-	text-decoration: none;
+    color: #337ab7;
+    text-decoration: none;
 }
 .anchor:hover {
-	text-decoration: underline;
-	color: #23527c;
+    text-decoration: underline;
+    color: #23527c;
 }
 
 .nonPriorityInformation {
-	font-size: 0.9rem;
+    font-size: 0.9rem;
 }
 
 .bookInformation {
-	line-height: 1.5;
+    line-height: 1.5;
 }
 
 .bookBtnForRead {
-	color: #fff;
-	background: linear-gradient(45deg, #923a65, #b44577);
-	border: 1px solid #923a65;
-	display: block;
-	text-align: center;
-	text-decoration: none;
+    color: #fff;
+    background: linear-gradient(45deg, #923a65, #b44577);
+    border: 1px solid #923a65;
+    display: block;
+    text-align: center;
+    text-decoration: none;
 
-	line-height: 39px;
+    line-height: 39px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.bookBtnForRead:hover {
+    font-size: 0.9rem;
+    background: linear-gradient(45deg, #b44577, #923a65);
+}
+.bookBtnForRead.buy {
+    margin-top: 10px;
+    background: #fff;
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    color: #923a65;
+}
+.bookBtnForRead.buy:hover {
+    background: #f7f7f7;
 }
 
 .wrapperBtnForRead {
-	display: block;
-	font-size: 0.8rem;
-	width: 80%;
-	height: 40px;
-	margin: 1.5rem auto;
-	max-width: 250px;
-	border-radius: 5px;
-	overflow: hidden;
-	transition: all 0.3s ease;
-}
-
-.wrapperBtnForRead:hover {
-	font-size: 0.9rem;
-	background: linear-gradient(45deg, #b44577, #923a65);
+    display: block;
+    font-size: 0.8rem;
+    width: 80%;
+    min-height: 40px;
+    margin: 1.5rem auto;
+    max-width: 250px;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .img {
-	max-width: 100%;
-	display: block;
-	object-fit: cover;
-	width: auto;
-	height: 400px;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
+    max-width: 100%;
+    display: block;
+    object-fit: cover;
+    width: auto;
+    height: 400px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .containerFor3Column {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .headerColumn3 {
-	display: flex;
-	overflow: hidden;
-	border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+    border-radius: 10px;
 }
 .likeContainer {
-	padding: 5px;
-	color: #fff;
-	flex-grow: 1;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	background: linear-gradient(90deg, #b44577, #923a65);
+    position: relative;
+    padding: 5px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: linear-gradient(90deg, #b44577, #923a65);
+    transition: all 1s ease;
+}
+.likeContainer * {
+    position: relative;
+}
+.likeContainer.active * {
+    opacity: 1;
+}
+.likeContainer.active {
+    color: #fff;
+}
+.likeContainer.active::before {
+    left: -200%;
+}
+.likeContainer::before {
+    content: '';
+    position: absolute;
+    left: -100%;
+    background-image: radial-gradient(circle, #f1f1f1 60%, #923a65 70%);
+    width: 200%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    transition: all 0.5s ease;
 }
 
 .ratingContainer {
-	padding: 10px;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: space-around;
-	background: linear-gradient(90deg, #923a65, #b44577);
-	color: #fff;
-	flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    background: linear-gradient(90deg, #923a65, #b44577);
+    color: #fff;
+    flex-grow: 1;
 }
 
 .addViewStatistics {
-	justify-content: space-evenly;
+    justify-content: space-evenly;
 }
 .bookPublicationStatus {
-	color: #fff;
-	background: #6fbd49;
-	justify-content: flex-start;
-	align-items: center;
-	border-radius: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+}
+.bookPublicationStatus.finished {
+    color: #fff;
+    background: #6fbd49;
+}
+
+.bookPublicationStatus.unfinished {
+    color: #fff;
+    background: #1d7fd3;
+}
+
+.bookPublicationStatus.frozen {
+    color: #fff;
+    background: #999999;
 }
 
 .lifeCycleOfBook {
-	line-height: 1.5;
+    line-height: 1.5;
 }
 .publicationTitle {
-	text-align: center;
-	font-weight: 700;
-	margin-bottom: 0.5em;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 0.5em;
 }
 .bookDate {
-	color: #999999;
+    color: #999999;
 }
 
 .divider {
-	display: block;
-	border-bottom: 1px solid #000;
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+    display: block;
+    border-bottom: 1px solid #000;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .mainColumn3 {
-	flex-grow: 1;
+    flex-grow: 1;
 }
 
 .footerColumn3 {
-	flex-shrink: 0;
-	background: #f1f1f1;
-	cursor: pointer;
-	padding: 10px;
-	justify-content: space-evenly;
-	border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 5px;
+    background-image: linear-gradient(90deg, #923a65, #b44577);
+    transition: all 1.5s ease;
+}
+.footerColumn3 * {
+    position: relative;
+}
+.footerColumn3::before {
+    content: '';
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 110%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+}
+.footerColumn3.isInLibrary::before {
+    width: 0;
+    aspect-ratio: 1/1;
+}
+.footerColumn3.isInLibrary {
+    color: #fff;
+}
+
+.footerColumn3 span {
+    display: block;
+    text-align: center;
 }

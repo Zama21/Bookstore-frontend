@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import { Role } from '../../../../auth/store/slices/authSlice.js';
 import { PrivateRoute } from '../../../../auth/ui/components/PrivateRoute/PrivateRoute.jsx';
 import { LoginPage } from '../../../../auth/ui/pages/LoginPage/LoginPage.jsx';
@@ -13,13 +13,26 @@ export const AppRouter = () => {
             <Route path='/'>
                 {/* all users */}
                 <Route path='/'>
-                    <Route path='/' element={<h1>Main page with web-site description</h1>} />
+                    <Route
+                        path='/'
+                        element={
+                            <>
+                                <h1>Main page with web-site description</h1>{' '}
+                                <Link to='/book/4'>
+                                    Перейти на другую страницу
+                                </Link>
+                            </>
+                        }
+                    />
                     <Route path='auth'>
                         <Route path='reg' element={<RegPage />} />
                         <Route path='login' element={<LoginPage />} />
                     </Route>
                     <Route path='book/:bookId' element={<BookPage />} />
-                    <Route path='book/:bookId/read' element={<BookReadPage />} />
+                    <Route
+                        path='book/:bookId/read'
+                        element={<BookReadPage />}
+                    />
                 </Route>
 
                 {/* authed users */}
@@ -28,7 +41,10 @@ export const AppRouter = () => {
                 </Route>
 
                 {/* authed and admins */}
-                <Route path='/' element={<PrivateRoute roles={[Role.Admin]} />}></Route>
+                <Route
+                    path='/'
+                    element={<PrivateRoute roles={[Role.Admin]} />}
+                ></Route>
 
                 {/* not existing page */}
                 <Route path='*' element={<Navigate to={'/'} />} />

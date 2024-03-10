@@ -1,4 +1,5 @@
 declare const styles: {
+  readonly "active": string;
   readonly "addViewStatistics": string;
   readonly "anchor": string;
   readonly "authorNic": string;
@@ -6,14 +7,18 @@ declare const styles: {
   readonly "bookDate": string;
   readonly "bookInformation": string;
   readonly "bookPublicationStatus": string;
+  readonly "buy": string;
   readonly "column": string;
   readonly "columnSameWidth": string;
   readonly "containerFor3Column": string;
   readonly "divider": string;
+  readonly "finished": string;
   readonly "footerColumn3": string;
+  readonly "frozen": string;
   readonly "h1": string;
   readonly "headerColumn3": string;
   readonly "img": string;
+  readonly "isInLibrary": string;
   readonly "lifeCycleOfBook": string;
   readonly "likeContainer": string;
   readonly "mainColumn3": string;
@@ -21,6 +26,7 @@ declare const styles: {
   readonly "nonPriorityInformation": string;
   readonly "publicationTitle": string;
   readonly "ratingContainer": string;
+  readonly "unfinished": string;
   readonly "wrapper": string;
   readonly "wrapperBtnForRead": string;
 };
