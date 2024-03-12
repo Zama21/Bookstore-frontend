@@ -5,11 +5,7 @@ import CarouselImg from './carouselImg/CarouselImg.jsx';
 export const PortalAuthorsModal = props => {
     let data = {
         title: 'Авторы портала',
-        text: (
-            <>
-                <CarouselImg />
-            </>
-        ),
+        text: <CarouselImg />,
         btnText: 'Понятно',
     };
     return <ModalAwareness {...data} {...props} />;

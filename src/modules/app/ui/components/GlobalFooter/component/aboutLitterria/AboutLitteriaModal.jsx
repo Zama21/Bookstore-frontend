@@ -2,7 +2,7 @@ import ModalAwareness from 'modules/modals/ui/Components/Modals/ModalAwareness/M
 import stl from './AboutLitterria.module.css';
 import React from 'react';
 
-const AboutLitteriaModal = props => {
+export const AboutLitteriaModal = props => {
     const data = {
         title: 'О Литтеррии',
         text: (
@@ -39,5 +39,3 @@ const AboutLitteriaModal = props => {
     };
     return <ModalAwareness {...data} {...props} />;
 };
-
-export default AboutLitteriaModal;
