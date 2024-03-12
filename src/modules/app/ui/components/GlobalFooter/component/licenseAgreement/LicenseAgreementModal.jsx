@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ModalAwareness from 'modules/modals/ui/Components/Modals/ModalAwareness/ModalAwareness';
 import stl from './licenseAgreement.module.css';
 
-export const ModalLicenseAgreement = props => {
+export const LicenseAgreementModal = props => {
     let data = {
         title: 'Лицензионное соглашение',
         text: (
