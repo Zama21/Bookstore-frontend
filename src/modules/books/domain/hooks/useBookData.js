@@ -6,20 +6,22 @@ import { useParams } from 'react-router-dom';
 
 export const useBookData = () => {
     const [data, setData] = useState({});
-    const { isAuthed } = useAuth();
+    const { isAuthed, roles } = useAuth();
     const { bookId } = useParams();
     const authModal = useAuthModal();
 
-    const updateAddsToLibrary = delta => {
-        setData(prev => ({
+    console.log(roles);
+
+    const updateAddsToLibrary = (delta) => {
+        setData((prev) => ({
             ...prev,
             isInLibrary: !prev.isInLibrary,
             addsToLibraryCount: prev?.addsToLibraryCount + delta,
         }));
     };
 
-    const updateBookStarred = delta => {
-        setData(prev => ({
+    const updateBookStarred = (delta) => {
+        setData((prev) => ({
             ...prev,
             isStarred: !prev.isStarred,
             starsCount: prev?.starsCount + delta,
@@ -30,9 +32,9 @@ export const useBookData = () => {
         if (!isAuthed) return authModal.open();
 
         if (data.isInLibrary) {
-            BookPageApi.removeFromLibrary(bookId).then(res => updateAddsToLibrary(-1));
+            BookPageApi.removeFromLibrary(bookId).then((res) => updateAddsToLibrary(-1));
         } else {
-            BookPageApi.addToLibrary(bookId).then(res => updateAddsToLibrary(1));
+            BookPageApi.addToLibrary(bookId).then((res) => updateAddsToLibrary(1));
         }
     };
 
@@ -47,7 +49,7 @@ export const useBookData = () => {
     };
 
     useEffect(() => {
-        BookPageApi.getBookInfo(bookId).then(res => {
+        BookPageApi.getBookInfo(bookId).then((res) => {
             console.log('Book info', res.data);
             setData(res.data);
         });
