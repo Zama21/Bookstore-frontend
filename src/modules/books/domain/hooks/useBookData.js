@@ -1,16 +1,16 @@
 import { BookPageApi } from 'modules/auth/api/bookPageApi.js';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
+import { useAuthModal } from 'modules/modals/domain/hooks/modal-types/useAuthModal.js';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const useBookData = () => {
     const [data, setData] = useState({});
-    const [showAuthModal, setShowAuthModal] = useState(false);
-    const [closingAnimation, setClosingAnimation] = useState(true);
-
-    const { isAuthed } = useAuth();
-
+    const { isAuthed, roles } = useAuth();
     const { bookId } = useParams();
+    const authModal = useAuthModal();
+
+    console.log(roles);
 
     const updateAddsToLibrary = (delta) => {
         setData((prev) => ({
@@ -29,11 +29,8 @@ export const useBookData = () => {
     };
 
     const toggleLibrary = () => {
-        if (!isAuthed) {
-            setShowAuthModal((prev) => !prev);
-            setClosingAnimation((prev) => !prev);
-            return;
-        }
+        if (!isAuthed) return authModal.open();
+
         if (data.isInLibrary) {
             BookPageApi.removeFromLibrary(bookId).then((res) => updateAddsToLibrary(-1));
         } else {
@@ -42,11 +39,8 @@ export const useBookData = () => {
     };
 
     const toggleStarred = () => {
-        if (!isAuthed) {
-            setShowAuthModal((prev) => !prev);
-            setClosingAnimation((prev) => !prev);
-            return;
-        }
+        if (!isAuthed) return authModal.open();
+
         if (data.isStarred) {
             BookPageApi.unstarBook(bookId).then(() => updateBookStarred(-1));
         } else {
@@ -56,7 +50,7 @@ export const useBookData = () => {
 
     useEffect(() => {
         BookPageApi.getBookInfo(bookId).then((res) => {
-            console.log(res.data);
+            console.log('Book info', res.data);
             setData(res.data);
         });
     }, []);
@@ -69,10 +63,5 @@ export const useBookData = () => {
             toggleLibrary,
             toggleStarred,
         },
-
-        showAuthModal,
-        setShowAuthModal,
-        closingAnimation,
-        setClosingAnimation,
     };
 };
