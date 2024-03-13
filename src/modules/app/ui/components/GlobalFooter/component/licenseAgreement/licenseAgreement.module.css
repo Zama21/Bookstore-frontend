@@ -1,0 +1,9 @@
+.keyword {
+	font-weight: 700;
+	font-size: 1.2rem;
+	font-style: italic;
+}
+
+.title {
+	cursor: pointer;
+}

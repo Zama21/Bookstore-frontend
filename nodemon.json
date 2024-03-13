@@ -1,4 +1,0 @@
-{
-    "watch": ["./src/**/*.module.css"],
-    "exec": "npm run type-css-modules"
-}

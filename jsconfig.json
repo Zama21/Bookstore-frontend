@@ -1,14 +1,12 @@
 {
     "compilerOptions": {
-        // "module": "ESNext",
-        // "moduleResolution": "node",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
         "jsx": "preserve",
-        "checkJs": true,
-        // "baseUrl": "src",
         "paths": {
-            // "modules/*": ["/src/modules/*"]
-            // "@app/*": ["/src/modules/app/*"]
-            // "@auth/*": ["/src/modules/auth/*"]
+            "shared/*": ["./src/shared/*"],
+            "modules/*": ["./src/modules/*"]
         }
     },
     "exclude": ["node_modules", "**/node_modules/*"]
