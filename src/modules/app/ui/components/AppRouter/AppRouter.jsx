@@ -6,6 +6,7 @@ import { RegPage } from '../../../../auth/ui/pages/RegPage/RegPage.jsx';
 import { BookPage } from '../../../../books/ui/pages/BookPage/BookPage.jsx';
 import { BookReadPage } from '../../../../books/ui/pages/BookReadPage/BookReadPage.jsx';
 import { HomePage } from '../../../../home/ui/pages/HomePage/HomePage.jsx';
+import BookEditPage from 'modules/books/ui/pages/BookEditPage/BookEditPage.jsx';
 
 export const AppRouter = () => {
     return (
@@ -38,6 +39,10 @@ export const AppRouter = () => {
                 {/* authed users */}
                 <Route path='/' element={<PrivateRoute roles={[Role.User]} />}>
                     <Route path='home' element={<HomePage />} />
+                    <Route
+                        path='book/:bookId/edit'
+                        element={<BookEditPage />}
+                    />
                 </Route>
 
                 {/* authed and admins */}

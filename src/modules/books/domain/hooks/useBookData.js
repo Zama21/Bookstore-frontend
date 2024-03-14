@@ -12,16 +12,16 @@ export const useBookData = () => {
 
     const { bookId } = useParams();
 
-    const updateAddsToLibrary = (delta) => {
-        setData((prev) => ({
+    const updateAddsToLibrary = delta => {
+        setData(prev => ({
             ...prev,
             isInLibrary: !prev.isInLibrary,
             addsToLibraryCount: prev?.addsToLibraryCount + delta,
         }));
     };
 
-    const updateBookStarred = (delta) => {
-        setData((prev) => ({
+    const updateBookStarred = delta => {
+        setData(prev => ({
             ...prev,
             isStarred: !prev.isStarred,
             starsCount: prev?.starsCount + delta,
@@ -30,21 +30,25 @@ export const useBookData = () => {
 
     const toggleLibrary = () => {
         if (!isAuthed) {
-            setShowAuthModal((prev) => !prev);
-            setClosingAnimation((prev) => !prev);
+            setShowAuthModal(prev => !prev);
+            setClosingAnimation(prev => !prev);
             return;
         }
         if (data.isInLibrary) {
-            BookPageApi.removeFromLibrary(bookId).then((res) => updateAddsToLibrary(-1));
+            BookPageApi.removeFromLibrary(bookId).then(res =>
+                updateAddsToLibrary(-1)
+            );
         } else {
-            BookPageApi.addToLibrary(bookId).then((res) => updateAddsToLibrary(1));
+            BookPageApi.addToLibrary(bookId).then(res =>
+                updateAddsToLibrary(1)
+            );
         }
     };
 
     const toggleStarred = () => {
         if (!isAuthed) {
-            setShowAuthModal((prev) => !prev);
-            setClosingAnimation((prev) => !prev);
+            setShowAuthModal(prev => !prev);
+            setClosingAnimation(prev => !prev);
             return;
         }
         if (data.isStarred) {
@@ -55,7 +59,7 @@ export const useBookData = () => {
     };
 
     useEffect(() => {
-        BookPageApi.getBookInfo(bookId).then((res) => {
+        BookPageApi.getBookInfo(bookId).then(res => {
             console.log(res.data);
             setData(res.data);
         });
