@@ -1,12 +1,13 @@
 import React from 'react';
 import stl from './BookEditPage.module.css';
 import BookViewBoxEditPage from './components/BookViewBoxEditPage/BookViewBoxEditPage';
-import { useBookData } from 'modules/books/domain/hooks/useBookData';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SwitchingBoxEditPage from './components/SwitchingBoxEditPage/SwitchingBoxEditPage';
+import { useBookData } from 'modules/books/domain/hooks/useBookData.js';
 
 export default function BookEditPage() {
-    const { data, bookId } = useBookData();
+    const { bookId } = useParams();
+    const { data } = useBookData();
 
     const dataBookViewBoxEditPage = {
         author: data?.author,

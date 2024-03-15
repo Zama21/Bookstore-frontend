@@ -7,8 +7,7 @@ import SwitchingBox from './components/SwitchingBox/SwitchingBox';
 import TableContents from '../../../../../shared/ui/components/TableСontents/TableСontents';
 import { axiosInstance } from 'shared/api/apiInstance';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth';
-import { BookPageApi } from 'modules/auth/api/bookPageApi.js';
-import { useBookData } from 'modules/books/domain/hooks/useBookData.js';
+import { useBookPage } from 'modules/books/domain/hooks/useBookPage.js';
 
 const tableContentsObj = {
     defaultValue: 'title',
@@ -17,7 +16,7 @@ const tableContentsObj = {
 };
 
 export const BookPage = () => {
-    const { data, control, bookId, showAuthModal } = useBookData();
+    const { data, control, bookId, showAuthModal } = useBookPage();
     const { isAuthed } = useAuth();
 
     const dataSwitchingBox = {
