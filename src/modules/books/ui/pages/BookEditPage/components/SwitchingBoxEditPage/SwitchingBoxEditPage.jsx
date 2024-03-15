@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import stl from './SwitchingBoxEditPage.module.css';
-import ChaptersEditPage from './EditPageTableContents/ChaptersEditPage/ChaptersEditPage';
+import ChaptersEditPage from './ChaptersEditPage/ChaptersEditPage';
 
 export default function SwitchingBoxEditPage({ description, title }) {
     const [SelectedSection, setSelectedSection] = useState('tableContents');
     let content;
     let activeClassForBtn = `${stl.SwitchBox} ${stl.active}`;
-    const handleClick = nameSelectedSection => {
+    const handleClick = (nameSelectedSection) => {
         setSelectedSection(nameSelectedSection);
     };
 
@@ -24,9 +24,7 @@ export default function SwitchingBoxEditPage({ description, title }) {
                 <button
                     onClick={() => handleClick('tableContents')}
                     className={`${
-                        SelectedSection == 'tableContents'
-                            ? activeClassForBtn
-                            : stl.SwitchBox
+                        SelectedSection == 'tableContents' ? activeClassForBtn : stl.SwitchBox
                     }`}
                 >
                     Оглавление
@@ -34,9 +32,7 @@ export default function SwitchingBoxEditPage({ description, title }) {
                 <button
                     onClick={() => handleClick('bookInformation')}
                     className={`${
-                        SelectedSection == 'bookInformation'
-                            ? activeClassForBtn
-                            : stl.SwitchBox
+                        SelectedSection == 'bookInformation' ? activeClassForBtn : stl.SwitchBox
                     }`}
                 >
                     Информация о книге

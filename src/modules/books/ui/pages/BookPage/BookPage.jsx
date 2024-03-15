@@ -7,7 +7,6 @@ import SwitchingBox from './components/SwitchingBox/SwitchingBox';
 import TableContents from '../../../../../shared/ui/components/TableСontents/TableСontents';
 import { axiosInstance } from 'shared/api/apiInstance';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth';
-import ModalOfferToAuthorize from 'shared/ui/components/Modal/modalOfferToAuthorize/ModalOfferToAuthorize';
 import { BookPageApi } from 'modules/auth/api/bookPageApi.js';
 import { useBookData } from 'modules/books/domain/hooks/useBookData.js';
 
@@ -18,23 +17,8 @@ const tableContentsObj = {
 };
 
 export const BookPage = () => {
-    const {
-        data,
-        control,
-        bookId,
-        showAuthModal,
-        setShowAuthModal,
-        closingAnimation,
-        setClosingAnimation,
-    } = useBookData();
+    const { data, control, bookId, showAuthModal } = useBookData();
     const { isAuthed } = useAuth();
-
-    const onHideCart = () => {
-        setClosingAnimation(true);
-        setTimeout(() => {
-            setShowAuthModal(false);
-        }, 300);
-    };
 
     const dataSwitchingBox = {
         description: data?.description,
@@ -65,9 +49,6 @@ export const BookPage = () => {
 
     return (
         <>
-            {showAuthModal && (
-                <ModalOfferToAuthorize closingAnimation={closingAnimation} onHideCart={onHideCart} />
-            )}
             <div className={stl.wrapper}>
                 <BookViewBox {...dataBookViewBox} />
                 <TableContents {...tableContentsObj}></TableContents>
