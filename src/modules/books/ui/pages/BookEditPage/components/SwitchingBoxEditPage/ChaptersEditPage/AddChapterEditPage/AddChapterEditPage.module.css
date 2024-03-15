@@ -1,0 +1,28 @@
+.wrapperAddTitleBtn {
+    display: flex;
+    align-items: center;
+}
+
+.addTitleBtn {
+    /* box-sizing: border-box; */
+    padding: 5px;
+    color: #6fbd49;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+.addTitleBtn:hover {
+    background-color: rgba(51, 51, 51, 0.1);
+}
+.addTitleInput {
+    min-width: 300px;
+    border-bottom: 2px black solid;
+    text-align: center;
+}
