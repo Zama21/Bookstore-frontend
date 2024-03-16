@@ -5,9 +5,9 @@ import { AuthProvider } from '../../../auth/ui/providers/AuthProvider/AuthProvid
 export const withProviders = component => props => {
     return (
         <StoreProvider>
-            <AuthProvider>
-                <BrowserRouter>{component(props)}</BrowserRouter>
-            </AuthProvider>
+            <BrowserRouter>
+                <AuthProvider>{component(props)}</AuthProvider>
+            </BrowserRouter>
         </StoreProvider>
     );
 };
