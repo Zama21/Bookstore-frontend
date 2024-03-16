@@ -1,0 +1,15 @@
+.wrapperControlChapters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btnReverse {
+    box-sizing: border-box;
+    transition: all 0.5s ease;
+    border-radius: 50%;
+    padding: 10px;
+}
+.btnReverse:hover {
+    background-color: rgba(51, 51, 51, 0.1);
+}

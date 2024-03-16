@@ -1,0 +1,103 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    transition: all 0.25s ease;
+}
+.danger {
+    color: red !important;
+}
+
+.wrapper:hover {
+    box-shadow: 0 7px 3px -3px rgba(0, 0, 0, 0.15),
+        0 -5px 3px -3px rgba(0, 0, 0, 0.15);
+}
+
+.wrapperBookPartsName {
+    flex: 0 0 200px;
+    margin: 0 8px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    min-width: 100px;
+}
+.wrapperBookPartsName a {
+    color: #333333;
+}
+.bookPartsStatus {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1;
+    color: #cccccc;
+}
+
+.bookPartsStatusSuccess {
+    color: #47b347;
+}
+
+.wrapperBookPartsAttr {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(51, 51, 51, 0.6);
+}
+
+.bookPartsAttrCost {
+    text-align: right;
+    padding: 0 24px 0 0;
+    white-space: nowrap;
+    border-right: 1px solid rgba(0, 0, 0, 0.13);
+    color: #47b347;
+}
+
+.bookPartsAttrDate {
+    text-align: right;
+    padding: 0 24px 0 0;
+    margin: 0 8px 0 20px;
+}
+
+.bookPartsMenu {
+    position: relative;
+    padding: 10px;
+    padding-left: 20px;
+    margin: 0 0 0 24px;
+    cursor: pointer;
+    color: #dddddd;
+}
+.bookPartsMenu:hover button {
+    color: #333333;
+}
+.bookPartsMenu:hover .bookPartsMenuList {
+    display: block;
+}
+.bookPartsMenu button {
+    cursor: pointer;
+    font-size: 1.6rem;
+}
+.bookPartsMenuList a {
+    display: block;
+    text-decoration: none;
+    padding: 8px 16px;
+    color: #333333;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+.bookPartsMenuList a:hover {
+    background: #f1f1f1;
+}
+
+.bookPartsMenuList {
+    display: none;
+    min-width: 160px;
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    background: #ffffff;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08), 0 -4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1;
+}

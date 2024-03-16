@@ -10,10 +10,27 @@ import { AuthPageWrapper } from '../AuthPageWrapper/AuthPageWrapper.jsx';
 import { useSelector } from 'react-redux';
 import { FormError } from 'shared/ui/components/FormComponents/FormError/FormError.jsx';
 import cls from './LoginPage.module.css';
+import GoogleAuthButton from '../../components/GoogleAuthButton/GoogleAuthButton.jsx';
+import { axiosInstance } from 'shared/api/apiInstance.js';
+import { useNavigate } from 'react-router-dom';
+
+const { VITE_APP_SERVER_HOST, VITE_APP_SERVER_PORT } = import.meta.env;
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
+    // const navigate = useNavigate();
     const loginState = useSelector(state => state.auth.login);
+
+    const handleGoogleAuth = () => {
+        console.log('Google auth');
+        console.log(`${VITE_APP_SERVER_HOST}:${import.meta.env.VITE_APP_SERVER_PORT}/auth/google`);
+
+        window.location.href = `${VITE_APP_SERVER_HOST}:${
+            import.meta.env.VITE_APP_SERVER_PORT
+        }/auth/google`;
+        // navigate(`${VITE_APP_SERVER_HOST}:${import.meta.env.VITE_APP_SERVER_PORT}/auth/google`);
+        // axiosInstance.get('/auth/google');
+    };
 
     return (
         <AuthPageWrapper>
@@ -52,6 +69,10 @@ export const LoginPage = () => {
                         </FormButton>
                         <FormLink to={'/auth/reg'} text={'Нет аккаунта? Зарегистрируйтесь!'} />
                         {loginState.error.length > 0 && <FormError message={loginState.error} />}
+
+                        <div className={cls.googleButtonCont}>
+                            <GoogleAuthButton onClick={handleGoogleAuth} />
+                        </div>
                     </Form>
                 )}
             </Formik>
