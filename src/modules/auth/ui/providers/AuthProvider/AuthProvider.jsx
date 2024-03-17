@@ -1,30 +1,26 @@
 import React, { Children, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { thunkCheckAuth } from '../../../domain/thunks/checkAuth.js';
-import { authActions } from '../../../store/slices/authSlice.js';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { axiosInstance } from 'shared/api/apiInstance.js';
+import { setAuthToken } from 'modules/auth/domain/lib/authToken.js';
 
 export const AuthProvider = ({ children }) => {
-    // const [authLoading, setAuthLoading] = useState(true);
-    const authIsLoading = useSelector(state => state.auth.authIsLoading);
     const dispatch = useDispatch();
+    const location = useLocation();
+    const authIsLoading = useSelector(state => state.auth.authIsLoading);
+
+    const searchParams = new URLSearchParams(location.search);
+    const jwtToken = searchParams.get('jwtToken');
 
     useEffect(() => {
+        if (jwtToken) {
+            axiosInstance.defaults.headers['Authorization'] = `Bearer ${jwtToken}`;
+            setAuthToken(jwtToken);
+        }
         dispatch(thunkCheckAuth());
-        // .unwrap()
-        // .then(data => {
-        //     console.log('data', data);
-        //     setAuthLoading(false);
-        //     // dispatch(userActions.setUserData(data));
-        //     // dispatch(userActions.setAuthed(true));
-        //     // dispatch(thunkGetProfileData());
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        //     setAuthLoading(false);
-        //     // dispatch(authActions.setAuthed(false));
-        // });
-    }, []);
+    }, [jwtToken]);
 
     return <>{authIsLoading ? '' : children}</>;
 };

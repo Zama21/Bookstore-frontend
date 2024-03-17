@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cls from './GlobalHeader.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { guestNavLinks, privateNavLinks } from './navLinks.js';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
 import { useDispatch } from 'react-redux';
@@ -16,8 +16,12 @@ export const GlobalHeader = ({ show }) => {
     useEffect(() => {
         setNavLinks(isAuthed ? privateNavLinks : guestNavLinks);
     }, [isAuthed]);
+    const navigate = useNavigate();
 
-    const handleLogout = () => dispatch(thunkLogout());
+    const handleLogout = () => {
+        dispatch(thunkLogout());
+        navigate('/auth/login');
+    };
     return (
         <header className={`${cls.header} ${scrollDirection ? cls.hide : ''}`}>
             <div className={cls.pageFrame}>
