@@ -7,7 +7,7 @@ import { useBookData } from 'modules/books/domain/hooks/useBookData.js';
 
 export default function BookEditPage() {
     const { bookId } = useParams();
-    const { data } = useBookData();
+    const { data } = useBookData(bookId);
 
     const dataBookViewBoxEditPage = {
         author: data?.author,
