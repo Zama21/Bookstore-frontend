@@ -8,6 +8,7 @@ import TableContents from '../../../../../shared/ui/components/TableСontents/Ta
 import { axiosInstance } from 'shared/api/apiInstance';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth';
 import { useBookPage } from 'modules/books/domain/hooks/useBookPage.js';
+import { date } from 'yup';
 
 const tableContentsObj = {
     defaultValue: 'title',
@@ -18,6 +19,7 @@ const tableContentsObj = {
 export const BookPage = () => {
     const { data, control, bookId, showAuthModal } = useBookPage();
     const { isAuthed } = useAuth();
+    console.log(data);
 
     const dataSwitchingBox = {
         description: data?.description,
@@ -53,11 +55,13 @@ export const BookPage = () => {
                 <TableContents {...tableContentsObj}></TableContents>
                 <SwitchingBox {...dataSwitchingBox}></SwitchingBox>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis labore iusto,
-                    nesciunt recusandae fugiat quo ipsum cumque et laudantium provident pariatur fugit
-                    quibusdam nemo debitis assumenda aperiam minus voluptatibus quam. Rerum sequi
-                    voluptatibus perferendis inventore omnis corporis consequuntur cumque adipisci quia
-                    exercitationem iste commodi corrupti voluptatum, debitis mollitia aperiam
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Veritatis labore iusto, nesciunt recusandae fugiat quo ipsum
+                    cumque et laudantium provident pariatur fugit quibusdam nemo
+                    debitis assumenda aperiam minus voluptatibus quam. Rerum
+                    sequi voluptatibus perferendis inventore omnis corporis
+                    consequuntur cumque adipisci quia exercitationem iste
+                    commodi corrupti voluptatum, debitis mollitia aperiam
                 </p>
             </div>
         </>

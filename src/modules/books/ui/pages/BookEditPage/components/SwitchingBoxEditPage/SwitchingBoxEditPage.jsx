@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import stl from './SwitchingBoxEditPage.module.css';
 import ChaptersEditPage from './ChaptersEditPage/ChaptersEditPage';
+import BookInformationEditForm from './BookInformationEditForm/BookInformationEditForm';
 
 export default function SwitchingBoxEditPage({ description, title }) {
     const [SelectedSection, setSelectedSection] = useState('tableContents');
     let content;
     let activeClassForBtn = `${stl.SwitchBox} ${stl.active}`;
-    const handleClick = (nameSelectedSection) => {
+    const handleClick = nameSelectedSection => {
         setSelectedSection(nameSelectedSection);
     };
 
@@ -15,7 +16,7 @@ export default function SwitchingBoxEditPage({ description, title }) {
             content = <ChaptersEditPage />;
             break;
         case 'bookInformation':
-            content = 'bookInformation';
+            content = <BookInformationEditForm />;
             break;
     }
     return (
@@ -24,7 +25,9 @@ export default function SwitchingBoxEditPage({ description, title }) {
                 <button
                     onClick={() => handleClick('tableContents')}
                     className={`${
-                        SelectedSection == 'tableContents' ? activeClassForBtn : stl.SwitchBox
+                        SelectedSection == 'tableContents'
+                            ? activeClassForBtn
+                            : stl.SwitchBox
                     }`}
                 >
                     Оглавление
@@ -32,7 +35,9 @@ export default function SwitchingBoxEditPage({ description, title }) {
                 <button
                     onClick={() => handleClick('bookInformation')}
                     className={`${
-                        SelectedSection == 'bookInformation' ? activeClassForBtn : stl.SwitchBox
+                        SelectedSection == 'bookInformation'
+                            ? activeClassForBtn
+                            : stl.SwitchBox
                     }`}
                 >
                     Информация о книге
