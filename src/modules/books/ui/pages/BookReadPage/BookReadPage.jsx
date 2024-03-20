@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import stl from './BookReadPage.module.css';
-import stlTableContents from './stl/TableContents.module.css';
 import stlCommentsBookRead from './stl/Comments.module.css';
-import TableContents from 'shared/ui/components/TableСontents/TableСontents';
+import stlCustomSelectOption from './stl/customSelectOption/customSelectOption.module.css';
 import BookReadSvgSelector from './svg/BookReadSvgSelector';
 import Comments from 'shared/ui/components/Comments/Comments';
-import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
 import BookReader from './components/BookReader/BookReader';
+import { useBookData } from 'modules/books/domain/hooks/useBookData';
+import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
 
-const tableContentsObj = {
-    defaultValue: 'titletetghg',
-    data: ['арбfdghghуз', 'глава2', 'kio rio'],
-    stl: stlTableContents,
-};
+// const tableContentsObj = {
+//     defaultValue: 'titletetghg',
+//     data: ['арбfdghghуз', 'глава2', 'kio rio'],
+//     stl: stlTableContents,
+// };
 
 const commentsObj = {
     data: [
@@ -78,28 +78,14 @@ const commentsObj = {
 };
 
 export const BookReadPage = () => {
+    const navigate = useNavigate();
     const { bookId } = useParams();
     const [fontSize, setFontSize] = useState('16px');
+    const { data: dataBook, setData: setDataBook } = useBookData(bookId);
 
-    // const location = useLocation();
-    // const searchParams = new URLSearchParams(location.search);
-
-    // const paramСurrentPage = searchParams.get('currentPage');
-    // const paramPageFrom = searchParams.get('pageFrom');
-    // const paramPageTo = searchParams.get('pageTo');
-
-    // useEffect(() => {
-    //     // BookReadPageApi.gettingPageRange(
-    //     //     bookId,
-    //     //     paramСurrentPage,
-    //     //     paramPageFrom,
-    //     //     paramPageTo
-    //     // ).then(res => console.log(res));
-
-    //     BookReadPageApi.gettingChapterMetaInformation(bookId, 2, 10).then(res =>
-    //         console.log(res.data)
-    //     );
-    // }, []);
+    const [searchParams] = useSearchParams();
+    const chapterNumber = searchParams.get('chapterNumber');
+    const pageNumber = searchParams.get('pageNumber');
 
     const increaseFontSize = () => {
         setFontSize(prevFontSize => {
@@ -118,97 +104,59 @@ export const BookReadPage = () => {
             return `${newSize}px`;
         });
     };
+    const handleSelection = part => {
+        navigate(
+            `/book/${bookId}/read?chapterNumber=${
+                dataBook.parts.indexOf(part) + 1
+            }&pageNumber=${1}`
+        );
+    };
+    const bookReaderObj = {
+        bookId,
+        fontSize,
+        pageNumber: +pageNumber,
+        selectedPart: +chapterNumber,
+        parts: dataBook.parts,
+    };
 
     return (
-        <>
-            <div className={stl.wrapper}>
-                <div>хлебные крошки</div>
+        dataBook.parts && (
+            <>
+                <div className={stl.wrapper}>
+                    <h1 className={stl.bookReadH1}>
+                        <a href='http://localhost:5173/book/13'>
+                            Тёмный Травник. Верховья Стикса
+                        </a>
+                    </h1>
 
-                <h1 className={stl.bookReadH1}>
-                    <a href='http://localhost:5173/book/13'>
-                        Тёмный Травник. Верховья Стикса
-                    </a>
-                </h1>
-
-                <div className={stl.WrapperTableContentsAndBtn}>
-                    <TableContents {...tableContentsObj}></TableContents>
-                    <div className={stl.wrapperBtnZoom}>
-                        <button
-                            className={stl.textZoomButton}
-                            onClick={increaseFontSize}
-                        >
-                            <BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
-                        </button>
-                        <button
-                            className={stl.textZoomButton}
-                            onClick={decreaseFontSize}
-                        >
-                            <BookReadSvgSelector nameSvg='-'></BookReadSvgSelector>
-                        </button>
+                    <div className={stl.WrapperTableContentsAndBtn}>
+                        <CustomSelectOption
+                            options={dataBook.parts}
+                            onChange={handleSelection}
+                            defaultValue={dataBook.parts[+chapterNumber - 1]}
+                            containerClassName={stlCustomSelectOption.container}
+                        />
+                        <div className={stl.wrapperBtnZoom}>
+                            <button
+                                className={stl.textZoomButton}
+                                onClick={increaseFontSize}
+                            >
+                                <BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
+                            </button>
+                            <button
+                                className={stl.textZoomButton}
+                                onClick={decreaseFontSize}
+                            >
+                                <BookReadSvgSelector nameSvg='-'></BookReadSvgSelector>
+                            </button>
+                        </div>
                     </div>
+
+                    <BookReader {...bookReaderObj} />
+
+                    <Comments {...commentsObj}></Comments>
                 </div>
-
-                {/* <div>Пагинация</div>
-                <span className={stl.divider}></span>
-
-                <div
-                    className={stl.WrapperBodyText}
-                    style={{ fontSize: fontSize }}
-                >
-                    <h2>Бунт Таиши</h2>
-                    <p>
-                        Стоило СТЕРВЕ опуститься на песок, как тут же рядом со
-                        мной возникла Серая Стая в полном составе. Моя подругу
-                        это очень сильно удивило – она-то полагала, что волки,
-                        волкодлаки и мифический пёс остались далеко позади.
-                    </p>
-                    <p>
-                        – Просто они мои спутники, и снова возникают рядом со
-                        мной, если умирают или отстают, – пояснил я Таише
-                        игровые правила «Бескрайнего Мира».
-                    </p>
-                    <p>
-                        Стоило СТЕРВЕ опуститься на песок, как тут же рядом со
-                        мной возникла Серая Стая в полном составе. Моя подругу
-                        это очень сильно удивило – она-то полагала, что волки,
-                        волкодлаки и мифический пёс остались далеко позади.
-                    </p>
-                    <p>
-                        – Просто они мои спутники, и снова возникают рядом со
-                        мной, если умирают или отстают, – пояснил я Таише
-                        игровые правила «Бескрайнего Мира».
-                    </p>
-                    <p>
-                        Стоило СТЕРВЕ опуститься на песок, как тут же рядом со
-                        мной возникла Серая Стая в полном составе. Моя подругу
-                        это очень сильно удивило – она-то полагала, что волки,
-                        волкодлаки и мифический пёс остались далеко позади.
-                    </p>
-                    <p>
-                        – Просто они мои спутники, и снова возникают рядом со
-                        мной, если умирают или отстают, – пояснил я Таише
-                        игровые правила «Бескрайнего Мира».
-                    </p>
-                    <p>
-                        Стоило СТЕРВЕ опуститься на песок, как тут же рядом со
-                        мной возникла Серая Стая в полном составе. Моя подругу
-                        это очень сильно удивило – она-то полагала, что волки,
-                        волкодлаки и мифический пёс остались далеко позади.
-                    </p>
-                    <p>
-                        – Просто они мои спутники, и снова возникают рядом со
-                        мной, если умирают или отстают, – пояснил я Таише
-                        игровые правила «Бескрайнего Мира».
-                    </p>
-                </div> */}
-
-                <BookReader bookId={bookId} />
-
-                <span className={stl.divider}></span>
-                <div>Пагинация</div>
-
-                <Comments {...commentsObj}></Comments>
-            </div>
-        </>
+            </>
+        )
     );
 };

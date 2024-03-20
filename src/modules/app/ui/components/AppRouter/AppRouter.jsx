@@ -19,7 +19,9 @@ export const AppRouter = () => {
                         element={
                             <>
                                 <h1>Main page with web-site description</h1>{' '}
-                                <Link to='/book/4'>Перейти на другую страницу</Link>
+                                <Link to='/book/4'>
+                                    Перейти на другую страницу
+                                </Link>
                             </>
                         }
                     />
@@ -28,7 +30,10 @@ export const AppRouter = () => {
                         <Route path='login' element={<LoginPage />} />
                     </Route>
                     <Route path='book/:bookId' element={<BookPage />} />
-                    <Route path='book/:bookId/read' element={<BookReadPage />} />
+                    <Route
+                        path='book/:bookId/read'
+                        element={<BookReadPage />}
+                    />
                 </Route>
 
                 {/* authed users */}
@@ -41,7 +46,10 @@ export const AppRouter = () => {
                 </Route>
 
                 {/* authed and admins */}
-                <Route path='/' element={<PrivateRoute roles={[Role.Admin]} />}></Route>
+                <Route
+                    path='/'
+                    element={<PrivateRoute roles={[Role.Admin]} />}
+                ></Route>
 
                 {/* not existing page */}
                 <Route path='*' element={<Navigate to={'/'} />} />

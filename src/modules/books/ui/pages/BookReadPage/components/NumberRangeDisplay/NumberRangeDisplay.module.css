@@ -1,14 +1,18 @@
 .container {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     min-height: 50px;
     gap: 10px;
     align-items: center;
-    justify-content: center;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+.containerNumbers {
+    display: flex;
+    gap: 10px;
 }
 
 .item {
@@ -25,11 +29,22 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 7px;
     cursor: pointer;
+    transition: all 0.5s ease;
+}
+.item.disabled {
+    cursor: auto;
+    opacity: 0.3;
+}
+.item:hover:not(.selectedItem, .disabled) {
+    background: rgba(146, 58, 101, 0.2);
 }
 .selectedItem {
     color: #fff;
     background: rgb(146, 58, 101);
 }
 .multipoint {
+    padding: 10px;
+    height: 40px;
+    min-width: 40px;
     align-self: flex-end;
 }
