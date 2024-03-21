@@ -11,16 +11,16 @@ export const useBookPage = () => {
     const { data, setData } = useBookData(bookId);
     const authModal = useAuthModal();
 
-    const updateAddsToLibrary = (delta) => {
-        setData((prev) => ({
+    const updateAddsToLibrary = delta => {
+        setData(prev => ({
             ...prev,
             isInLibrary: !prev.isInLibrary,
             addsToLibraryCount: prev?.addsToLibraryCount + delta,
         }));
     };
 
-    const updateBookStarred = (delta) => {
-        setData((prev) => ({
+    const updateBookStarred = delta => {
+        setData(prev => ({
             ...prev,
             isStarred: !prev.isStarred,
             starsCount: prev?.starsCount + delta,
@@ -31,9 +31,13 @@ export const useBookPage = () => {
         if (!isAuthed) return authModal.open();
 
         if (data.isInLibrary) {
-            BookPageApi.removeFromLibrary(bookId).then((res) => updateAddsToLibrary(-1));
+            BookPageApi.removeFromLibrary(bookId).then(res =>
+                updateAddsToLibrary(-1)
+            );
         } else {
-            BookPageApi.addToLibrary(bookId).then((res) => updateAddsToLibrary(1));
+            BookPageApi.addToLibrary(bookId).then(res =>
+                updateAddsToLibrary(1)
+            );
         }
     };
 
