@@ -21,9 +21,7 @@ export default function FormCustomSelectOption({
 }) {
     const [field, meta] = useField(props);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(
-        defaultValue ?? 'Выберете значение'
-    );
+    const [selectedOption, setSelectedOption] = useState(defaultValue ?? 'Выберете значение');
 
     const handleOptionClick = option => {
         setSelectedOption(option);
@@ -40,9 +38,7 @@ export default function FormCustomSelectOption({
             className={classNames(cls.container, containerClassName)}
             onClick={() => setIsOpen(!isOpen)}
         >
-            <span className={classNames(cls.label, labelClassName)}>
-                {label}
-            </span>
+            <span className={classNames(cls.label, labelClassName)}>{label}</span>
             <button
                 className={cls.header}
                 onClick={e => e.preventDefault()}
@@ -77,20 +73,14 @@ export default function FormCustomSelectOption({
                         </li>
                     )}
                     {options.map((option, index) => (
-                        <li
-                            className={cls.option}
-                            key={index}
-                            onClick={() => handleOptionClick(option)}
-                        >
+                        <li className={cls.option} key={index} onClick={() => handleOptionClick(option)}>
                             {option}
                         </li>
                     ))}
                 </ul>
             )}
             {meta.touched && meta.error ? (
-                <div className={classNames(cls.error, errorClassName)}>
-                    {meta.error}
-                </div>
+                <div className={classNames(cls.error, errorClassName)}>{meta.error}</div>
             ) : null}
         </div>
     );
