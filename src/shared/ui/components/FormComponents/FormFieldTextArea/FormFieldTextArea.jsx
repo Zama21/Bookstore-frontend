@@ -1,14 +1,14 @@
-import { useField } from 'formik';
 import React from 'react';
-import cls from './FormField.module.css';
+import cls from './FormFieldTextArea.module.css';
 import classNames from 'classnames';
+import { useField } from 'formik';
 
-export const FormField = ({
+export const FormFieldTextArea = ({
     label,
     containerClassName,
     fieldClassName,
     labelClassName,
-    inputClassName,
+    textareaClassName,
     errorClassName,
     ...props
 }) => {
@@ -19,8 +19,8 @@ export const FormField = ({
                 <span className={classNames(cls.label, labelClassName)}>
                     {label}
                 </span>
-                <input
-                    className={classNames(cls.input, inputClassName)}
+                <textarea
+                    className={classNames(cls.textarea, textareaClassName)}
                     {...field}
                     {...props}
                 />
