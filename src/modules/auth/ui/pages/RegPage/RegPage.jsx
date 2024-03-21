@@ -19,12 +19,6 @@ export const RegPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (registerState.success) {
-    //         navigate('/auth/login');
-    //     }
-    // }, [registerState]);
-
     return (
         <AuthPageWrapper>
             <Formik
@@ -35,9 +29,7 @@ export const RegPage = () => {
                     passwordRepeat: '',
                 }}
                 validationSchema={Yup.object({
-                    email: Yup.string()
-                        .email('Некорректный адрес email')
-                        .required('Обязательное поле'),
+                    email: Yup.string().email('Некорректный адрес email').required('Обязательное поле'),
                     username: Yup.string()
                         .min(4, 'username должен быть не короче 4 символов')
                         .required('Обязательное поле'),
@@ -101,19 +93,11 @@ export const RegPage = () => {
                             placeholder='Пароль..'
                             autoComplete='new-password'
                         />
-                        <FormButton
-                            className={cls.formActionButton}
-                            type='submit'
-                        >
+                        <FormButton className={cls.formActionButton} type='submit'>
                             Зарегистрироваться
                         </FormButton>
-                        <FormLink
-                            to={'/auth/login'}
-                            text={'Уже есть аккаунт? Войдите!'}
-                        />
-                        {registerState.error.length > 0 && (
-                            <FormError message={registerState.error} />
-                        )}
+                        <FormLink to={'/auth/login'} text={'Уже есть аккаунт? Войдите!'} />
+                        {registerState.error.length > 0 && <FormError message={registerState.error} />}
                     </Form>
                 )}
             </Formik>
