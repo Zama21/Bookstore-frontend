@@ -77,6 +77,10 @@ button::-moz-focus-inner {
     max-width: 1000px;
 }
 
+.ck-powered-by {
+    display: none !important;
+}
+
 /* footer {
 	flex-shrink: 0;
 } */
