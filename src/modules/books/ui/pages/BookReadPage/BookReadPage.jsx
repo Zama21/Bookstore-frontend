@@ -136,7 +136,7 @@ export const BookReadPage = () => {
     return (
         dataBook.parts && (
             <>
-                <div className={stl.wrapper}>
+                <div className='wrapperPage'>
                     <h1 className={stl.bookReadH1}>
                         <Link to={`/book/${bookId}`}>{dataBook.title}</Link>
                     </h1>

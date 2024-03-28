@@ -52,7 +52,7 @@ export const BookPage = () => {
 
     return (
         <>
-            <div className={stl.wrapper}>
+            <div className='wrapperPage'>
                 <BookViewBox {...dataBookViewBox} />
                 <TableContents {...tableContentsObj}></TableContents>
                 <SwitchingBox {...dataSwitchingBox}></SwitchingBox>
