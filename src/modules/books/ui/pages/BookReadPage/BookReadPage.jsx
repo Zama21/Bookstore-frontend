@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {
+    Link,
+    useNavigate,
+    useParams,
+    useSearchParams,
+} from 'react-router-dom';
 import stl from './BookReadPage.module.css';
 import stlCommentsBookRead from './stl/Comments.module.css';
 import stlCustomSelectOption from './stl/customSelectOption/customSelectOption.module.css';
@@ -8,6 +13,7 @@ import Comments from 'shared/ui/components/Comments/Comments';
 import BookReader from './components/BookReader/BookReader';
 import { useBookData } from 'modules/books/domain/hooks/useBookData';
 import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
+import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
 
 // const tableContentsObj = {
 //     defaultValue: 'titletetghg',
@@ -81,7 +87,8 @@ export const BookReadPage = () => {
     const navigate = useNavigate();
     const { bookId } = useParams();
     const [fontSize, setFontSize] = useState('16px');
-    const { data: dataBook, setData: setDataBook } = useBookData(bookId);
+    const { data: dataBook } = useBookData(bookId);
+    console.log(dataBook);
 
     const [searchParams] = useSearchParams();
     const chapterNumber = searchParams.get('chapterNumber');
@@ -104,13 +111,20 @@ export const BookReadPage = () => {
             return `${newSize}px`;
         });
     };
-    const handleSelection = part => {
-        navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                dataBook.parts.indexOf(part) + 1
-            }&pageNumber=${1}`
-        );
+    const handleSelection = title => {
+        const chapter = dataBook.parts.find(item => item.title === title);
+
+        BookReadPageApi.gettingChapterMetaInformation(
+            bookId,
+            chapter.id,
+            0
+        ).then(res => {
+            navigate(
+                `/book/${bookId}/read?chapterNumber=${chapter.id}&pageNumber=${res.data.firstPageIndex}`
+            );
+        });
     };
+
     const bookReaderObj = {
         bookId,
         fontSize,
@@ -124,16 +138,18 @@ export const BookReadPage = () => {
             <>
                 <div className={stl.wrapper}>
                     <h1 className={stl.bookReadH1}>
-                        <a href='http://localhost:5173/book/13'>
-                            Тёмный Травник. Верховья Стикса
-                        </a>
+                        <Link to={`/book/${bookId}`}>{dataBook.title}</Link>
                     </h1>
 
                     <div className={stl.WrapperTableContentsAndBtn}>
                         <CustomSelectOption
-                            options={dataBook.parts}
+                            options={dataBook.parts.map(item => item.title)}
                             onChange={handleSelection}
-                            defaultValue={dataBook.parts[+chapterNumber - 1]}
+                            defaultValue={
+                                dataBook.parts[
+                                    +chapterNumber - dataBook.parts[0].id
+                                ].title
+                            }
                             containerClassName={stlCustomSelectOption.container}
                         />
                         <div className={stl.wrapperBtnZoom}>

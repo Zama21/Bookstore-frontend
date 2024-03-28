@@ -82,7 +82,9 @@ export default function CustomSelectOption({
                     )}
                     {options.map((option, index) => (
                         <li
-                            className={cls.option}
+                            className={classNames(cls.option, {
+                                [cls.active]: option == selectedOption,
+                            })}
                             key={index}
                             onClick={() => handleOptionClick(option)}
                         >

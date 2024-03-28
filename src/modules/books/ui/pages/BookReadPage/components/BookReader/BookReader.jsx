@@ -1,39 +1,42 @@
 import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
 import React, { useState, useEffect } from 'react';
-import NumberRangeDisplay from '../NumberRangeDisplay/NumberRangeDisplay';
+import ReadingPagination from '../ReadingPagination/ReadingPagination';
 import cls from './BookReader.module.css';
 import { useNavigate } from 'react-router-dom';
+import payImg from './Img/payImg.png';
 
 const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
     const navigate = useNavigate();
     const [content, setContent] = useState(null);
-    const [isEndPage, setIsEndPage] = useState(false);
-    const [dataDownloaded, setDataDownloaded] = useState(false);
     const [data, setData] = useState({
         firstPageIndex: null,
         lastPageIndex: null,
         pages: [],
     });
-    useEffect(() => {
-        if (isEndPage) {
-            if (!dataDownloaded) return;
-            pageNumber = data.lastPageIndex - data.firstPageIndex + 1;
-            setIsEndPage(false);
-            setDataDownloaded(false);
-            navigate(
-                `/book/${bookId}/read?chapterNumber=${selectedPart}&pageNumber=${pageNumber}`
-            );
-        }
-    }, [isEndPage, data.lastPageIndex, data.firstPageIndex]);
+
+    let buyContent = (
+        <>
+            <img className={cls.payImg} src={payImg} alt='gh' />
+            <div className={cls.containerPayText}>
+                <p>
+                    <span className={cls.keyword}>Упс</span>, кажется это{' '}
+                    <span className={cls.keyword}>платная</span> глава.
+                </p>
+                <p>
+                    <span className={cls.keyword}>Поддержите</span> автора -{' '}
+                    <span className={cls.keyword}>купите</span> книгу!
+                </p>
+            </div>
+        </>
+    );
 
     useEffect(() => {
         BookReadPageApi.gettingChapterMetaInformation(
             bookId,
             selectedPart,
-            1
+            0
         ).then(res => {
             setData(prev => {
-                isEndPage && setDataDownloaded(true);
                 return {
                     ...res.data,
                     pages: [...prev.pages],
@@ -43,34 +46,34 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
     }, [bookId, selectedPart]);
 
     useEffect(() => {
-        if (!data.firstPageIndex) return;
-
-        if (isBookPageLoaded(pageNumber + data.firstPageIndex - 1)) return;
+        if (isBookPageLoaded(pageNumber)) return;
 
         BookReadPageApi.gettingPageRange(
             bookId,
-            pageNumber + data.firstPageIndex - 1,
-            pageNumber + data.firstPageIndex - 1,
-            pageNumber + data.firstPageIndex - 1
-        ).then(res => {
-            setData(prev => {
-                return {
-                    ...prev,
-                    pages: [...prev.pages, ...res.data],
-                };
+            pageNumber,
+            pageNumber,
+            pageNumber
+        )
+            .then(res => {
+                setData(prev => {
+                    return {
+                        ...prev,
+                        pages: [...prev.pages, ...res.data],
+                    };
+                });
+            })
+            .catch(err => {
+                err.response.data.message ==
+                    'Current page can not be selected' &&
+                    setContent(buyContent);
             });
-        });
-    }, [pageNumber, data.firstPageIndex]);
+    }, [pageNumber]);
 
     useEffect(() => {
         gettingContent();
     }, [data.pages, pageNumber]);
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
-        if (deltaPart < 0) {
-            deltaPage = 0;
-            setIsEndPage(true);
-        }
         navigate(
             `/book/${bookId}/read?chapterNumber=${
                 selectedPart + deltaPart
@@ -85,7 +88,7 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
     };
 
     const gettingContent = () => {
-        let indexSelectedPage = pageNumber + data.firstPageIndex - 1;
+        let indexSelectedPage = pageNumber;
 
         const selectedContent = data.pages.find((page, index) => {
             return page.index === indexSelectedPage;
@@ -101,13 +104,16 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
         selectedPart,
         parts,
         onSelect: handleSelectItem,
+        firstPageIndex: data.firstPageIndex,
     };
+
+    // console.log(data);
 
     return (
         data &&
         data.firstPageIndex && (
             <div>
-                <NumberRangeDisplay {...paginationObj} />
+                <ReadingPagination {...paginationObj} />
                 <span className={cls.divider}></span>
                 <div
                     className={cls.WrapperBodyText}
@@ -116,7 +122,7 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
                     {content || ''}
                 </div>
                 <span className={cls.divider}></span>
-                <NumberRangeDisplay {...paginationObj} />
+                <ReadingPagination {...paginationObj} />
             </div>
         )
     );
