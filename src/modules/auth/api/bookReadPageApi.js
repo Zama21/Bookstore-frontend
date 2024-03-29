@@ -7,10 +7,6 @@ export class BookReadPageApi {
         );
     }
     static async gettingChapterMetaInformation(bookId, partIndex, pagesCount) {
-        return axiosInstance
-            .get(`/books/${bookId}/part/${partIndex}?pagesCount=${pagesCount}`)
-            .catch(error => {
-                console.error('Ошибка запроса:', error);
-            });
+        return axiosInstance.get(`/books/${bookId}/part/${partIndex}?pagesCount=${pagesCount}`);
     }
 }

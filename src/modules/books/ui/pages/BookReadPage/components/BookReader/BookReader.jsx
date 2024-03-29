@@ -5,7 +5,23 @@ import cls from './BookReader.module.css';
 import { useNavigate } from 'react-router-dom';
 import payImg from './Img/payImg.png';
 
-const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
+const byeContent = (
+    <>
+        <img className={cls.payImg} src={payImg} alt='gh' />
+        <div className={cls.containerPayText}>
+            <p>
+                <span className={cls.keyword}>Упс</span>, кажется это{' '}
+                <span className={cls.keyword}>платная</span> глава.
+            </p>
+            <p>
+                <span className={cls.keyword}>Поддержите</span> автора -{' '}
+                <span className={cls.keyword}>купите</span> книгу!
+            </p>
+        </div>
+    </>
+);
+
+const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBook }) => {
     const navigate = useNavigate();
     const [content, setContent] = useState(null);
     const [data, setData] = useState({
@@ -14,47 +30,41 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
         pages: [],
     });
 
-    let buyContent = (
-        <>
-            <img className={cls.payImg} src={payImg} alt='gh' />
-            <div className={cls.containerPayText}>
-                <p>
-                    <span className={cls.keyword}>Упс</span>, кажется это{' '}
-                    <span className={cls.keyword}>платная</span> глава.
-                </p>
-                <p>
-                    <span className={cls.keyword}>Поддержите</span> автора -{' '}
-                    <span className={cls.keyword}>купите</span> книгу!
-                </p>
-            </div>
-        </>
-    );
+    const navigateToCurrentReadingPage = () => {
+        navigate(
+            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0].id}&pageNumber=${
+                dataBook.currentPage ?? 1
+            }`
+        );
+    };
 
     useEffect(() => {
-        BookReadPageApi.gettingChapterMetaInformation(
-            bookId,
-            selectedPart,
-            0
-        ).then(res => {
-            setData(prev => {
-                return {
-                    ...res.data,
-                    pages: [...prev.pages],
-                };
+        console.log('get meta');
+        BookReadPageApi.gettingChapterMetaInformation(bookId, selectedPart, 0)
+            .then(res => {
+                setData(prev => {
+                    return {
+                        ...res.data,
+                        pages: [...prev.pages],
+                    };
+                });
+            })
+            .catch(err => {
+                if (err.response.status === 403) {
+                    setContent(byeContent);
+                } else {
+                    navigateToCurrentReadingPage();
+                }
             });
-        });
     }, [bookId, selectedPart]);
 
     useEffect(() => {
         if (isBookPageLoaded(pageNumber)) return;
 
-        BookReadPageApi.gettingPageRange(
-            bookId,
-            pageNumber,
-            pageNumber,
-            pageNumber
-        )
+        console.log('get range');
+        BookReadPageApi.gettingPageRange(bookId, pageNumber, pageNumber, pageNumber)
             .then(res => {
+                console.log('get pages res', res);
                 setData(prev => {
                     return {
                         ...prev,
@@ -63,9 +73,12 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
                 });
             })
             .catch(err => {
-                err.response.data.message ==
-                    'Current page can not be selected' &&
-                    setContent(buyContent);
+                if (err.response.status === 403) {
+                    setContent(byeContent);
+                } else {
+                    console.log('get pages err', err);
+                    navigateToCurrentReadingPage();
+                }
             });
     }, [pageNumber]);
 
@@ -74,10 +87,12 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
     }, [data.pages, pageNumber]);
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
+        const currentPartIndex = parts.findIndex(part => part.id === selectedPart);
+        // console.log(currentPartIndex, deltaPart);
         navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                selectedPart + deltaPart
-            }&pageNumber=${newPageNumber + deltaPage}`
+            `/book/${bookId}/read?chapterNumber=${parts[currentPartIndex + deltaPart].id}&pageNumber=${
+                newPageNumber + deltaPage
+            }`
         );
     };
 
@@ -115,10 +130,7 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts }) => {
             <div>
                 <ReadingPagination {...paginationObj} />
                 <span className={cls.divider}></span>
-                <div
-                    className={cls.WrapperBodyText}
-                    style={{ fontSize: fontSize }}
-                >
+                <div className={cls.WrapperBodyText} style={{ fontSize: fontSize }}>
                     {content || ''}
                 </div>
                 <span className={cls.divider}></span>

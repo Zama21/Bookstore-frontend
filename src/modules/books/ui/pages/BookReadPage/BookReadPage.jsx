@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Link,
-    useNavigate,
-    useParams,
-    useSearchParams,
-} from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import stl from './BookReadPage.module.css';
 import stlCommentsBookRead from './stl/Comments.module.css';
 import stlCustomSelectOption from './stl/customSelectOption/customSelectOption.module.css';
@@ -88,7 +83,6 @@ export const BookReadPage = () => {
     const { bookId } = useParams();
     const [fontSize, setFontSize] = useState('16px');
     const { data: dataBook } = useBookData(bookId);
-    console.log(dataBook);
 
     const [searchParams] = useSearchParams();
     const chapterNumber = searchParams.get('chapterNumber');
@@ -113,12 +107,7 @@ export const BookReadPage = () => {
     };
     const handleSelection = title => {
         const chapter = dataBook.parts.find(item => item.title === title);
-
-        BookReadPageApi.gettingChapterMetaInformation(
-            bookId,
-            chapter.id,
-            0
-        ).then(res => {
+        BookReadPageApi.gettingChapterMetaInformation(bookId, chapter.id, 0).then(res => {
             navigate(
                 `/book/${bookId}/read?chapterNumber=${chapter.id}&pageNumber=${res.data.firstPageIndex}`
             );
@@ -131,6 +120,7 @@ export const BookReadPage = () => {
         pageNumber: +pageNumber,
         selectedPart: +chapterNumber,
         parts: dataBook.parts,
+        dataBook,
     };
 
     return (
@@ -145,24 +135,14 @@ export const BookReadPage = () => {
                         <CustomSelectOption
                             options={dataBook.parts.map(item => item.title)}
                             onChange={handleSelection}
-                            defaultValue={
-                                dataBook.parts[
-                                    +chapterNumber - dataBook.parts[0].id
-                                ].title
-                            }
+                            defaultValue={dataBook.parts.find(part => part.id == chapterNumber)?.title}
                             containerClassName={stlCustomSelectOption.container}
                         />
                         <div className={stl.wrapperBtnZoom}>
-                            <button
-                                className={stl.textZoomButton}
-                                onClick={increaseFontSize}
-                            >
+                            <button className={stl.textZoomButton} onClick={increaseFontSize}>
                                 <BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
                             </button>
-                            <button
-                                className={stl.textZoomButton}
-                                onClick={decreaseFontSize}
-                            >
+                            <button className={stl.textZoomButton} onClick={decreaseFontSize}>
                                 <BookReadSvgSelector nameSvg='-'></BookReadSvgSelector>
                             </button>
                         </div>

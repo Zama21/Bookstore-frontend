@@ -20,9 +20,7 @@ export default function CustomSelectOption({
     ...props
 }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(
-        defaultValue ?? 'Выберете значение'
-    );
+    const [selectedOption, setSelectedOption] = useState(defaultValue ?? 'Выберете значение');
     useEffect(() => {
         setSelectedOption(defaultValue);
     }, [defaultValue]);
@@ -43,18 +41,14 @@ export default function CustomSelectOption({
             className={classNames(cls.container, containerClassName)}
             onClick={() => setIsOpen(!isOpen)}
         >
-            {label && (
-                <span className={classNames(cls.label, labelClassName)}>
-                    {label}
-                </span>
-            )}
+            {label && <span className={classNames(cls.label, labelClassName)}>{label}</span>}
             <button
                 className={cls.header}
                 onClick={e => e.preventDefault()}
                 onBlur={() => {
                     setTimeout(() => {
                         setIsOpen(false);
-                    }, 100);
+                    }, 500);
                 }}
             >
                 {selectedOption}
