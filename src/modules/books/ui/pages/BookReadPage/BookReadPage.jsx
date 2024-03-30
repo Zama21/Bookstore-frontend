@@ -9,6 +9,10 @@ import BookReader from './components/BookReader/BookReader';
 import { useBookData } from 'modules/books/domain/hooks/useBookData';
 import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
 import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { bookReadActions } from 'modules/books/store/bookReadSlice.js';
+import { useFontSize } from 'modules/books/domain/hooks/useFontSize.js';
 
 // const tableContentsObj = {
 //     defaultValue: 'titletetghg',
@@ -81,30 +85,14 @@ const commentsObj = {
 export const BookReadPage = () => {
     const navigate = useNavigate();
     const { bookId } = useParams();
-    const [fontSize, setFontSize] = useState('16px');
+    const { fontSize, increaseFontSize, decreaseFontSize } = useFontSize();
+
     const { data: dataBook } = useBookData(bookId);
 
     const [searchParams] = useSearchParams();
     const chapterNumber = searchParams.get('chapterNumber');
     const pageNumber = searchParams.get('pageNumber');
 
-    const increaseFontSize = () => {
-        setFontSize(prevFontSize => {
-            if (parseInt(prevFontSize, 10) > 60) return prevFontSize;
-            const currentSize = parseInt(prevFontSize, 10);
-            const newSize = currentSize + 2;
-            return `${newSize}px`;
-        });
-    };
-
-    const decreaseFontSize = () => {
-        setFontSize(prevFontSize => {
-            if (parseInt(prevFontSize, 10) < 6) return prevFontSize;
-            const currentSize = parseInt(prevFontSize, 10);
-            const newSize = currentSize - 2;
-            return `${newSize}px`;
-        });
-    };
     const handleSelection = title => {
         const chapter = dataBook.parts.find(item => item.title === title);
         BookReadPageApi.gettingChapterMetaInformation(bookId, chapter.id, 0).then(res => {
@@ -116,7 +104,7 @@ export const BookReadPage = () => {
 
     const bookReaderObj = {
         bookId,
-        fontSize,
+        fontSize: fontSize + 'px',
         pageNumber: +pageNumber,
         selectedPart: +chapterNumber,
         parts: dataBook.parts,
