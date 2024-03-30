@@ -7,6 +7,7 @@ import { BookPage } from '../../../../books/ui/pages/BookPage/BookPage.jsx';
 import { BookReadPage } from '../../../../books/ui/pages/BookReadPage/BookReadPage.jsx';
 import { HomePage } from '../../../../home/ui/pages/HomePage/HomePage.jsx';
 import BookEditPage from 'modules/books/ui/pages/BookEditPage/BookEditPage.jsx';
+import PartEditPage from 'modules/books/ui/pages/PartEditPage/PartEditPage.jsx';
 
 export const AppRouter = () => {
     return (
@@ -42,6 +43,10 @@ export const AppRouter = () => {
                     <Route
                         path='book/:bookId/edit'
                         element={<BookEditPage />}
+                    />
+                    <Route
+                        path='book/:bookId/part/:partId/edit'
+                        element={<PartEditPage />}
                     />
                 </Route>
 

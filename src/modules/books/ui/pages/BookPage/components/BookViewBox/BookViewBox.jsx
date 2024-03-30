@@ -35,9 +35,13 @@ export default function BookViewBox({
     currentPage,
     bookId,
     cost,
+    parts,
+    currentPart,
 }) {
     createdAt = formatDate(new Date(createdAt));
     updatedAt = formatDate(new Date(updatedAt));
+    let chapterNumber = currentPart?.id ? currentPart?.id : parts?.[0]?.id;
+
     let divBookPublicationStatus = () => {
         switch (status) {
             case 'finished':
@@ -88,7 +92,9 @@ export default function BookViewBox({
         <div className={stl.wrapperBtnForRead}>
             <Link
                 className={stl.bookBtnForRead}
-                to={`/book/${bookId}/read?chapterNumber=1&pageNumber=1`}
+                to={`/book/${bookId}/read?chapterNumber=${chapterNumber}&pageNumber=${
+                    currentPage || 1
+                }`}
             >
                 {`${currentPage > 1 ? 'Продолжить' : 'Читать'}`}
             </Link>

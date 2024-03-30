@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import cls from './CustomSelectOption.module.css';
 
@@ -20,9 +20,7 @@ export default function CustomSelectOption({
     ...props
 }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(
-        defaultValue ?? 'Выберете значение'
-    );
+    const [selectedOption, setSelectedOption] = useState(defaultValue ?? 'Выберете значение');
     useEffect(() => {
         setSelectedOption(defaultValue);
     }, [defaultValue]);
@@ -38,25 +36,26 @@ export default function CustomSelectOption({
         onChange('');
     };
 
+    useEffect(() => {
+        const handleBlur = () => {
+            setIsOpen(false);
+        };
+        window.addEventListener('click', handleBlur);
+        return () => {
+            window.removeEventListener('click', handleBlur);
+        };
+    }, []);
+
     return (
         <div
             className={classNames(cls.container, containerClassName)}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={e => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+            }}
         >
-            {label && (
-                <span className={classNames(cls.label, labelClassName)}>
-                    {label}
-                </span>
-            )}
-            <button
-                className={cls.header}
-                onClick={e => e.preventDefault()}
-                onBlur={() => {
-                    setTimeout(() => {
-                        setIsOpen(false);
-                    }, 100);
-                }}
-            >
+            {label && <span className={classNames(cls.label, labelClassName)}>{label}</span>}
+            <button className={cls.header} onClick={e => e.preventDefault()}>
                 {selectedOption}
                 <span
                     className={classNames(cls.toggleArrow, {
@@ -82,7 +81,9 @@ export default function CustomSelectOption({
                     )}
                     {options.map((option, index) => (
                         <li
-                            className={cls.option}
+                            className={classNames(cls.option, {
+                                [cls.active]: option == selectedOption,
+                            })}
                             key={index}
                             onClick={() => handleOptionClick(option)}
                         >

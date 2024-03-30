@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import stl from './BookReadPage.module.css';
 import stlCommentsBookRead from './stl/Comments.module.css';
 import stlCustomSelectOption from './stl/customSelectOption/customSelectOption.module.css';
@@ -8,6 +8,11 @@ import Comments from 'shared/ui/components/Comments/Comments';
 import BookReader from './components/BookReader/BookReader';
 import { useBookData } from 'modules/books/domain/hooks/useBookData';
 import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
+import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { bookReadActions } from 'modules/books/store/bookReadSlice.js';
+import { useFontSize } from 'modules/books/domain/hooks/useFontSize.js';
 
 // const tableContentsObj = {
 //     defaultValue: 'titletetghg',
@@ -80,73 +85,52 @@ const commentsObj = {
 export const BookReadPage = () => {
     const navigate = useNavigate();
     const { bookId } = useParams();
-    const [fontSize, setFontSize] = useState('16px');
-    const { data: dataBook, setData: setDataBook } = useBookData(bookId);
+    const { fontSize, increaseFontSize, decreaseFontSize } = useFontSize();
+
+    const { data: dataBook } = useBookData(bookId);
 
     const [searchParams] = useSearchParams();
     const chapterNumber = searchParams.get('chapterNumber');
     const pageNumber = searchParams.get('pageNumber');
 
-    const increaseFontSize = () => {
-        setFontSize(prevFontSize => {
-            if (parseInt(prevFontSize, 10) > 60) return prevFontSize;
-            const currentSize = parseInt(prevFontSize, 10);
-            const newSize = currentSize + 2;
-            return `${newSize}px`;
+    const handleSelection = title => {
+        const chapter = dataBook.parts.find(item => item.title === title);
+        BookReadPageApi.gettingChapterMetaInformation(bookId, chapter.id, 0).then(res => {
+            navigate(
+                `/book/${bookId}/read?chapterNumber=${chapter.id}&pageNumber=${res.data.firstPageIndex}`
+            );
         });
     };
 
-    const decreaseFontSize = () => {
-        setFontSize(prevFontSize => {
-            if (parseInt(prevFontSize, 10) < 6) return prevFontSize;
-            const currentSize = parseInt(prevFontSize, 10);
-            const newSize = currentSize - 2;
-            return `${newSize}px`;
-        });
-    };
-    const handleSelection = part => {
-        navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                dataBook.parts.indexOf(part) + 1
-            }&pageNumber=${1}`
-        );
-    };
     const bookReaderObj = {
         bookId,
-        fontSize,
+        fontSize: fontSize + 'px',
         pageNumber: +pageNumber,
         selectedPart: +chapterNumber,
         parts: dataBook.parts,
+        dataBook,
     };
 
     return (
         dataBook.parts && (
             <>
-                <div className={stl.wrapper}>
+                <div className='wrapperPage'>
                     <h1 className={stl.bookReadH1}>
-                        <a href='http://localhost:5173/book/13'>
-                            Тёмный Травник. Верховья Стикса
-                        </a>
+                        <Link to={`/book/${bookId}`}>{dataBook.title}</Link>
                     </h1>
 
                     <div className={stl.WrapperTableContentsAndBtn}>
                         <CustomSelectOption
-                            options={dataBook.parts}
+                            options={dataBook.parts.map(item => item.title)}
                             onChange={handleSelection}
-                            defaultValue={dataBook.parts[+chapterNumber - 1]}
+                            defaultValue={dataBook.parts.find(part => part.id == chapterNumber)?.title}
                             containerClassName={stlCustomSelectOption.container}
                         />
                         <div className={stl.wrapperBtnZoom}>
-                            <button
-                                className={stl.textZoomButton}
-                                onClick={increaseFontSize}
-                            >
+                            <button className={stl.textZoomButton} onClick={increaseFontSize}>
                                 <BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
                             </button>
-                            <button
-                                className={stl.textZoomButton}
-                                onClick={decreaseFontSize}
-                            >
+                            <button className={stl.textZoomButton} onClick={decreaseFontSize}>
                                 <BookReadSvgSelector nameSvg='-'></BookReadSvgSelector>
                             </button>
                         </div>

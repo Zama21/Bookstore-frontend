@@ -18,3 +18,22 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.payImg {
+    display: block;
+    margin: 0 auto;
+    max-width: 40%;
+    height: auto;
+}
+.containerPayText {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.keyword {
+    font-weight: 700;
+
+    font-style: italic;
+}

@@ -46,11 +46,13 @@ export const BookPage = () => {
         currentPage: data?.currentPage,
         bookId,
         cost: data?.cost,
+        parts: data?.parts,
+        currentPart: data?.currentPart,
     };
 
     return (
         <>
-            <div className={stl.wrapper}>
+            <div className='wrapperPage'>
                 <BookViewBox {...dataBookViewBox} />
                 <TableContents {...tableContentsObj}></TableContents>
                 <SwitchingBox {...dataSwitchingBox}></SwitchingBox>

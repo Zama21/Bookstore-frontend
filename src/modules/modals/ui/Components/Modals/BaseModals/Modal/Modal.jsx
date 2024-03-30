@@ -3,12 +3,14 @@ import styles from './Modal.module.css';
 import ReactDOM from 'react-dom';
 import { ClosingAnimationDelta } from 'modules/modals/domain/config.js';
 
-const Backdrop = (props) => {
+const Backdrop = props => {
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => (document.body.style.overflow = 'auto');
     }, []);
-    let stl = `${styles.backdrop} ${props.closingAnimation ? styles.close : ''}`;
+    let stl = `${styles.backdrop} ${
+        props.closingAnimation ? styles.close : ''
+    }`;
     return (
         <div
             className={stl}
@@ -18,10 +20,12 @@ const Backdrop = (props) => {
     );
 };
 
-const ModalWindow = (props) => {
+const ModalWindow = props => {
     return (
         <div
-            className={`${styles.modal} ${props.closingAnimation ? styles.close : ''}`}
+            className={`${styles.modal} ${
+                props.closingAnimation ? styles.close : ''
+            }`}
             style={{ animationDuration: ClosingAnimationDelta + 'ms' }}
         >
             <div className={`${styles.content} `}>{props.children}</div>
@@ -32,7 +36,7 @@ const ModalWindow = (props) => {
 const portalElement = document.getElementById('overlays');
 // const portalElement = document.body;
 
-const Modal = (props) => {
+const Modal = props => {
     return (
         <React.Fragment>
             {ReactDOM.createPortal(<Backdrop {...props} />, portalElement)}
