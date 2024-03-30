@@ -1,4 +1,4 @@
-import { BookPageApi } from 'modules/auth/api/bookPageApi.js';
+import { BookPageApi } from 'modules/books/api/bookPageApi.js';
 import { useEffect, useState } from 'react';
 
 export const useBookData = bookId => {

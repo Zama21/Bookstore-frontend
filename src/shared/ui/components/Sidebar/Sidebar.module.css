@@ -1,4 +1,5 @@
 .sidebar {
+    min-width: 170px;
 }
 
 .menu {
@@ -25,4 +26,7 @@
 
 .profile img {
     width: 60px;
+}
+
+.username {
 }

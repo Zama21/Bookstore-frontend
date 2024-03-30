@@ -3,6 +3,7 @@ declare const styles: {
   readonly "menu": string;
   readonly "profile": string;
   readonly "sidebar": string;
+  readonly "username": string;
 };
 export = styles;
 

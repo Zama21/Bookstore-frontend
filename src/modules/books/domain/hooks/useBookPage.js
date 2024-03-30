@@ -1,4 +1,4 @@
-import { BookPageApi } from 'modules/auth/api/bookPageApi.js';
+import { BookPageApi } from 'modules/books/api/bookPageApi.js';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
 import { useAuthModal } from 'modules/modals/domain/hooks/modal-types/useAuthModal.js';
 import { useEffect, useState } from 'react';
@@ -31,13 +31,9 @@ export const useBookPage = () => {
         if (!isAuthed) return authModal.open();
 
         if (data.isInLibrary) {
-            BookPageApi.removeFromLibrary(bookId).then(res =>
-                updateAddsToLibrary(-1)
-            );
+            BookPageApi.removeFromLibrary(bookId).then(res => updateAddsToLibrary(-1));
         } else {
-            BookPageApi.addToLibrary(bookId).then(res =>
-                updateAddsToLibrary(1)
-            );
+            BookPageApi.addToLibrary(bookId).then(res => updateAddsToLibrary(1));
         }
     };
 

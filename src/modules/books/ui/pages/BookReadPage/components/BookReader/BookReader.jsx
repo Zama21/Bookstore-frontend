@@ -1,4 +1,4 @@
-import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
+import { BookReadPageApi } from 'modules/books/api/bookReadPageApi';
 import React, { useState, useEffect } from 'react';
 import ReadingPagination from '../ReadingPagination/ReadingPagination';
 import cls from './BookReader.module.css';
@@ -31,8 +31,10 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
     });
 
     const navigateToCurrentReadingPage = () => {
+        // console.log(parts, dataBook);
+        if (parts.length === 0) return;
         navigate(
-            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0].id}&pageNumber=${
+            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0]?.id}&pageNumber=${
                 dataBook.currentPage ?? 1
             }`
         );
@@ -40,6 +42,7 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
 
     useEffect(() => {
         console.log('get meta');
+        if (!dataBook) return;
         BookReadPageApi.gettingChapterMetaInformation(bookId, selectedPart, 0)
             .then(res => {
                 setData(prev => {
@@ -56,9 +59,10 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
                     navigateToCurrentReadingPage();
                 }
             });
-    }, [bookId, selectedPart]);
+    }, [bookId, selectedPart, dataBook]);
 
     useEffect(() => {
+        if (!dataBook) return;
         if (isBookPageLoaded(pageNumber)) return;
 
         console.log('get range');
@@ -80,7 +84,7 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
                     navigateToCurrentReadingPage();
                 }
             });
-    }, [pageNumber]);
+    }, [pageNumber, dataBook]);
 
     useEffect(() => {
         gettingContent();
@@ -88,7 +92,6 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
         const currentPartIndex = parts.findIndex(part => part.id === selectedPart);
-        // console.log(currentPartIndex, deltaPart);
         navigate(
             `/book/${bookId}/read?chapterNumber=${parts[currentPartIndex + deltaPart].id}&pageNumber=${
                 newPageNumber + deltaPage

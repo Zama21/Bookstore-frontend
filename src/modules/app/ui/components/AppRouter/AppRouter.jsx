@@ -9,7 +9,7 @@ import { HomePage } from '../../../../home/ui/pages/HomePage/HomePage.jsx';
 import BookEditPage from 'modules/books/ui/pages/BookEditPage/BookEditPage.jsx';
 import PartEditPage from 'modules/books/ui/pages/PartEditPage/PartEditPage.jsx';
 import { MyLibPage } from 'modules/home/ui/pages/MyLibPage/MyLibPage.jsx';
-import { MyBooksPage } from 'modules/home/ui/pages/MyBooks/MyBooks.jsx';
+import { MyBooksPage } from 'modules/home/ui/pages/MyBooksPage/MyBooksPage.jsx';
 import { MyProfilePage } from 'modules/home/ui/pages/MyProfile/MyProfile.jsx';
 
 export const AppRouter = () => {
