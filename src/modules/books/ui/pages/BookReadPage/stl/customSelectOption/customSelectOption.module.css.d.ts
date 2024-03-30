@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly "backLink": string;
+  readonly "container": string;
 };
 export = styles;
 

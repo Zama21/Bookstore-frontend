@@ -19,7 +19,7 @@ export default function BookEditPage() {
         cost: data?.cost,
     };
     return (
-        <div className={stl.wrapper}>
+        <div className='wrapperPage'>
             <BookViewBoxEditPage {...dataBookViewBoxEditPage} />
             <Link className={stl.backLink} to={`/book/${bookId}/`}>
                 {' '}

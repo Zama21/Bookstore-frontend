@@ -16,6 +16,7 @@ export const GlobalHeader = ({ show }) => {
     useEffect(() => {
         setNavLinks(isAuthed ? privateNavLinks : guestNavLinks);
     }, [isAuthed]);
+
     const navigate = useNavigate();
 
     const handleLogout = () => {

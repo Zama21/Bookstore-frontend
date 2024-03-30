@@ -7,6 +7,7 @@ import { BookPage } from '../../../../books/ui/pages/BookPage/BookPage.jsx';
 import { BookReadPage } from '../../../../books/ui/pages/BookReadPage/BookReadPage.jsx';
 import { HomePage } from '../../../../home/ui/pages/HomePage/HomePage.jsx';
 import BookEditPage from 'modules/books/ui/pages/BookEditPage/BookEditPage.jsx';
+import PartEditPage from 'modules/books/ui/pages/PartEditPage/PartEditPage.jsx';
 
 export const AppRouter = () => {
     return (
@@ -19,7 +20,9 @@ export const AppRouter = () => {
                         element={
                             <>
                                 <h1>Main page with web-site description</h1>{' '}
-                                <Link to='/book/4'>Перейти на другую страницу</Link>
+                                <Link to='/book/4'>
+                                    Перейти на другую страницу
+                                </Link>
                             </>
                         }
                     />
@@ -28,7 +31,10 @@ export const AppRouter = () => {
                         <Route path='login' element={<LoginPage />} />
                     </Route>
                     <Route path='book/:bookId' element={<BookPage />} />
-                    <Route path='book/:bookId/read' element={<BookReadPage />} />
+                    <Route
+                        path='book/:bookId/read'
+                        element={<BookReadPage />}
+                    />
                 </Route>
 
                 {/* authed users */}
@@ -38,10 +44,17 @@ export const AppRouter = () => {
                         path='book/:bookId/edit'
                         element={<BookEditPage />}
                     />
+                    <Route
+                        path='book/:bookId/part/:partId/edit'
+                        element={<PartEditPage />}
+                    />
                 </Route>
 
                 {/* authed and admins */}
-                <Route path='/' element={<PrivateRoute roles={[Role.Admin]} />}></Route>
+                <Route
+                    path='/'
+                    element={<PrivateRoute roles={[Role.Admin]} />}
+                ></Route>
 
                 {/* not existing page */}
                 <Route path='*' element={<Navigate to={'/'} />} />

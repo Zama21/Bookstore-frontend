@@ -1,0 +1,39 @@
+.WrapperBodyText {
+    width: 100%;
+    min-height: 500px;
+}
+
+.WrapperBodyText h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.WrapperBodyText p {
+    margin-bottom: 15px;
+}
+
+.divider {
+    display: block;
+    border-bottom: 1px solid #dddddd;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.payImg {
+    display: block;
+    margin: 0 auto;
+    max-width: 40%;
+    height: auto;
+}
+.containerPayText {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.keyword {
+    font-weight: 700;
+
+    font-style: italic;
+}

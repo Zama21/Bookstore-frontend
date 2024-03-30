@@ -1,187 +1,146 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import stl from './BookReadPage.module.css'
-import stlTableContents from './stl/TableContents.module.css'
-import stlCommentsBookRead from './stl/Comments.module.css'
-import TableContents from 'shared/ui/components/TableСontents/TableСontents'
-import BookReadSvgSelector from './svg/BookReadSvgSelector'
-import Comments from 'shared/ui/components/Comments/Comments'
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import stl from './BookReadPage.module.css';
+import stlCommentsBookRead from './stl/Comments.module.css';
+import stlCustomSelectOption from './stl/customSelectOption/customSelectOption.module.css';
+import BookReadSvgSelector from './svg/BookReadSvgSelector';
+import Comments from 'shared/ui/components/Comments/Comments';
+import BookReader from './components/BookReader/BookReader';
+import { useBookData } from 'modules/books/domain/hooks/useBookData';
+import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
+import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { bookReadActions } from 'modules/books/store/bookReadSlice.js';
+import { useFontSize } from 'modules/books/domain/hooks/useFontSize.js';
 
-const tableContentsObj = {
-	defaultValue: 'titletetghg',
-	data: ['арбfdghghуз', 'глава2', 'kio rio'],
-	stl: stlTableContents,
-}
+// const tableContentsObj = {
+//     defaultValue: 'titletetghg',
+//     data: ['арбfdghghуз', 'глава2', 'kio rio'],
+//     stl: stlTableContents,
+// };
 
 const commentsObj = {
-	data: [
-		{
-			avatar:
-				'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663110850_6-mykaleidoscope-ru-p-spokoinii-chelovek-vkontakte-8.jpg',
-			firstName: 'Grot',
-			lastName: 'Grotovich',
-			date: '12.02.2024',
-			time: '12:03',
-			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.',
-			answers: [
-				{
-					avatar:
-						'https://get.wallhere.com/photo/face-women-model-portrait-long-hair-blue-eyes-brunette-looking-at-viewer-photography-blue-fashion-hair-Person-skin-head-girl-beauty-smile-eye-woman-lady-blond-hairstyle-portrait-photography-photo-shoot-brown-hair-facial-expression-41103.jpg',
-					firstName: 'Grot',
-					lastName: '',
-					date: '12.02.2024',
-					time: '12:03',
-					text: 'Да, согласен!',
-					Answers: [],
-				},
-				{
-					avatar:
-						'http://microsac.es/wp-content/uploads/2019/06/8V1z7D_t20_YX6vKm.jpg',
-					firstName: 'Grot',
-					lastName: 'Mimrovich',
-					date: '12.02.2024',
-					time: '12:03',
-					text: 'Плюсую!111!1111!111',
-					Answers: [],
-				},
-			],
-		},
-		{
-			avatar:
-				'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663110850_6-mykaleidoscope-ru-p-spokoinii-chelovek-vkontakte-8.jpg',
-			firstName: 'Grot',
-			lastName: 'Grotovich',
-			date: '12.02.2024',
-			time: '12:03',
-			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.',
-			answers: [
-				{
-					avatar:
-						'https://get.wallhere.com/photo/face-women-model-portrait-long-hair-blue-eyes-brunette-looking-at-viewer-photography-blue-fashion-hair-Person-skin-head-girl-beauty-smile-eye-woman-lady-blond-hairstyle-portrait-photography-photo-shoot-brown-hair-facial-expression-41103.jpg',
-					firstName: 'Grot',
-					lastName: '',
-					date: '12.02.2024',
-					time: '12:03',
-					text: 'Да, согласен!',
-					Answers: [],
-				},
-				{
-					avatar:
-						'http://microsac.es/wp-content/uploads/2019/06/8V1z7D_t20_YX6vKm.jpg',
-					firstName: 'Grot',
-					lastName: 'Mimrovich',
-					date: '12.02.2024',
-					time: '12:03',
-					text: 'Плюсую!111!1111!111',
-					Answers: [],
-				},
-			],
-		},
-	],
-	stl: stlCommentsBookRead,
-}
+    data: [
+        {
+            avatar: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663110850_6-mykaleidoscope-ru-p-spokoinii-chelovek-vkontakte-8.jpg',
+            firstName: 'Grot',
+            lastName: 'Grotovich',
+            date: '12.02.2024',
+            time: '12:03',
+            text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.',
+            answers: [
+                {
+                    avatar: 'https://get.wallhere.com/photo/face-women-model-portrait-long-hair-blue-eyes-brunette-looking-at-viewer-photography-blue-fashion-hair-Person-skin-head-girl-beauty-smile-eye-woman-lady-blond-hairstyle-portrait-photography-photo-shoot-brown-hair-facial-expression-41103.jpg',
+                    firstName: 'Grot',
+                    lastName: '',
+                    date: '12.02.2024',
+                    time: '12:03',
+                    text: 'Да, согласен!',
+                    Answers: [],
+                },
+                {
+                    avatar: 'http://microsac.es/wp-content/uploads/2019/06/8V1z7D_t20_YX6vKm.jpg',
+                    firstName: 'Grot',
+                    lastName: 'Mimrovich',
+                    date: '12.02.2024',
+                    time: '12:03',
+                    text: 'Плюсую!111!1111!111',
+                    Answers: [],
+                },
+            ],
+        },
+        {
+            avatar: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663110850_6-mykaleidoscope-ru-p-spokoinii-chelovek-vkontakte-8.jpg',
+            firstName: 'Grot',
+            lastName: 'Grotovich',
+            date: '12.02.2024',
+            time: '12:03',
+            text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, id, harum temporibus tenetur perspiciatis, consequatur quae omnis libero accusamus odit totam facilis aspernatur quo iste ab amet velit iusto possimus.',
+            answers: [
+                {
+                    avatar: 'https://get.wallhere.com/photo/face-women-model-portrait-long-hair-blue-eyes-brunette-looking-at-viewer-photography-blue-fashion-hair-Person-skin-head-girl-beauty-smile-eye-woman-lady-blond-hairstyle-portrait-photography-photo-shoot-brown-hair-facial-expression-41103.jpg',
+                    firstName: 'Grot',
+                    lastName: '',
+                    date: '12.02.2024',
+                    time: '12:03',
+                    text: 'Да, согласен!',
+                    Answers: [],
+                },
+                {
+                    avatar: 'http://microsac.es/wp-content/uploads/2019/06/8V1z7D_t20_YX6vKm.jpg',
+                    firstName: 'Grot',
+                    lastName: 'Mimrovich',
+                    date: '12.02.2024',
+                    time: '12:03',
+                    text: 'Плюсую!111!1111!111',
+                    Answers: [],
+                },
+            ],
+        },
+    ],
+    stl: stlCommentsBookRead,
+};
 
 export const BookReadPage = () => {
-	const { bookId } = useParams()
-	const [fontSize, setFontSize] = useState('16px')
+    const navigate = useNavigate();
+    const { bookId } = useParams();
+    const { fontSize, increaseFontSize, decreaseFontSize } = useFontSize();
 
-	const increaseFontSize = () => {
-		setFontSize(prevFontSize => {
-			if (parseInt(prevFontSize, 10) > 60) return prevFontSize
-			const currentSize = parseInt(prevFontSize, 10)
-			const newSize = currentSize + 2
-			return `${newSize}px`
-		})
-	}
+    const { data: dataBook } = useBookData(bookId);
 
-	const decreaseFontSize = () => {
-		setFontSize(prevFontSize => {
-			if (parseInt(prevFontSize, 10) < 6) return prevFontSize
-			const currentSize = parseInt(prevFontSize, 10)
-			const newSize = currentSize - 2
-			return `${newSize}px`
-		})
-	}
+    const [searchParams] = useSearchParams();
+    const chapterNumber = searchParams.get('chapterNumber');
+    const pageNumber = searchParams.get('pageNumber');
 
-	return (
-		<>
-			<div className={stl.wrapper}>
-				<div>хлебные крошки</div>
+    const handleSelection = title => {
+        const chapter = dataBook.parts.find(item => item.title === title);
+        BookReadPageApi.gettingChapterMetaInformation(bookId, chapter.id, 0).then(res => {
+            navigate(
+                `/book/${bookId}/read?chapterNumber=${chapter.id}&pageNumber=${res.data.firstPageIndex}`
+            );
+        });
+    };
 
-				<h1 className={stl.bookReadH1}>
-					<a href='http://localhost:5173/book/13'>
-						Тёмный Травник. Верховья Стикса
-					</a>
-				</h1>
+    const bookReaderObj = {
+        bookId,
+        fontSize: fontSize + 'px',
+        pageNumber: +pageNumber,
+        selectedPart: +chapterNumber,
+        parts: dataBook.parts,
+        dataBook,
+    };
 
-				<div className={stl.WrapperTableContentsAndBtn}>
-					<TableContents {...tableContentsObj}></TableContents>
-					<div className={stl.wrapperBtnZoom}>
-						<button className={stl.textZoomButton} onClick={increaseFontSize}>
-							<BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
-						</button>
-						<button className={stl.textZoomButton} onClick={decreaseFontSize}>
-							<BookReadSvgSelector nameSvg='-'></BookReadSvgSelector>
-						</button>
-					</div>
-				</div>
+    return (
+        dataBook.parts && (
+            <>
+                <div className='wrapperPage'>
+                    <h1 className={stl.bookReadH1}>
+                        <Link to={`/book/${bookId}`}>{dataBook.title}</Link>
+                    </h1>
 
-				<div>Пагинация</div>
-				<span className={stl.divider}></span>
+                    <div className={stl.WrapperTableContentsAndBtn}>
+                        <CustomSelectOption
+                            options={dataBook.parts.map(item => item.title)}
+                            onChange={handleSelection}
+                            defaultValue={dataBook.parts.find(part => part.id == chapterNumber)?.title}
+                            containerClassName={stlCustomSelectOption.container}
+                        />
+                        <div className={stl.wrapperBtnZoom}>
+                            <button className={stl.textZoomButton} onClick={increaseFontSize}>
+                                <BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
+                            </button>
+                            <button className={stl.textZoomButton} onClick={decreaseFontSize}>
+                                <BookReadSvgSelector nameSvg='-'></BookReadSvgSelector>
+                            </button>
+                        </div>
+                    </div>
 
-				<div className={stl.WrapperBodyText} style={{ fontSize: fontSize }}>
-					<h2>Бунт Таиши</h2>
-					<p>
-						Стоило СТЕРВЕ опуститься на песок, как тут же рядом со мной возникла
-						Серая Стая в полном составе. Моя подругу это очень сильно удивило –
-						она-то полагала, что волки, волкодлаки и мифический пёс остались
-						далеко позади.
-					</p>
-					<p>
-						– Просто они мои спутники, и снова возникают рядом со мной, если
-						умирают или отстают, – пояснил я Таише игровые правила «Бескрайнего
-						Мира».
-					</p>
-					<p>
-						Стоило СТЕРВЕ опуститься на песок, как тут же рядом со мной возникла
-						Серая Стая в полном составе. Моя подругу это очень сильно удивило –
-						она-то полагала, что волки, волкодлаки и мифический пёс остались
-						далеко позади.
-					</p>
-					<p>
-						– Просто они мои спутники, и снова возникают рядом со мной, если
-						умирают или отстают, – пояснил я Таише игровые правила «Бескрайнего
-						Мира».
-					</p>
-					<p>
-						Стоило СТЕРВЕ опуститься на песок, как тут же рядом со мной возникла
-						Серая Стая в полном составе. Моя подругу это очень сильно удивило –
-						она-то полагала, что волки, волкодлаки и мифический пёс остались
-						далеко позади.
-					</p>
-					<p>
-						– Просто они мои спутники, и снова возникают рядом со мной, если
-						умирают или отстают, – пояснил я Таише игровые правила «Бескрайнего
-						Мира».
-					</p>
-					<p>
-						Стоило СТЕРВЕ опуститься на песок, как тут же рядом со мной возникла
-						Серая Стая в полном составе. Моя подругу это очень сильно удивило –
-						она-то полагала, что волки, волкодлаки и мифический пёс остались
-						далеко позади.
-					</p>
-					<p>
-						– Просто они мои спутники, и снова возникают рядом со мной, если
-						умирают или отстают, – пояснил я Таише игровые правила «Бескрайнего
-						Мира».
-					</p>
-				</div>
+                    <BookReader {...bookReaderObj} />
 
-				<span className={stl.divider}></span>
-				<div>Пагинация</div>
-
-				<Comments {...commentsObj}></Comments>
-			</div>
-		</>
-	)
-}
+                    <Comments {...commentsObj}></Comments>
+                </div>
+            </>
+        )
+    );
+};
