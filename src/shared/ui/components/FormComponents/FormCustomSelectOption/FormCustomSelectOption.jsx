@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cls from './FormCustomSelectOption.module.css';
 import classNames from 'classnames';
 import { useField } from 'formik';
@@ -33,21 +33,24 @@ export default function FormCustomSelectOption({
         field.onChange({ target: { value: '', name: props.name } });
     };
 
+    useEffect(() => {
+        const handleBlur = () => setIsOpen(false);
+        window.addEventListener('click', handleBlur);
+        return () => {
+            window.removeEventListener('click', handleBlur);
+        };
+    }, []);
+
     return (
         <div
             className={classNames(cls.container, containerClassName)}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={e => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+            }}
         >
             <span className={classNames(cls.label, labelClassName)}>{label}</span>
-            <button
-                className={cls.header}
-                onClick={e => e.preventDefault()}
-                onBlur={() => {
-                    setTimeout(() => {
-                        setIsOpen(false);
-                    }, 100);
-                }}
-            >
+            <button className={cls.header} onClick={e => e.preventDefault()}>
                 {selectedOption}
                 <span
                     className={classNames(cls.toggleArrow, {

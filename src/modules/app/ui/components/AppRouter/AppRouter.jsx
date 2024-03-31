@@ -11,6 +11,7 @@ import PartEditPage from 'modules/books/ui/pages/PartEditPage/PartEditPage.jsx';
 import { MyLibPage } from 'modules/home/ui/pages/MyLibPage/MyLibPage.jsx';
 import { MyBooksPage } from 'modules/home/ui/pages/MyBooksPage/MyBooksPage.jsx';
 import { MyProfilePage } from 'modules/home/ui/pages/MyProfile/MyProfile.jsx';
+import { BookCreatePage } from 'modules/books/ui/pages/BookCreatePage/BookCreatePage.jsx';
 
 export const AppRouter = () => {
     return (
@@ -19,9 +20,6 @@ export const AppRouter = () => {
                 {/* all users */}
                 <Route path='/'>
                     <Route path='/' element={<HomePage />} />
-                    <Route path='/library' element={<MyLibPage />} />
-                    <Route path='/profile' element={<MyProfilePage />} />
-                    <Route path='/myBooks' element={<MyBooksPage />} />
 
                     <Route path='auth'>
                         <Route path='reg' element={<RegPage />} />
@@ -36,6 +34,11 @@ export const AppRouter = () => {
                     <Route path='home' element={<HomePage />} />
                     <Route path='book/:bookId/edit' element={<BookEditPage />} />
                     <Route path='book/:bookId/part/:partId/edit' element={<PartEditPage />} />
+                    <Route path='book/create' element={<BookCreatePage />} />
+
+                    <Route path='library' element={<MyLibPage />} />
+                    <Route path='profile' element={<MyProfilePage />} />
+                    <Route path='myBooks' element={<MyBooksPage />} />
                 </Route>
 
                 {/* authed and admins */}

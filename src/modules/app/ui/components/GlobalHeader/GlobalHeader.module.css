@@ -45,16 +45,15 @@
     cursor: pointer;
 }
 .nameSite {
-    font-family: "Courier";
     font-size: 2rem;
     color: #333;
     letter-spacing: 2px;
     user-select: none;
-    /* animation: typing 13s infinite steps(16); */
     white-space: nowrap;
     overflow: hidden;
-    font-weight: 600;
-    /* max-width: 10ch; */
+    font-weight: 500;
+    font-style: normal;
+    margin-left: 10px;
 }
 .nameSite::before {
     content: "";

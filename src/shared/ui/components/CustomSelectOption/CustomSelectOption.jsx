@@ -37,9 +37,7 @@ export default function CustomSelectOption({
     };
 
     useEffect(() => {
-        const handleBlur = () => {
-            setIsOpen(false);
-        };
+        const handleBlur = () => setIsOpen(false);
         window.addEventListener('click', handleBlur);
         return () => {
             window.removeEventListener('click', handleBlur);

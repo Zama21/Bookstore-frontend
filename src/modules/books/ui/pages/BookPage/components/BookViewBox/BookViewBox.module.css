@@ -135,7 +135,7 @@
     left: -200%;
 }
 .likeContainer::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -100%;
     background-image: radial-gradient(circle, #f1f1f1 60%, #923a65 70%);
@@ -220,7 +220,7 @@
     position: relative;
 }
 .footerColumn3::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: #f1f1f1;
     width: 110%;

@@ -15,27 +15,21 @@ export default function BookViewBoxEditPage({
         switch (status) {
             case 'finished':
                 return (
-                    <div
-                        className={`${stl.bookPublicationStatus} ${stl.finished}  flxRow`}
-                    >
+                    <div className={`${stl.bookPublicationStatus} ${stl.finished}  flxRow`}>
                         <BookSvgSelector nameSvg='tick'></BookSvgSelector>
                         <span>Полный текст</span>
                     </div>
                 );
             case 'unfinished':
                 return (
-                    <div
-                        className={`${stl.bookPublicationStatus} ${stl.unfinished}  flxRow`}
-                    >
+                    <div className={`${stl.bookPublicationStatus} ${stl.unfinished}  flxRow`}>
                         <BookSvgSelector nameSvg='unfinished'></BookSvgSelector>
                         <span>В процессе</span>
                     </div>
                 );
             case 'frozen':
                 return (
-                    <div
-                        className={`${stl.bookPublicationStatus} ${stl.frozen}  flxRow`}
-                    >
+                    <div className={`${stl.bookPublicationStatus} ${stl.frozen}  flxRow`}>
                         <BookSvgSelector nameSvg='snowflake'></BookSvgSelector>
                         <span>Заморожена</span>
                     </div>
@@ -51,7 +45,7 @@ export default function BookViewBoxEditPage({
             <div className={`${stl.column} ${stl.columnSameWidth}`}>
                 <div className={stl.bookInformation}>
                     <h1 className={stl.h1}>{title}</h1>
-                    {Object.keys(series).length != 0 && (
+                    {series && (
                         <p className={stl.nonPriorityInformation}>
                             <span className={stl.metaName}>Цикл: </span>
                             <a className={stl.anchor} href=''>

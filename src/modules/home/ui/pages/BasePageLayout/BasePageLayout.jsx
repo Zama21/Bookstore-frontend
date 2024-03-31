@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from './BasePageLayout.module.css';
-import { Sidebar } from '../Sidebar/Sidebar.jsx';
+import { Sidebar } from '../../components/Sidebar/Sidebar.jsx';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
 
 export const BasePageLayout = ({ children, title }) => {

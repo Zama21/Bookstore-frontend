@@ -1,4 +1,4 @@
-import { BasePageLayout } from 'shared/ui/components/BasePageLayout/BasePageLayout.jsx';
+import { BasePageLayout } from 'modules/home/ui/pages/BasePageLayout/BasePageLayout.jsx';
 import { BooksCategory } from '../../components/BooksCategory/BooksCategory.jsx';
 
 export const HomePage = () => {
