@@ -3,13 +3,83 @@
     min-height: 500px;
 }
 
-.WrapperBodyText h2 {
+.WrapperBodyText ul {
+    list-style-type: disc;
+    padding-left: 3em;
+    line-height: 1.5em;
+}
+
+.WrapperBodyText ol {
+    list-style-type: decimal;
+    padding-left: 3em;
+    line-height: 1.5em;
+}
+.WrapperBodyText li p {
+    text-indent: 0;
+}
+
+.WrapperBodyText {
+    padding: 1rem !important;
+}
+
+.WrapperBodyText p,
+h1,
+h2,
+h3,
+p {
+    margin: 0 !important;
+    text-indent: 1rem;
+    line-height: 1.5em;
+}
+.WrapperBodyText blockquote {
+    border-left: 5px solid #ccc;
+    font-style: italic;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: hidden;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+.WrapperBodyText table {
+    border: 1px double #b3b3b3;
+    border-collapse: collapse;
+    border-spacing: 0;
+    height: 100%;
+    /* width: 100%; */
+}
+.WrapperBodyText tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.WrapperBodyText td,
+th {
+    border: 1px solid #bfbfbf;
+    min-width: 2em;
+    padding: 0.4em;
+}
+.WrapperBodyText table th {
+    background: rgba(0, 0, 0, 0.05);
+    font-weight: 700;
+}
+
+.WrapperBodyText figure {
+    position: relative;
+    overflow: auto;
+}
+.WrapperBodyText figure table {
+    display: table;
+    margin: 0.9em auto;
+}
+
+/* .WrapperBodyText h2 {
     margin-top: 20px;
     margin-bottom: 10px;
 }
 .WrapperBodyText p {
     margin-bottom: 15px;
-}
+} */
 
 .divider {
     display: block;

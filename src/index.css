@@ -104,11 +104,11 @@ button::-moz-focus-inner {
     align-items: center;
 }
 
-li {
-    list-style: none;
-}
-
 a {
     color: black;
     text-decoration: none;
+}
+ul,
+ol {
+    list-style: none;
 }
