@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BookInformationEditForm from '../BookEditPage/components/SwitchingBoxEditPage/BookInformationEditForm/BookInformationEditForm';
 import cls from './BookCreatePage.module.css';
+import { myBooksApi } from 'modules/home/api/myBooksApi.js';
+import { useNavigate } from 'react-router-dom';
 
 export const BookCreatePage = () => {
-    const createBook = values => {
-        console.log('create book ', values);
+    const [createBook, createBookResult] = myBooksApi.useCreateBookMutation();
+    const navigate = useNavigate();
+
+    const handleSubmit = values => {
+        createBook({
+            title: values.bookTitle,
+            description: values.annotation,
+        });
     };
+
+    useEffect(() => {
+        if (createBookResult.isSuccess) {
+            navigate('/myBooks');
+        }
+    }, [createBookResult.isSuccess]);
 
     return (
         <div className={cls.wrapper}>
@@ -15,7 +29,7 @@ export const BookCreatePage = () => {
                 fieldsIncluded={{
                     bookStatus: false,
                 }}
-                onSubmit={createBook}
+                onSubmit={handleSubmit}
             />
         </div>
     );

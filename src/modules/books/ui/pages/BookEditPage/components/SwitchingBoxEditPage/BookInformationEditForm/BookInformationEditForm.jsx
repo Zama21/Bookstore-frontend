@@ -8,18 +8,8 @@ import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormB
 import defaultCover from '../../../../../../../../shared/Img/defaultCover.jpg';
 import { FormFieldTextArea } from 'shared/ui/components/FormComponents/FormFieldTextArea/FormFieldTextArea';
 import FormCustomSelectOption from 'shared/ui/components/FormComponents/FormCustomSelectOption/FormCustomSelectOption';
+import { sharedApi } from 'shared/api/sharedApi.js';
 
-const options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-    'Option 5',
-    'Option 6',
-    'Option 7',
-    'Option 8',
-    'Option 9',
-];
 const bookStatusOptions = ['Завершена', 'В процессе', 'Заморожена', 'Скрыта', 'Удалить'];
 const ageRestrictionOptions = ['3+', '6+', '12+', '16+', '18+', '21+'];
 const initialFormValues = {
@@ -64,6 +54,13 @@ export default function BookInformationEditForm(props) {
     const fieldsIncluded = props.fieldsIncluded ?? {};
     const shouldIncludeField = field =>
         fieldsIncluded[field] === true || fieldsIncluded[field] === undefined;
+
+    const { data: genres } = sharedApi.useGetGenresQuery();
+    const genresNames = genres?.map(g => g.name) ?? [];
+
+    const { data: bookSeries } = sharedApi.useGetMySeriesQuery();
+    console.log(bookSeries);
+    const seriesNames = bookSeries?.map(s => s.name) ?? [];
 
     return (
         <Formik
@@ -129,7 +126,7 @@ export default function BookInformationEditForm(props) {
 
                         {shouldIncludeField('cycleName') && (
                             <FormCustomSelectOption
-                                options={options}
+                                options={seriesNames}
                                 name='cycleName'
                                 label='Название цикла'
                                 containerClassName={stl.containerInlineClassName}
@@ -141,7 +138,7 @@ export default function BookInformationEditForm(props) {
                         {shouldIncludeField('genres') && (
                             <>
                                 <FormCustomSelectOption
-                                    options={options}
+                                    options={genresNames}
                                     name='genre1'
                                     label={'Жанр 1'}
                                     containerClassName={stl.containerInlineClassName}
@@ -150,7 +147,7 @@ export default function BookInformationEditForm(props) {
                                 />
                                 {formik.values.genre1 != '' && (
                                     <FormCustomSelectOption
-                                        options={options}
+                                        options={genresNames}
                                         name='genre2'
                                         label={'Жанр 2'}
                                         containerClassName={stl.containerInlineClassName}
@@ -160,7 +157,7 @@ export default function BookInformationEditForm(props) {
                                 )}
                                 {formik.values.genre1 != '' && formik.values.genre2 != '' && (
                                     <FormCustomSelectOption
-                                        options={options}
+                                        options={genresNames}
                                         name='genre3'
                                         label={'Жанр 3'}
                                         containerClassName={stl.containerInlineClassName}
