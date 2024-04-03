@@ -46,6 +46,7 @@ export default function NumberRangeDisplay({
             onSelect(item + firstPageIndex - 1);
         }
     };
+
     return (
         <div className={cls.containerNumbers}>
             {displayNumbers.map((item, index) => {

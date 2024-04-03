@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
-import { StoreProvider } from '../providers/StoreProvider/StoreProvider.jsx';
 import { AuthProvider } from '../../../auth/ui/providers/AuthProvider/AuthProvider.jsx';
+import { StoreProvider } from '../providers/StoreProvider/StoreProvider.jsx';
 
 export const withProviders = component => props => {
     return (

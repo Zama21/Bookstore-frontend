@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import stl from './BookPage.module.css';
-import stlTableContents from './stl/TableContents.module.css';
-import BookViewBox from './components/BookViewBox/BookViewBox';
-import SwitchingBox from './components/SwitchingBox/SwitchingBox';
-import TableContents from '../../../../../shared/ui/components/TableСontents/TableСontents';
-import { axiosInstance } from 'shared/api/apiInstance';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth';
 import { useBookPage } from 'modules/books/domain/hooks/useBookPage.js';
-import { date } from 'yup';
+import TableContents from '../../../../../shared/ui/components/TableСontents/TableСontents';
+import BookViewBox from './components/BookViewBox/BookViewBox';
+import SwitchingBox from './components/SwitchingBox/SwitchingBox';
+import stlTableContents from './stl/TableContents.module.css';
 
 const tableContentsObj = {
     defaultValue: 'title',
@@ -26,7 +21,7 @@ export const BookPage = () => {
         title: data?.title,
     };
 
-    const dataBookViewBox = {
+    const dataBookViewBox = data && {
         addsToLibraryCount: data?.addsToLibraryCount,
         author: data?.author,
         coverSrc: data?.coverSrc,
@@ -53,18 +48,21 @@ export const BookPage = () => {
     return (
         <>
             <div className='wrapperPage'>
-                <BookViewBox {...dataBookViewBox} />
-                <TableContents {...tableContentsObj}></TableContents>
-                <SwitchingBox {...dataSwitchingBox}></SwitchingBox>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Veritatis labore iusto, nesciunt recusandae fugiat quo ipsum
-                    cumque et laudantium provident pariatur fugit quibusdam nemo
-                    debitis assumenda aperiam minus voluptatibus quam. Rerum
-                    sequi voluptatibus perferendis inventore omnis corporis
-                    consequuntur cumque adipisci quia exercitationem iste
-                    commodi corrupti voluptatum, debitis mollitia aperiam
-                </p>
+                {data && (
+                    <>
+                        <BookViewBox {...dataBookViewBox} />
+                        <TableContents {...tableContentsObj}></TableContents>
+                        <SwitchingBox {...dataSwitchingBox}></SwitchingBox>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis labore
+                            iusto, nesciunt recusandae fugiat quo ipsum cumque et laudantium provident
+                            pariatur fugit quibusdam nemo debitis assumenda aperiam minus voluptatibus
+                            quam. Rerum sequi voluptatibus perferendis inventore omnis corporis
+                            consequuntur cumque adipisci quia exercitationem iste commodi corrupti
+                            voluptatum, debitis mollitia aperiam
+                        </p>
+                    </>
+                )}
             </div>
         </>
     );

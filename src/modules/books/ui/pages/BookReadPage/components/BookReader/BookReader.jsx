@@ -1,8 +1,9 @@
-import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
-import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
+import { usePagination } from 'modules/books/domain/hooks/usePagination';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReadingPagination from '../ReadingPagination/ReadingPagination';
 import cls from './BookReader.module.css';
-import { useNavigate } from 'react-router-dom';
 import payImg from './Img/payImg.png';
 
 const byeContent = (
@@ -24,63 +25,26 @@ const byeContent = (
 const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBook }) => {
     const navigate = useNavigate();
     const [content, setContent] = useState(null);
-    const [data, setData] = useState({
-        firstPageIndex: null,
-        lastPageIndex: null,
-        pages: [],
+    const { data } = usePagination({
+        bookId,
+        onError403: () => {
+            setContent(byeContent);
+        },
+        onErrorElse: err => {
+            console.log('get pages err', err);
+            navigateToCurrentReadingPage();
+        },
     });
 
     const navigateToCurrentReadingPage = () => {
+        // console.log(parts, dataBook);
+        if (parts.length === 0) return;
         navigate(
-            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0].id}&pageNumber=${
+            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0]?.id}&pageNumber=${
                 dataBook.currentPage ?? 1
             }`
         );
     };
-
-    useEffect(() => {
-        console.log('get meta');
-        BookReadPageApi.gettingChapterMetaInformation(bookId, selectedPart, 0)
-            .then(res => {
-                setData(prev => {
-                    return {
-                        ...res.data,
-                        pages: [...prev.pages],
-                    };
-                });
-            })
-            .catch(err => {
-                if (err.response.status === 403) {
-                    setContent(byeContent);
-                } else {
-                    navigateToCurrentReadingPage();
-                }
-            });
-    }, [bookId, selectedPart]);
-
-    useEffect(() => {
-        if (isBookPageLoaded(pageNumber)) return;
-
-        console.log('get range');
-        BookReadPageApi.gettingPageRange(bookId, pageNumber, pageNumber, pageNumber)
-            .then(res => {
-                console.log('get pages res', res);
-                setData(prev => {
-                    return {
-                        ...prev,
-                        pages: [...prev.pages, ...res.data],
-                    };
-                });
-            })
-            .catch(err => {
-                if (err.response.status === 403) {
-                    setContent(byeContent);
-                } else {
-                    console.log('get pages err', err);
-                    navigateToCurrentReadingPage();
-                }
-            });
-    }, [pageNumber]);
 
     useEffect(() => {
         gettingContent();
@@ -88,18 +52,12 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
         const currentPartIndex = parts.findIndex(part => part.id === selectedPart);
-        // console.log(currentPartIndex, deltaPart);
+
         navigate(
             `/book/${bookId}/read?chapterNumber=${parts[currentPartIndex + deltaPart].id}&pageNumber=${
                 newPageNumber + deltaPage
             }`
         );
-    };
-
-    const isBookPageLoaded = selectedPage => {
-        return data.pages.some((page, index) => {
-            return page.index === selectedPage;
-        });
     };
 
     const gettingContent = () => {
@@ -122,7 +80,10 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
         firstPageIndex: data.firstPageIndex,
     };
 
-    // console.log(data);
+    // const cleanContent = DOMPurify.sanitize(content, {
+    //     USE_PROFILES: { html: true },
+    // });
+    // console.log(typeof cleanContent);
 
     return (
         data &&
@@ -130,8 +91,12 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
             <div>
                 <ReadingPagination {...paginationObj} />
                 <span className={cls.divider}></span>
-                <div className={cls.WrapperBodyText} style={{ fontSize: fontSize }}>
-                    {content || ''}
+                <div
+                    className={cls.WrapperBodyText}
+                    style={{ fontSize: fontSize }}
+                    // dangerouslySetInnerHTML={{ __html: cleanContent }}
+                >
+                    {content}
                 </div>
                 <span className={cls.divider}></span>
                 <ReadingPagination {...paginationObj} />

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const ModalTypes = {
     Auth: 'auth',
     Awareness: 'awareness',
+    AlertModal: 'alert',
 };
 
 export const modalsSlice = createSlice({

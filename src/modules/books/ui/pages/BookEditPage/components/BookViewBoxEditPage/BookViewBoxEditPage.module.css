@@ -48,22 +48,6 @@
     transform: translateY(-50%);
 }
 
-.bookPublicationStatus {
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 10px;
-}
-.bookPublicationStatus.finished {
-    color: #fff;
-    background: #6fbd49;
-}
-
-.bookPublicationStatus.unfinished {
-    color: #fff;
-    background: #1d7fd3;
-}
-
-.bookPublicationStatus.frozen {
-    color: #fff;
-    background: #999999;
+.anchor {
+    /* margin-right: 5px; */
 }

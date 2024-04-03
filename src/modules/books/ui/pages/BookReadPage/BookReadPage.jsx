@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { BookReadPageApi } from 'modules/books/api/bookReadPageApi';
+import { useBookData } from 'modules/books/domain/hooks/useBookData';
+import { useFontSize } from 'modules/books/domain/hooks/useFontSize.js';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import Comments from 'shared/ui/components/Comments/Comments';
+import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
 import stl from './BookReadPage.module.css';
+import BookReader from './components/BookReader/BookReader';
 import stlCommentsBookRead from './stl/Comments.module.css';
 import stlCustomSelectOption from './stl/customSelectOption/customSelectOption.module.css';
 import BookReadSvgSelector from './svg/BookReadSvgSelector';
-import Comments from 'shared/ui/components/Comments/Comments';
-import BookReader from './components/BookReader/BookReader';
-import { useBookData } from 'modules/books/domain/hooks/useBookData';
-import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption';
-import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { bookReadActions } from 'modules/books/store/bookReadSlice.js';
-import { useFontSize } from 'modules/books/domain/hooks/useFontSize.js';
-
-// const tableContentsObj = {
-//     defaultValue: 'titletetghg',
-//     data: ['арбfdghghуз', 'глава2', 'kio rio'],
-//     stl: stlTableContents,
-// };
 
 const commentsObj = {
     data: [
@@ -102,7 +92,7 @@ export const BookReadPage = () => {
         });
     };
 
-    const bookReaderObj = {
+    const bookReaderObj = dataBook && {
         bookId,
         fontSize: fontSize + 'px',
         pageNumber: +pageNumber,
@@ -112,7 +102,7 @@ export const BookReadPage = () => {
     };
 
     return (
-        dataBook.parts && (
+        dataBook && (
             <>
                 <div className='wrapperPage'>
                     <h1 className={stl.bookReadH1}>
@@ -120,12 +110,18 @@ export const BookReadPage = () => {
                     </h1>
 
                     <div className={stl.WrapperTableContentsAndBtn}>
-                        <CustomSelectOption
-                            options={dataBook.parts.map(item => item.title)}
-                            onChange={handleSelection}
-                            defaultValue={dataBook.parts.find(part => part.id == chapterNumber)?.title}
-                            containerClassName={stlCustomSelectOption.container}
-                        />
+                        {dataBook.parts.length > 0 ? (
+                            <CustomSelectOption
+                                options={dataBook.parts.map(item => item.title)}
+                                onChange={handleSelection}
+                                defaultValue={
+                                    dataBook.parts.find(part => part.id == chapterNumber)?.title
+                                }
+                                containerClassName={stlCustomSelectOption.container}
+                            />
+                        ) : (
+                            <p>В книге пока нет глав</p>
+                        )}
                         <div className={stl.wrapperBtnZoom}>
                             <button className={stl.textZoomButton} onClick={increaseFontSize}>
                                 <BookReadSvgSelector nameSvg='+'></BookReadSvgSelector>
