@@ -6,15 +6,12 @@ declare const styles: {
   readonly "bookBtnForRead": string;
   readonly "bookDate": string;
   readonly "bookInformation": string;
-  readonly "bookPublicationStatus": string;
   readonly "buy": string;
   readonly "column": string;
   readonly "columnSameWidth": string;
   readonly "containerFor3Column": string;
   readonly "divider": string;
-  readonly "finished": string;
   readonly "footerColumn3": string;
-  readonly "frozen": string;
   readonly "h1": string;
   readonly "headerColumn3": string;
   readonly "img": string;
@@ -26,7 +23,6 @@ declare const styles: {
   readonly "nonPriorityInformation": string;
   readonly "publicationTitle": string;
   readonly "ratingContainer": string;
-  readonly "unfinished": string;
   readonly "wrapper": string;
   readonly "wrapperBtnForRead": string;
 };

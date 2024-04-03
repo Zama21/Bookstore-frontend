@@ -1,4 +1,4 @@
-import { BookReadPageApi } from 'modules/auth/api/bookReadPageApi';
+import { BookReadPageApi } from 'modules/books/api/bookReadPageApi';
 import React, { useState, useEffect } from 'react';
 import ReadingPagination from '../ReadingPagination/ReadingPagination';
 import cls from './BookReader.module.css';
@@ -45,10 +45,12 @@ const BookReader = ({
     console.log(data);
 
     const navigateToCurrentReadingPage = () => {
+        // console.log(parts, dataBook);
+        if (parts.length === 0) return;
         navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                dataBook.currentPart?.id ?? parts[0].id
-            }&pageNumber=${dataBook.currentPage ?? 1}`
+            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0]?.id}&pageNumber=${
+                dataBook.currentPage ?? 1
+            }`
         );
     };
 

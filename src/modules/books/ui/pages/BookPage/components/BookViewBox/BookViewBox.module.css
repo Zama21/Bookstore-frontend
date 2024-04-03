@@ -36,6 +36,7 @@
 .anchor {
     color: #337ab7;
     text-decoration: none;
+    /* margin-right: 10px; */
 }
 .anchor:hover {
     text-decoration: underline;
@@ -135,7 +136,7 @@
     left: -200%;
 }
 .likeContainer::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -100%;
     background-image: radial-gradient(circle, #f1f1f1 60%, #923a65 70%);
@@ -158,25 +159,6 @@
 
 .addViewStatistics {
     justify-content: space-evenly;
-}
-.bookPublicationStatus {
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 10px;
-}
-.bookPublicationStatus.finished {
-    color: #fff;
-    background: #6fbd49;
-}
-
-.bookPublicationStatus.unfinished {
-    color: #fff;
-    background: #1d7fd3;
-}
-
-.bookPublicationStatus.frozen {
-    color: #fff;
-    background: #999999;
 }
 
 .lifeCycleOfBook {
@@ -220,7 +202,7 @@
     position: relative;
 }
 .footerColumn3::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: #f1f1f1;
     width: 110%;

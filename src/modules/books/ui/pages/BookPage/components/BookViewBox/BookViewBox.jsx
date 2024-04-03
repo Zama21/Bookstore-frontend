@@ -1,7 +1,8 @@
 import React from 'react';
-import stl from './BookViewBox.module.css';
+import stl, { bookDate } from './BookViewBox.module.css';
 import BookSvgSelector from './svg/BookSvgSelector';
 import { Link } from 'react-router-dom';
+import { BookPublicationStatus } from '../../../BookEditPage/components/BookPublicationStatus/BookPublicationStatus.jsx';
 
 function formatDate(date) {
     let day = date.getDate();
@@ -40,68 +41,33 @@ export default function BookViewBox({
 }) {
     createdAt = formatDate(new Date(createdAt));
     updatedAt = formatDate(new Date(updatedAt));
-    let chapterNumber = currentPart?.id ? currentPart?.id : parts?.[0]?.id;
+    let chapterNumber = currentPart?.id ?? parts?.[0]?.id;
 
-    let divBookPublicationStatus = () => {
-        switch (status) {
-            case 'finished':
-                return (
-                    <div
-                        className={`${stl.bookPublicationStatus} ${stl.finished}  flxRow`}
-                    >
-                        <BookSvgSelector nameSvg='tick'></BookSvgSelector>
-                        <span>Полный текст</span>
-                    </div>
-                );
-            case 'unfinished':
-                return (
-                    <div
-                        className={`${stl.bookPublicationStatus} ${stl.unfinished}  flxRow`}
-                    >
-                        <BookSvgSelector nameSvg='unfinished'></BookSvgSelector>
-                        <span>В процессе</span>
-                    </div>
-                );
-            case 'frozen':
-                return (
-                    <div
-                        className={`${stl.bookPublicationStatus} ${stl.frozen}  flxRow`}
-                    >
-                        <BookSvgSelector nameSvg='snowflake'></BookSvgSelector>
-                        <span>Заморожена</span>
-                    </div>
-                );
-        }
-    };
     let libraryBtn = (
         <div
-            className={`${stl.footerColumn3} ${
-                isInLibrary ? stl.isInLibrary : ''
-            } `}
+            className={`${stl.footerColumn3} ${isInLibrary ? stl.isInLibrary : ''} `}
             onClick={toggleLibrary}
         >
             <BookSvgSelector nameSvg='libraryOfBooks' />
-            {isInLibrary ? (
-                <span>В библиотеке</span>
-            ) : (
-                <span>Добавьте в библиотеку</span>
-            )}
+            {isInLibrary ? <span>В библиотеке</span> : <span>Добавьте в библиотеку</span>}
         </div>
     );
     let containerBookReadBtn = (
         <div className={stl.wrapperBtnForRead}>
             <Link
                 className={stl.bookBtnForRead}
-                to={`/book/${bookId}/read?chapterNumber=${chapterNumber}&pageNumber=${
-                    currentPage || 1
-                }`}
+                to={
+                    chapterNumber && currentPage
+                        ? `/book/${bookId}/read?chapterNumber=${chapterNumber}&pageNumber=${
+                              currentPage || 1
+                          }`
+                        : `/book/${bookId}/read`
+                }
             >
                 {`${currentPage > 1 ? 'Продолжить' : 'Читать'}`}
             </Link>
             {cost > 0 && (
-                <div
-                    className={`${stl.bookBtnForRead} ${stl.buy}`}
-                >{`Подписка ${cost} RUB`}</div>
+                <div className={`${stl.bookBtnForRead} ${stl.buy}`}>{`Подписка ${cost} RUB`}</div>
             )}
         </div>
     );
@@ -147,11 +113,7 @@ export default function BookViewBox({
             <div className={`${stl.column} ${stl.columnSameWidth}`}>
                 <div className={stl.containerFor3Column}>
                     <div className={stl.headerColumn3} onClick={toggleStarred}>
-                        <div
-                            className={`${stl.likeContainer} ${
-                                isStarred ? stl.active : ''
-                            }`}
-                        >
+                        <div className={`${stl.likeContainer} ${isStarred ? stl.active : ''}`}>
                             <BookSvgSelector nameSvg='starLike'></BookSvgSelector>
                             <span>{starsCount}</span>
                         </div>
@@ -176,19 +138,16 @@ export default function BookViewBox({
                             </div>
                         </div>
                         <span className={stl.divider}></span>
-                        {divBookPublicationStatus()}
+                        <BookPublicationStatus status={status} />
                         <span className={stl.divider}></span>
                         <div className={stl.lifeCycleOfBook}>
                             <p className={stl.publicationTitle}>Публикация</p>
                             <p>
-                                <span className={stl.bookDate}>Начата:</span>{' '}
-                                {createdAt}
+                                <span className={stl.bookDate}>Начата:</span> {createdAt}
                             </p>
                             <p>
                                 <span className={stl.bookDate}>{`${
-                                    status == 'finished'
-                                        ? 'Завершена:'
-                                        : 'обновлена:'
+                                    status == 'finished' ? 'Завершена:' : 'обновлена:'
                                 }`}</span>{' '}
                                 {updatedAt}
                             </p>

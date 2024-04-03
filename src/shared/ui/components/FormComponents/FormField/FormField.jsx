@@ -16,19 +16,16 @@ export const FormField = ({
     return (
         <label className={classNames(cls.container, containerClassName)}>
             <div className={classNames(cls.field, fieldClassName)}>
-                <span className={classNames(cls.label, labelClassName)}>
-                    {label}
-                </span>
+                <span className={classNames(cls.label, labelClassName)}>{label}</span>
                 <input
                     className={classNames(cls.input, inputClassName)}
                     {...field}
                     {...props}
+                    value={props.type === 'number' ? Number(field.value).toString() : field.value}
                 />
             </div>
             {meta.touched && meta.error ? (
-                <div className={classNames(cls.error, errorClassName)}>
-                    {meta.error}
-                </div>
+                <div className={classNames(cls.error, errorClassName)}>{meta.error}</div>
             ) : null}
         </label>
     );

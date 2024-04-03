@@ -6,6 +6,9 @@ declare const styles: {
   readonly "fieldClassName": string;
   readonly "fileInputLabel": string;
   readonly "form": string;
+  readonly "submitActive": string;
+  readonly "submitInactive": string;
+  readonly "wrapperDescr": string;
   readonly "wrapperImg": string;
 };
 export = styles;

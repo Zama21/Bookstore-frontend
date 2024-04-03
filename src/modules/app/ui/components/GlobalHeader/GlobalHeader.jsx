@@ -26,7 +26,7 @@ export const GlobalHeader = ({ show }) => {
     return (
         <header className={`${cls.header} ${scrollDirection ? cls.hide : ''}`}>
             <div className={cls.pageFrame}>
-                <div className={cls.wrapperLogo}>
+                <div className={cls.wrapperLogo} onClick={() => navigate('/')}>
                     <GlobalHeaderSvgSelector nameSvg='logo'></GlobalHeaderSvgSelector>
                     <span className={cls.nameSite}></span>
                 </div>

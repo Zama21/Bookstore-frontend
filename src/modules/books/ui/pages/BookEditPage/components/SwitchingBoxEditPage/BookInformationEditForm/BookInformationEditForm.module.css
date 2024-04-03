@@ -1,7 +1,8 @@
 .form {
     width: 100%;
-    padding: 0;
+    padding: 10px;
     margin: 0 auto;
+    overflow: hidden;
 }
 
 .wrapperImg {
@@ -9,6 +10,13 @@
     width: 100%;
     grid-row: span 3;
 }
+
+.wrapperDescr {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
 .wrapperImg input {
     display: none;
 }
@@ -41,15 +49,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
-    align-items: center;
+    align-items: top;
     grid-template-rows: auto auto;
     gap: 10px;
 }
 .containerInlineClassName {
     display: inline-block;
-    width: 30%;
-    min-width: 300px;
-    max-width: 400px;
+    width: 100%;
+    min-width: 250px;
+    /* max-width: 400px; */
 }
 .fieldClassName {
     display: inline-block;
@@ -58,4 +66,18 @@
 .containerClassName {
     clear: left;
     width: 100%;
+}
+
+.submitActive {
+}
+
+.submitInactive {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
+.submitInactive:hover {
+    background-color: lightgray;
+    /* cursor: not-allowed; */
+    cursor: default;
 }

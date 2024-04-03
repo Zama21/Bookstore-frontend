@@ -15,8 +15,11 @@
 .modal {
     position: fixed;
     top: 7vh;
-    left: 5%;
-    width: 90%;
+    left: 50%;
+    /* width: 90%; */
+    display: block;
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
     background-color: white;
     padding: 1rem;
     border-radius: 14px;

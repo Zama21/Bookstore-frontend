@@ -2,19 +2,15 @@ import { axiosInstance } from 'shared/api/apiInstance.js';
 
 export class BookPageApi {
     static async removeFromLibrary(bookId) {
-        return axiosInstance
-            .post(`/books/${bookId}/removeFromLibrary`)
-            .catch(error => {
-                console.error('Ошибка запроса:', error);
-            });
+        return axiosInstance.post(`/books/${bookId}/removeFromLibrary`).catch(error => {
+            console.error('Ошибка запроса:', error);
+        });
     }
 
     static async addToLibrary(bookId) {
-        return axiosInstance
-            .post(`/books/${bookId}/addToLibrary`)
-            .catch(error => {
-                console.error('Ошибка запроса:', error);
-            });
+        return axiosInstance.post(`/books/${bookId}/addToLibrary`).catch(error => {
+            console.error('Ошибка запроса:', error);
+        });
     }
 
     static async starBook(bookId) {

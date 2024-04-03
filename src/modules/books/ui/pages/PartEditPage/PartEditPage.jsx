@@ -24,13 +24,6 @@ export default function PartEditPage() {
     const { data, updatePageIndexValue, deletePageByIndex } = usePagination({
         bookId,
     });
-    // console.log(data.pages);
-    // console.log('Старое значение');
-    // console.log(data);
-
-    // increasePageIndex(2);
-    // console.log('Новое значение');
-    // console.log(data);
 
     const [contentData, setContentData] = useState({});
 

@@ -11,6 +11,8 @@
 .WrapperTableContentsAndBtn {
     height: 40px;
     display: flex;
+    /* align-items: center; */
+    padding: 0 10px;
     width: 100%;
     margin-bottom: 30px;
 }

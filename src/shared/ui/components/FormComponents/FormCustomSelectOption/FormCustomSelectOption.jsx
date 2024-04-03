@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cls from './FormCustomSelectOption.module.css';
 import classNames from 'classnames';
 import { useField } from 'formik';
@@ -6,7 +6,6 @@ import { useField } from 'formik';
 export default function FormCustomSelectOption({
     options,
     label,
-    defaultValue,
     IsClearSelection,
     clearSelectionText,
     clearOptionClassName,
@@ -21,7 +20,7 @@ export default function FormCustomSelectOption({
 }) {
     const [field, meta] = useField(props);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(defaultValue ?? 'Выберете значение');
+    const [selectedOption, setSelectedOption] = useState(field.value ?? 'Выберете значение');
 
     const handleOptionClick = option => {
         setSelectedOption(option);
@@ -29,25 +28,28 @@ export default function FormCustomSelectOption({
         setIsOpen(false);
     };
     const clearSelection = () => {
-        setSelectedOption(defaultValue ?? 'Выберете значение');
+        setSelectedOption('Выберете значение');
         field.onChange({ target: { value: '', name: props.name } });
     };
+
+    useEffect(() => {
+        const handleBlur = () => setIsOpen(false);
+        window.addEventListener('click', handleBlur);
+        return () => {
+            window.removeEventListener('click', handleBlur);
+        };
+    }, []);
 
     return (
         <div
             className={classNames(cls.container, containerClassName)}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={e => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+            }}
         >
             <span className={classNames(cls.label, labelClassName)}>{label}</span>
-            <button
-                className={cls.header}
-                onClick={e => e.preventDefault()}
-                onBlur={() => {
-                    setTimeout(() => {
-                        setIsOpen(false);
-                    }, 100);
-                }}
-            >
+            <button className={cls.header} onClick={e => e.preventDefault()}>
                 {selectedOption}
                 <span
                     className={classNames(cls.toggleArrow, {
