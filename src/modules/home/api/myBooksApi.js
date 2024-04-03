@@ -6,9 +6,30 @@ export const myBooksApi = createApi({
     endpoints: builder => ({
         getMyBooks: builder.query({
             queryFn: () => axiosInstance.get('/books/my'),
+            providesTags: ['Books'],
         }),
         createBook: builder.mutation({
-            queryFn: createBookData => axiosInstance.post('/books/write/', createBookData),
+            queryFn: createBookData => {
+                const createBookFormData = new FormData();
+                for (const key in createBookData) {
+                    createBookFormData.append(key, JSON.stringify(createBookData[key]));
+                }
+                return axiosInstance.post('/books/write/', createBookData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            },
+            invalidatesTags: ['Books'],
+        }),
+        editBook: builder.mutation({
+            queryFn: ({ bookId, editBookData }) => {
+                const createBookFormData = new FormData();
+                for (const key in editBookData) {
+                    createBookFormData.append(key, JSON.stringify(editBookData[key]));
+                }
+                return axiosInstance.post(`/books/write/${bookId}/edit`, editBookData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            },
         }),
     }),
 });

@@ -102,7 +102,7 @@ export const BookReadPage = () => {
         });
     };
 
-    const bookReaderObj = {
+    const bookReaderObj = dataBook && {
         bookId,
         fontSize: fontSize + 'px',
         pageNumber: +pageNumber,
@@ -112,7 +112,7 @@ export const BookReadPage = () => {
     };
 
     return (
-        dataBook.parts && (
+        dataBook && (
             <>
                 <div className='wrapperPage'>
                     <h1 className={stl.bookReadH1}>

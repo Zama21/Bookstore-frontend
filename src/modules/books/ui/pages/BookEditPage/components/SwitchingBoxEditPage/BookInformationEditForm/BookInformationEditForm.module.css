@@ -10,6 +10,13 @@
     width: 100%;
     grid-row: span 3;
 }
+
+.wrapperDescr {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
 .wrapperImg input {
     display: none;
 }
@@ -59,4 +66,18 @@
 .containerClassName {
     clear: left;
     width: 100%;
+}
+
+.submitActive {
+}
+
+.submitInactive {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
+.submitInactive:hover {
+    background-color: lightgray;
+    /* cursor: not-allowed; */
+    cursor: default;
 }

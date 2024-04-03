@@ -10,50 +10,37 @@ import { useBookData } from 'modules/books/domain/hooks/useBookData';
 import { FormField } from 'shared/ui/components/FormComponents/FormField/FormField';
 
 export default function PartEditPage() {
-    const navigate = useNavigate();
     const { bookId, partId } = useParams();
     const { data: dataBook } = useBookData(bookId);
-    console.log(dataBook, partId);
     return (
         <div className='wrapperPage'>
-            <Formik
-                initialValues={{
-                    content: '',
-                    partTitle: '',
-                }}
-                validationSchema={Yup.object({
-                    content: Yup.string().required('Обязательное поле'),
-                    partTitle: Yup.string()
-                        .min(4, 'Название должно быть не короче 4 символов')
-                        .required('Обязательное поле'),
-                })}
-                onSubmit={(values, { setSubmitting }) => {
-                    console.log('OnSubmit');
-                    console.log(values);
-                }}
-            >
-                {formik => (
-                    <Form
-                        onSubmit={formik.handleSubmit}
-                        className={cls.formWrapper}
-                    >
-                        <h2>
-                            {
-                                dataBook?.parts?.[
-                                    +partId - dataBook?.parts?.[0]?.id
-                                ]?.title
-                            }
-                        </h2>
-                        <FormField
-                            name='partTitle'
-                            type='text'
-                            label={'Название главы'}
-                        />
-                        <FormCKEditor name='content' />
-                        <FormButton type='submit'>Сохранить</FormButton>
-                    </Form>
-                )}
-            </Formik>
+            {dataBook && (
+                <Formik
+                    initialValues={{
+                        content: '',
+                        partTitle: '',
+                    }}
+                    validationSchema={Yup.object({
+                        content: Yup.string().required('Обязательное поле'),
+                        partTitle: Yup.string()
+                            .min(4, 'Название должно быть не короче 4 символов')
+                            .required('Обязательное поле'),
+                    })}
+                    onSubmit={(values, { setSubmitting }) => {
+                        console.log('OnSubmit');
+                        console.log(values);
+                    }}
+                >
+                    {formik => (
+                        <Form onSubmit={formik.handleSubmit} className={cls.formWrapper}>
+                            <h2>{dataBook?.parts?.[+partId - dataBook?.parts?.[0]?.id]?.title}</h2>
+                            <FormField name='partTitle' type='text' label={'Название главы'} />
+                            <FormCKEditor name='content' />
+                            <FormButton type='submit'>Сохранить</FormButton>
+                        </Form>
+                    )}
+                </Formik>
+            )}
         </div>
     );
 }

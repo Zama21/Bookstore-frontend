@@ -5,6 +5,7 @@ import ModalOfferToAuthorize from '../Modals/ModalOfferToAuthorize/ModalOfferToA
 import ModalAwareness from '../Modals/ModalAwareness/ModalAwareness.jsx';
 import { useDispatch } from 'react-redux';
 import { ClosingAnimationDelta } from 'modules/modals/domain/config.js';
+import ModalAlert from '../Modals/ModalAlert/ModalAlert.jsx';
 
 const ModalsLayer = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,8 @@ const ModalsLayer = () => {
                 return <ModalOfferToAuthorize {...commonProps} />;
             case ModalTypes.Awareness:
                 return <ModalAwareness {...commonProps} />;
+            case ModalTypes.AlertModal:
+                return <ModalAlert {...commonProps} />;
             default:
                 return <></>;
         }

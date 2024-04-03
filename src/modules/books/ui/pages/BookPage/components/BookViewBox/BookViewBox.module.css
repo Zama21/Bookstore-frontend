@@ -36,6 +36,7 @@
 .anchor {
     color: #337ab7;
     text-decoration: none;
+    /* margin-right: 10px; */
 }
 .anchor:hover {
     text-decoration: underline;
@@ -158,25 +159,6 @@
 
 .addViewStatistics {
     justify-content: space-evenly;
-}
-.bookPublicationStatus {
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 10px;
-}
-.bookPublicationStatus.finished {
-    color: #fff;
-    background: #6fbd49;
-}
-
-.bookPublicationStatus.unfinished {
-    color: #fff;
-    background: #1d7fd3;
-}
-
-.bookPublicationStatus.frozen {
-    color: #fff;
-    background: #999999;
 }
 
 .lifeCycleOfBook {

@@ -6,7 +6,6 @@ import { useField } from 'formik';
 export default function FormCustomSelectOption({
     options,
     label,
-    defaultValue,
     IsClearSelection,
     clearSelectionText,
     clearOptionClassName,
@@ -21,7 +20,7 @@ export default function FormCustomSelectOption({
 }) {
     const [field, meta] = useField(props);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(defaultValue ?? 'Выберете значение');
+    const [selectedOption, setSelectedOption] = useState(field.value ?? 'Выберете значение');
 
     const handleOptionClick = option => {
         setSelectedOption(option);
@@ -29,7 +28,7 @@ export default function FormCustomSelectOption({
         setIsOpen(false);
     };
     const clearSelection = () => {
-        setSelectedOption(defaultValue ?? 'Выберете значение');
+        setSelectedOption('Выберете значение');
         field.onChange({ target: { value: '', name: props.name } });
     };
 

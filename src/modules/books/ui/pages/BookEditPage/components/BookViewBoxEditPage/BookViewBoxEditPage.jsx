@@ -1,73 +1,39 @@
 import React from 'react';
+import defaultCover from 'shared/Img/defaultCover.jpg';
+import { BookPublicationStatus } from '../BookPublicationStatus/BookPublicationStatus.jsx';
 import stl from './BookViewBoxEditPage.module.css';
-import BookSvgSelector from '../../../BookPage/components/BookViewBox/svg/BookSvgSelector';
 
-export default function BookViewBoxEditPage({
-    author,
-    coverSrc,
-    series = {},
-    status,
-    title,
-    bookId,
-    cost,
-}) {
-    let divBookPublicationStatus = () => {
-        switch (status) {
-            case 'finished':
-                return (
-                    <div className={`${stl.bookPublicationStatus} ${stl.finished}  flxRow`}>
-                        <BookSvgSelector nameSvg='tick'></BookSvgSelector>
-                        <span>Полный текст</span>
-                    </div>
-                );
-            case 'unfinished':
-                return (
-                    <div className={`${stl.bookPublicationStatus} ${stl.unfinished}  flxRow`}>
-                        <BookSvgSelector nameSvg='unfinished'></BookSvgSelector>
-                        <span>В процессе</span>
-                    </div>
-                );
-            case 'frozen':
-                return (
-                    <div className={`${stl.bookPublicationStatus} ${stl.frozen}  flxRow`}>
-                        <BookSvgSelector nameSvg='snowflake'></BookSvgSelector>
-                        <span>Заморожена</span>
-                    </div>
-                );
-        }
-    };
-
+export default function BookViewBoxEditPage({ bookData }) {
     return (
         <div className={`${stl.wrapper} `}>
             <div className={`${stl.column} `}>
-                <img className={stl.img} src={coverSrc} alt='img' />
+                <img className={stl.img} src={bookData?.coverSrc ?? defaultCover} alt='img' />
             </div>
             <div className={`${stl.column} ${stl.columnSameWidth}`}>
                 <div className={stl.bookInformation}>
-                    <h1 className={stl.h1}>{title}</h1>
-                    {series && (
-                        <p className={stl.nonPriorityInformation}>
+                    <h1 className={stl.h1}>{bookData.title}</h1>
+                    {bookData.series?.name && (
+                        <p className={stl.nonPriorityInformation} key={'series'}>
                             <span className={stl.metaName}>Цикл: </span>
-                            <a className={stl.anchor} href=''>
-                                {series.name}
+                            <a className={stl.anchor} href='#'>
+                                {bookData.series.name}
                             </a>
                         </p>
                     )}
                     <p>
                         <span className={stl.metaName}>Жанры: </span>
-                        <a className={stl.anchor} href=''>
-                            Стихи
-                        </a>
-                        ,{' '}
-                        <a className={stl.anchor} href=''>
-                            Литрпг
-                        </a>
-                        ,{' '}
-                        <a className={stl.anchor} href=''>
-                            Любовный роман
-                        </a>
+                        {bookData.genres?.length > 0
+                            ? bookData.genres.map((genre, ind) => (
+                                  <React.Fragment key={genre}>
+                                      <a className={stl.anchor} href=''>
+                                          {genre}
+                                      </a>
+                                      {ind < bookData.genres.length - 1 && ', '}
+                                  </React.Fragment>
+                              ))
+                            : 'нет'}
                     </p>
-                    {divBookPublicationStatus()}
+                    {<BookPublicationStatus status={bookData.status} />}
                 </div>
             </div>
         </div>
