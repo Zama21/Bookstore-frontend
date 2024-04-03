@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useField } from 'formik';
 import classNames from 'classnames';
 import cls from './FormCKEditor.module.css';
+import './FormCKEditor.css';
 
-function FormCKEditor({ errorClassName, ...props }) {
-    const [field, meta] = useField(props);
+function FormCKEditor({
+    errorClassName,
+    selectedContent,
+    handleContentPageChange,
+    ...props
+}) {
     const [editorData, setEditorData] = useState('');
+
+    useEffect(() => {
+        if ((selectedContent ?? true) == true) return;
+        setEditorData(selectedContent);
+    }, [selectedContent]);
 
     const handleEditorChange = (event, editor) => {
         const data = editor.getData();
         setEditorData(data);
-        field.onChange({ target: { value: data, name: props.name } });
+        handleContentPageChange(data);
     };
 
     return (
         <div className={cls.wrapperEditor}>
             <CKEditor
                 editor={ClassicEditor}
+                data={editorData}
                 config={{
                     toolbar: [
                         'heading',
@@ -36,11 +47,6 @@ function FormCKEditor({ errorClassName, ...props }) {
                 }}
                 onChange={handleEditorChange}
             />
-            {meta.touched && meta.error ? (
-                <div className={classNames(cls.error, errorClassName)}>
-                    {meta.error}
-                </div>
-            ) : null}
         </div>
     );
 }

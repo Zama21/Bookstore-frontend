@@ -45,7 +45,7 @@ export const AppRouter = () => {
                         element={<BookEditPage />}
                     />
                     <Route
-                        path='book/:bookId/part/:partId/edit'
+                        path='book/:bookId/partEdit'
                         element={<PartEditPage />}
                     />
                 </Route>
