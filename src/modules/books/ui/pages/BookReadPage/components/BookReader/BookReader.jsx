@@ -1,11 +1,10 @@
-import { BookReadPageApi } from 'modules/books/api/bookReadPageApi';
-import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
+import { usePagination } from 'modules/books/domain/hooks/usePagination';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReadingPagination from '../ReadingPagination/ReadingPagination';
 import cls from './BookReader.module.css';
-import { useNavigate } from 'react-router-dom';
 import payImg from './Img/payImg.png';
-import { usePagination } from 'modules/books/domain/hooks/usePagination';
-import DOMPurify from 'dompurify';
 
 const byeContent = (
     <>
@@ -23,26 +22,19 @@ const byeContent = (
     </>
 );
 
-const BookReader = ({
-    bookId,
-    fontSize,
-    pageNumber,
-    selectedPart,
-    parts,
-    dataBook,
-}) => {
+const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBook }) => {
     const navigate = useNavigate();
     const [content, setContent] = useState(null);
     const { data } = usePagination({
         bookId,
-        onError403: () => setContent(byeContent),
+        onError403: () => {
+            setContent(byeContent);
+        },
         onErrorElse: err => {
             console.log('get pages err', err);
             navigateToCurrentReadingPage();
         },
     });
-
-    console.log(data);
 
     const navigateToCurrentReadingPage = () => {
         // console.log(parts, dataBook);
@@ -59,14 +51,12 @@ const BookReader = ({
     }, [data.pages, pageNumber]);
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
-        const currentPartIndex = parts.findIndex(
-            part => part.id === selectedPart
-        );
+        const currentPartIndex = parts.findIndex(part => part.id === selectedPart);
 
         navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                parts[currentPartIndex + deltaPart].id
-            }&pageNumber=${newPageNumber + deltaPage}`
+            `/book/${bookId}/read?chapterNumber=${parts[currentPartIndex + deltaPart].id}&pageNumber=${
+                newPageNumber + deltaPage
+            }`
         );
     };
 
@@ -90,9 +80,10 @@ const BookReader = ({
         firstPageIndex: data.firstPageIndex,
     };
 
-    const cleanContent = DOMPurify.sanitize(content, {
-        USE_PROFILES: { html: true },
-    });
+    // const cleanContent = DOMPurify.sanitize(content, {
+    //     USE_PROFILES: { html: true },
+    // });
+    // console.log(typeof cleanContent);
 
     return (
         data &&
@@ -103,8 +94,10 @@ const BookReader = ({
                 <div
                     className={cls.WrapperBodyText}
                     style={{ fontSize: fontSize }}
-                    dangerouslySetInnerHTML={{ __html: cleanContent }}
-                ></div>
+                    // dangerouslySetInnerHTML={{ __html: cleanContent }}
+                >
+                    {content}
+                </div>
                 <span className={cls.divider}></span>
                 <ReadingPagination {...paginationObj} />
             </div>

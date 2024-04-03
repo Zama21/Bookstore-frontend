@@ -23,6 +23,8 @@ export default function PartEditPage() {
     const { data: dataBook } = useBookData(bookId);
     const { data, updatePageIndexValue, deletePageByIndex } = usePagination({
         bookId,
+        onError403: () => {},
+        onErrorElse: () => {},
     });
 
     const [contentData, setContentData] = useState({});
@@ -41,9 +43,7 @@ export default function PartEditPage() {
     }, [data, pageNumber]);
 
     const handleSelectItem = newPageNumber => {
-        navigate(
-            `/book/${bookId}/partEdit?chapterNumber=${chapterNumber}&pageNumber=${newPageNumber}`
-        );
+        navigate(`/book/${bookId}/partEdit?chapterNumber=${chapterNumber}&pageNumber=${newPageNumber}`);
     };
 
     const gettingContent = () => {
@@ -71,9 +71,7 @@ export default function PartEditPage() {
 
     function savePagesToDatabase() {
         Object.keys(contentData).forEach(key => {
-            BookEditPartApi.updatePage(key, contentData[key]).catch(err =>
-                console.log(err)
-            );
+            BookEditPartApi.updatePage(key, contentData[key]).catch(err => console.log(err));
         });
     }
 
@@ -107,10 +105,7 @@ export default function PartEditPage() {
             {data?.firstPageIndex && dataBook?.parts && (
                 <Formik
                     initialValues={{
-                        partTitle:
-                            dataBook?.parts?.find(
-                                part => part.id == chapterNumber
-                            )?.title || '',
+                        partTitle: dataBook?.parts?.find(part => part.id == chapterNumber)?.title || '',
                     }}
                     validationSchema={Yup.object({
                         partTitle: Yup.string()
@@ -123,26 +118,13 @@ export default function PartEditPage() {
                     }}
                 >
                     {formik => (
-                        <Form
-                            onSubmit={formik.handleSubmit}
-                            className={cls.formWrapper}
-                        >
+                        <Form onSubmit={formik.handleSubmit} className={cls.formWrapper}>
                             <h2>{dataBook?.title}</h2>
-                            <FormField
-                                name='partTitle'
-                                type='text'
-                                label={'Название главы'}
-                            />
+                            <FormField name='partTitle' type='text' label={'Название главы'} />
                             <PartEditPagination {...paginationObj} />
                             <FormCKEditor
-                                handleContentPageChange={
-                                    handleContentPageChange
-                                }
-                                selectedContent={
-                                    contentData?.[
-                                        getIdByIndex(data.pages, pageNumber)
-                                    ]
-                                }
+                                handleContentPageChange={handleContentPageChange}
+                                selectedContent={contentData?.[getIdByIndex(data.pages, pageNumber)]}
                             />
                             <FormButton type='submit'>Сохранить</FormButton>
                         </Form>

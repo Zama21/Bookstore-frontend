@@ -3,6 +3,7 @@ import stl, { bookDate } from './BookViewBox.module.css';
 import BookSvgSelector from './svg/BookSvgSelector';
 import { Link } from 'react-router-dom';
 import { BookPublicationStatus } from '../../../BookEditPage/components/BookPublicationStatus/BookPublicationStatus.jsx';
+import defaultCover from 'shared/Img/defaultCover.jpg';
 
 function formatDate(date) {
     let day = date.getDate();
@@ -75,7 +76,7 @@ export default function BookViewBox({
     return (
         <div className={`${stl.wrapper} `}>
             <div className={`${stl.column} `}>
-                <img className={stl.img} src={coverSrc} alt='img' />
+                <img className={stl.img} src={coverSrc ?? defaultCover} alt='img' />
             </div>
             <div className={`${stl.column} ${stl.columnSameWidth}`}>
                 <div className={stl.bookInformation}>
