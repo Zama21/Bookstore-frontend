@@ -107,6 +107,7 @@ export default function BookInformationEditForm(props) {
                                                         const img = event.currentTarget.files[0];
                                                         if (await validateBookCover(img)) {
                                                             form.setFieldValue('bookCover', img);
+                                                            formik.setTouched({ bookCover: true });
                                                         } else {
                                                             alertModal.open({
                                                                 text: 'Формат файла некорректный',

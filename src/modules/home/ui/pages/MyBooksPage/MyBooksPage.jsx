@@ -7,7 +7,7 @@ import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
 import defaultCover from 'shared/Img/defaultCover.jpg';
 import searchSvg from '../../../assets/search.svg';
 import libSvg from '../../../assets/lib.svg';
-import editSvg from '../../../assets/lib.svg';
+import editSvg from '../../../assets/edit.svg';
 import { BookPublicationStatus } from 'modules/books/ui/pages/BookEditPage/components/BookPublicationStatus/BookPublicationStatus.jsx';
 import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
 
