@@ -26,10 +26,9 @@
 }
 
 .ck-content p,
-h1,
-h2,
-h3,
-p {
+.ck-content h1,
+.ck-content h2,
+.ck-content h3 {
     margin: 0 !important;
     text-indent: 1rem;
     line-height: 1.5em;
