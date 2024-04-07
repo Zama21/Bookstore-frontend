@@ -28,4 +28,32 @@ export class BookEditPartApi {
                 console.error('Ошибка запроса:', error);
             });
     }
+    static async deletePart(bookPartId) {
+        return axiosInstance
+            .delete(`/books/write/parts/${bookPartId}`)
+            .catch(error => {
+                console.error('Ошибка запроса:', error);
+            });
+    }
+    static async addNewPart(bookPartId, title) {
+        const bodyData = {
+            title,
+        };
+        return axiosInstance
+            .post(`/books/write/${bookPartId}/parts`, bodyData)
+            .catch(error => {
+                console.error('Ошибка запроса:', error);
+            });
+    }
+    static async changeOrderParts(partsIds, bookId) {
+        const bodyData = {
+            partsIds,
+        };
+
+        return axiosInstance
+            .post(`/books/write/${bookId}/parts/order`, bodyData)
+            .catch(error => {
+                console.error('Ошибка запроса:', error);
+            });
+    }
 }

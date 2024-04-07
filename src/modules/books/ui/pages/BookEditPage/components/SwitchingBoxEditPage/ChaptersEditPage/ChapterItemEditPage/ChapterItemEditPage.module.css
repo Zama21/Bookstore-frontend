@@ -61,11 +61,14 @@
 
 .bookPartsMenu {
     position: relative;
-    padding: 10px;
-    padding-left: 20px;
-    margin: 0 0 0 24px;
+    padding: 5px;
+    /* padding-left: 20px; */
+    margin: 0 0 0 12px;
     cursor: pointer;
     color: #dddddd;
+}
+.bookPartsMenu:hover {
+    padding-left: 30px;
 }
 .bookPartsMenu:hover button {
     color: #333333;
@@ -93,7 +96,7 @@
     display: none;
     min-width: 160px;
     position: absolute;
-    right: 50px;
+    right: 35px;
     top: 10px;
     background: #ffffff;
     box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08), 0 -4px 20px rgba(0, 0, 0, 0.08);

@@ -37,7 +37,9 @@ export default function SwitchingBoxEditPage({ description, title, bookData }) {
                 freeChaptersCount: values.freeChaptersCount,
                 cost: values.cost,
                 ageRestriction: values.ageRestriction,
-                genres: [values.genre1, values.genre2, values.genre3].filter(Boolean),
+                genres: [values.genre1, values.genre2, values.genre3].filter(
+                    Boolean
+                ),
                 bookCover: values.bookCover,
                 bookStatus: Object.keys(BookStatusOptionsMap).find(
                     key => BookStatusOptionsMap[key] === values.bookStatus
@@ -48,7 +50,7 @@ export default function SwitchingBoxEditPage({ description, title, bookData }) {
 
     switch (SelectedSection) {
         case 'tableContents':
-            content = <ChaptersEditPage />;
+            content = <ChaptersEditPage bookData={bookData} />;
             break;
         case 'bookInformation':
             content = (
@@ -65,7 +67,9 @@ export default function SwitchingBoxEditPage({ description, title, bookData }) {
                 <button
                     onClick={() => handleClick('tableContents')}
                     className={`${
-                        SelectedSection == 'tableContents' ? activeClassForBtn : stl.SwitchBox
+                        SelectedSection == 'tableContents'
+                            ? activeClassForBtn
+                            : stl.SwitchBox
                     }`}
                 >
                     Оглавление
@@ -73,7 +77,9 @@ export default function SwitchingBoxEditPage({ description, title, bookData }) {
                 <button
                     onClick={() => handleClick('bookInformation')}
                     className={`${
-                        SelectedSection == 'bookInformation' ? activeClassForBtn : stl.SwitchBox
+                        SelectedSection == 'bookInformation'
+                            ? activeClassForBtn
+                            : stl.SwitchBox
                     }`}
                 >
                     Информация о книге
