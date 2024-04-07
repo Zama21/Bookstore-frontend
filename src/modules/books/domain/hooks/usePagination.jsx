@@ -34,7 +34,12 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
     useEffect(() => {
         if (isBookPageLoaded(pageNumber)) return;
 
-        BookReadPageApi.gettingPageRange(bookId, pageNumber, pageNumber, pageNumber)
+        BookReadPageApi.gettingPageRange(
+            bookId,
+            pageNumber,
+            pageNumber,
+            pageNumber
+        )
             .then(res => {
                 setData(prev => {
                     return {
@@ -64,7 +69,10 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
                 ...prev,
                 pages: prev.pages.map(page => ({
                     ...page,
-                    index: page.index > thresholdIndex ? page.index + delta : page.index,
+                    index:
+                        page.index > thresholdIndex
+                            ? page.index + delta
+                            : page.index,
                 })),
             };
         });
@@ -80,7 +88,8 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
 
     return {
         data,
-        updatePageIndexValue: (thresholdIndex, delta) => updatePageIndexValue(thresholdIndex, delta),
+        updatePageIndexValue: (thresholdIndex, delta) =>
+            updatePageIndexValue(thresholdIndex, delta),
         deletePageByIndex: indexToDelete => deletePageByIndex(indexToDelete),
     };
 };

@@ -31,7 +31,7 @@ const ReadingPagination = ({
             textLeftBtn,
             textRightBtn,
         });
-    }, [selectedPart, parts, start, end, selected]);
+    }, [selectedPart, parts, start, end, selected, firstPageIndex]);
 
     const handleSideBtnClick = direction => {
         if (direction == 'left') {

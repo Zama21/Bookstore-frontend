@@ -22,7 +22,14 @@ const byeContent = (
     </>
 );
 
-const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBook }) => {
+const BookReader = ({
+    bookId,
+    fontSize,
+    pageNumber,
+    selectedPart,
+    parts,
+    dataBook,
+}) => {
     const navigate = useNavigate();
     const [content, setContent] = useState(null);
     const { data } = usePagination({
@@ -37,12 +44,11 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
     });
 
     const navigateToCurrentReadingPage = () => {
-        // console.log(parts, dataBook);
         if (parts.length === 0) return;
         navigate(
-            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0]?.id}&pageNumber=${
-                dataBook.currentPage ?? 1
-            }`
+            `/book/${bookId}/read?chapterNumber=${
+                dataBook.currentPart?.id ?? parts[0]?.id
+            }&pageNumber=${dataBook.currentPage ?? 1}`
         );
     };
 
@@ -51,12 +57,15 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
     }, [data.pages, pageNumber]);
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
-        const currentPartIndex = parts.findIndex(part => part.id === selectedPart);
-
+        const currentPartIndex = parts.findIndex(
+            part => part.id === selectedPart
+        );
+        // console.log(parts);
+        // console.log(currentPartIndex, deltaPart);
         navigate(
-            `/book/${bookId}/read?chapterNumber=${parts[currentPartIndex + deltaPart].id}&pageNumber=${
-                newPageNumber + deltaPage
-            }`
+            `/book/${bookId}/read?chapterNumber=${
+                parts[currentPartIndex + deltaPart].id
+            }&pageNumber=${newPageNumber + deltaPage}`
         );
     };
 
@@ -94,10 +103,8 @@ const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBoo
                 <div
                     className={cls.WrapperBodyText}
                     style={{ fontSize: fontSize }}
-                    // dangerouslySetInnerHTML={{ __html: cleanContent }}
-                >
-                    {content}
-                </div>
+                    dangerouslySetInnerHTML={{ __html: content }}
+                ></div>
                 <span className={cls.divider}></span>
                 <ReadingPagination {...paginationObj} />
             </div>

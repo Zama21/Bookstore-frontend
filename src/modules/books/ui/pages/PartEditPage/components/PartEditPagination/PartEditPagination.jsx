@@ -18,6 +18,7 @@ const PartEditPagination = ({
     deletePage,
 }) => {
     const navigate = useNavigate();
+    const [deltaEnd, setDeltaEnd] = useState(0);
     const handleSideBtnClick = direction => {
         if (direction == 'add') {
             const prevPageId = getIdByIndex(pages, selected);
@@ -25,6 +26,7 @@ const PartEditPagination = ({
             BookEditPartApi.addNewPage(partId, prevPageId)
                 .then(res => {
                     updatePageIndexValue(selected, 1);
+                    setDeltaEnd(0);
                     navigate(
                         `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${
                             selected + 1
@@ -36,15 +38,24 @@ const PartEditPagination = ({
             const pageId = getIdByIndex(pages, selected);
             BookEditPartApi.deletePage(pageId)
                 .then(res => {
-                    console.log('Удалили!');
                     deletePage(pageId);
-                    updatePageIndexValue(selected, -1);
+                    if (start + firstPageIndex - 1 == selected) {
+                        updatePageIndexValue(selected, 1);
+                        setDeltaEnd(1);
 
-                    navigate(
-                        `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${
-                            selected - 1
-                        }`
-                    );
+                        navigate(
+                            `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${selected}`
+                        );
+                    } else {
+                        updatePageIndexValue(selected, -1);
+                        setDeltaEnd(0);
+
+                        navigate(
+                            `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${
+                                selected - 1
+                            }`
+                        );
+                    }
                 })
                 .catch(err => console.log(err));
         }
@@ -61,15 +72,17 @@ const PartEditPagination = ({
     return (
         <div className={cls.container}>
             <div
-                className={classNames(cls.item, cls.delBtn)}
-                onClick={() => handleSideBtnClick('del')}
+                className={classNames(cls.item, cls.delBtn, {
+                    [cls.disabled]: start == end,
+                })}
+                onClick={() => start != end && handleSideBtnClick('del')}
             >
                 <span className={cls.delBtn}>-</span>
             </div>
             <NumberRangeDisplay
                 onSelect={onSelect}
                 start={start}
-                end={end}
+                end={end - deltaEnd}
                 selected={selected}
                 firstPageIndex={firstPageIndex}
             />

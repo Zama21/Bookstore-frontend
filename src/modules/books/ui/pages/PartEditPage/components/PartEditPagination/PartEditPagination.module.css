@@ -44,7 +44,7 @@
     font-size: 2rem;
     color: #007a33;
 }
-.item:hover .delBtn {
+.item:hover:not(.disabled) .delBtn {
     font-size: 3rem;
     color: rgb(229, 0, 0);
 }
