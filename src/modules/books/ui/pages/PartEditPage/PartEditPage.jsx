@@ -29,10 +29,6 @@ export default function PartEditPage() {
             onErrorElse: () => {},
         });
 
-    console.log('data.pages');
-    console.log(data.pages);
-    console.log('===============================');
-
     const handleSelectItem = newPageNumber => {
         navigate(
             `/book/${bookId}/partEdit?chapterNumber=${chapterNumber}&pageNumber=${newPageNumber}`

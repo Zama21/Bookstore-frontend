@@ -41,7 +41,7 @@ const PartEditPagination = ({
                     deletePage();
                     if (start + firstPageIndex - 1 == selected) {
                         updatePageIndexValue(selected, -1);
-                        setDeltaEnd(1);
+                        setDeltaEnd(prev => prev + 1);
 
                         navigate(
                             `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${selected}`
@@ -73,9 +73,11 @@ const PartEditPagination = ({
         <div className={cls.container}>
             <div
                 className={classNames(cls.item, cls.delBtn, {
-                    [cls.disabled]: start == end,
+                    [cls.disabled]: start == end - deltaEnd,
                 })}
-                onClick={() => start != end && handleSideBtnClick('del')}
+                onClick={() =>
+                    start != end - deltaEnd && handleSideBtnClick('del')
+                }
             >
                 <span className={cls.delBtn}>-</span>
             </div>
