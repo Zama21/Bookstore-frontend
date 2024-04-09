@@ -88,6 +88,7 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
 
     return {
         data,
+        setData,
         updatePageIndexValue: (thresholdIndex, delta) =>
             updatePageIndexValue(thresholdIndex, delta),
         deletePageByIndex: indexToDelete => deletePageByIndex(indexToDelete),

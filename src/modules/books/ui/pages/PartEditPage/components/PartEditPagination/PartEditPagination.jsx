@@ -38,9 +38,9 @@ const PartEditPagination = ({
             const pageId = getIdByIndex(pages, selected);
             BookEditPartApi.deletePage(pageId)
                 .then(res => {
-                    deletePage(pageId);
+                    deletePage();
                     if (start + firstPageIndex - 1 == selected) {
-                        updatePageIndexValue(selected, 1);
+                        updatePageIndexValue(selected, -1);
                         setDeltaEnd(1);
 
                         navigate(
