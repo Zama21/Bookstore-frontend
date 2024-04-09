@@ -11,6 +11,7 @@ import { FormField } from 'shared/ui/components/FormComponents/FormField/FormFie
 import PartEditPagination from './components/PartEditPagination/PartEditPagination';
 import { usePagination } from 'modules/books/domain/hooks/usePagination';
 import { BookEditPartApi } from 'modules/auth/api/BookEditPartApi';
+import { item } from './components/PartEditPagination/PartEditPagination.module.css';
 
 export default function PartEditPage() {
     const navigate = useNavigate();
@@ -21,26 +22,16 @@ export default function PartEditPage() {
     const pageNumber = +searchParams.get('pageNumber');
 
     const { data: dataBook } = useBookData(bookId);
-    const { data, updatePageIndexValue, deletePageByIndex } = usePagination({
-        bookId,
-        onError403: () => {},
-        onErrorElse: () => {},
-    });
+    const { data, setData, updatePageIndexValue, deletePageByIndex } =
+        usePagination({
+            bookId,
+            onError403: () => {},
+            onErrorElse: () => {},
+        });
 
-    const [contentData, setContentData] = useState({});
-
-    const updateContent = (id, newContent) => {
-        if (!id) return;
-
-        setContentData(prevData => ({
-            ...prevData,
-            [id]: newContent,
-        }));
-    };
-
-    useEffect(() => {
-        updateContent(...gettingContent());
-    }, [data, pageNumber]);
+    console.log('data.pages');
+    console.log(data.pages);
+    console.log('===============================');
 
     const handleSelectItem = newPageNumber => {
         navigate(
@@ -48,44 +39,28 @@ export default function PartEditPage() {
         );
     };
 
-    const gettingContent = () => {
-        const page = data.pages.find((page, index) => {
-            return page.index === pageNumber;
-        });
-        return [page?.id, page?.content];
-    };
-    function getIdByIndex(data, index) {
-        const item = data?.find(item => item.index === index);
-        if (item) {
-            return item.id;
-        }
-        return null;
-    }
-    function deletePage(pageId) {
+    function deletePage() {
         deletePageByIndex(pageNumber);
-
-        setContentData(prev => {
-            const newContentData = { ...prev };
-            delete newContentData[pageId];
-            return newContentData;
-        });
     }
 
     function savePagesToDatabase() {
-        Object.keys(contentData).forEach(key => {
-            BookEditPartApi.updatePage(key, contentData[key]).catch(err =>
+        data.pages.forEach(item => {
+            BookEditPartApi.updatePage(item.id, item.content).catch(err =>
                 console.log(err)
             );
         });
     }
 
     function handleContentPageChange(content) {
-        const pageId = getIdByIndex(data.pages, pageNumber);
-
-        setContentData(prev => {
+        setData(prev => {
             return {
                 ...prev,
-                [pageId]: content,
+                pages: prev.pages.map((item, index) => {
+                    if (item.index == pageNumber) {
+                        item.content = content;
+                    }
+                    return item;
+                }),
             };
         });
     }
@@ -103,6 +78,15 @@ export default function PartEditPage() {
         updatePageIndexValue,
         deletePage,
     };
+
+    function getContentByIndex(index) {
+        for (let item of data.pages) {
+            if (item.index === index) {
+                return item.content;
+            }
+        }
+        return null;
+    }
 
     return (
         <div className='wrapperPage'>
@@ -140,11 +124,7 @@ export default function PartEditPage() {
                                 handleContentPageChange={
                                     handleContentPageChange
                                 }
-                                selectedContent={
-                                    contentData?.[
-                                        getIdByIndex(data.pages, pageNumber)
-                                    ]
-                                }
+                                selectedContent={getContentByIndex(pageNumber)}
                             />
                             <FormButton type='submit'>Сохранить</FormButton>
                         </Form>
