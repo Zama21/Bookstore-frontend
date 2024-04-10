@@ -101,6 +101,11 @@ export default function PartEditPage() {
                     })}
                     onSubmit={(values, { setSubmitting }) => {
                         console.log('OnSubmit');
+
+                        BookEditPartApi.updateTittlePart(
+                            chapterNumber,
+                            values.partTitle
+                        );
                         savePagesToDatabase();
                     }}
                 >

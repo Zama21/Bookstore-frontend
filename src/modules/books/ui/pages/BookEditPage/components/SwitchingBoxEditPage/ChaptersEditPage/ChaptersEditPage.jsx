@@ -9,6 +9,7 @@ export default function ChaptersEditPage({ bookData }) {
     const [chapters, setChapters] = useState(bookData.parts);
     const [isReversed, setIsReversed] = useState(false);
     const [isErrorValidateTitle, setIsErrorValidateTitle] = useState(false);
+    const [isUpdateFirstPage, setIsUpdateFirstPage] = useState(false);
     // console.log(bookData);
     // console.log(chapters);
 
@@ -25,12 +26,20 @@ export default function ChaptersEditPage({ bookData }) {
                 }
                 return { ...item, isFree: false };
             });
+
+            let arrPartsForOrder = newArrParts.map((item, index) => {
+                return item.id;
+            });
+
+            arrPartsForOrder = isReversed
+                ? arrPartsForOrder.reverse()
+                : arrPartsForOrder;
             BookEditPartApi.changeOrderParts(
-                newArrParts.map((item, index) => {
-                    return item.id;
-                }),
+                arrPartsForOrder,
                 bookData.id
-            );
+            ).then(res => {
+                setIsUpdateFirstPage(true);
+            });
 
             return newArrParts;
         });
@@ -44,20 +53,6 @@ export default function ChaptersEditPage({ bookData }) {
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
 
-        // items = items.map((item, index) => {
-        //     if (isReversed) {
-        //         if (index < bookData.freeChaptersCount) {
-        //             return { ...item, isFree: true };
-        //         } else return { ...item, isFree: false };
-        //     } else {
-        //         if (index >= bookData.freeChaptersCount) {
-        //             return { ...item, isFree: false };
-        //         } else return { ...item, isFree: true };
-        //     }
-
-        //     return item;
-        // });
-
         setChapters(items);
         changeBuyPart();
     };
@@ -66,6 +61,7 @@ export default function ChaptersEditPage({ bookData }) {
         setChapters(prevChapters => {
             return prevChapters.filter(chapter => chapter.id !== chapterId);
         });
+        setIsUpdateFirstPage(true);
     };
     const addChapter = chapterTitle => {
         if (chapterTitle.trim().length < 3) {
@@ -132,6 +128,12 @@ export default function ChaptersEditPage({ bookData }) {
                                             <ChapterItemEditPage
                                                 {...chapter}
                                                 bookId={bookData.id}
+                                                isUpdateFirstPage={
+                                                    isUpdateFirstPage
+                                                }
+                                                setIsUpdateFirstPage={
+                                                    setIsUpdateFirstPage
+                                                }
                                                 deleteChapter={deleteChapter}
                                             />
                                             {provided.placeholder}
