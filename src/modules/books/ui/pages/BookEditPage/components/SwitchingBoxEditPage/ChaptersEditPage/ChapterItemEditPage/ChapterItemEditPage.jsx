@@ -36,10 +36,13 @@ export default function ChapterItemEditPage({
     updatedAt,
     bookId,
     deleteChapter,
+    isUpdateFirstPage,
+    setIsUpdateFirstPage,
 }) {
     const [pageNumber, setPageNumber] = useState(1);
 
     useEffect(() => {
+        console.log('fegtg');
         BookReadPageApi.gettingChapterMetaInformation(bookId, id, 0).then(
             res => {
                 if (res.data.firstPageIndex > res.data.lastPageIndex) {
@@ -47,11 +50,12 @@ export default function ChapterItemEditPage({
                         console.log(err)
                     );
                 }
+                setIsUpdateFirstPage(false);
 
                 setPageNumber(res.data.firstPageIndex);
             }
         );
-    }, [bookId, id]);
+    }, [bookId, id, isUpdateFirstPage]);
 
     // function getPageNumber() {
     //     BookReadPageApi.gettingChapterMetaInformation(bookId, id, 0).then(

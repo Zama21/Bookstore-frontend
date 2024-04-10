@@ -28,6 +28,20 @@ export class BookEditPartApi {
                 console.error('Ошибка запроса:', error);
             });
     }
+
+    static async updateTittlePart(bookPartId, title) {
+        const bodyData = {
+            title,
+        };
+
+        console.log(bookPartId, title);
+        return axiosInstance
+            .post(`/books/write/parts/${bookPartId}`, bodyData)
+            .catch(error => {
+                console.error('Ошибка запроса:', error);
+            });
+    }
+
     static async deletePart(bookPartId) {
         return axiosInstance
             .delete(`/books/write/parts/${bookPartId}`)
