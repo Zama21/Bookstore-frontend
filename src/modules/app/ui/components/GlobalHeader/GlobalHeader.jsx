@@ -7,9 +7,12 @@ import { useDispatch } from 'react-redux';
 import { thunkLogout } from 'modules/auth/domain/thunks/logout.js';
 import GlobalHeaderSvgSelector from './svg/GlobalHeaderSvgSelector';
 import useScrollDirection from 'shared/hooks/useScrollDirection';
+import { useSidebar } from 'modules/home/domain/useSidebar.js';
+import { ProfilePhoto } from 'modules/home/ui/components/ProfilePhoto/ProfilePhoto.jsx';
 
 export const GlobalHeader = ({ show }) => {
     const scrollDirection = useScrollDirection();
+    const sidebar = useSidebar();
     const { isAuthed } = useAuth();
     const dispatch = useDispatch();
     const [navLinks, setNavLinks] = useState(guestNavLinks);
@@ -42,6 +45,7 @@ export const GlobalHeader = ({ show }) => {
                                 <button onClick={handleLogout}>Выход</button>
                             </li>
                         )}
+                        <ProfilePhoto onClick={sidebar.toggle} />
                     </ul>
                 </nav>
             </div>

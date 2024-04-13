@@ -11,7 +11,8 @@
 }
 
 .main {
-    min-width: 750px;
+    width: 1050px;
+    transition: all 0.3s ease-out;
 }
 
 .title {
@@ -21,4 +22,16 @@
     text-align: left;
     border-bottom: 3px solid rgba(0, 0, 0, 0.361);
     padding-bottom: 6px;
+}
+
+@media (max-width: 1200px) {
+    .main {
+        width: 900px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .main {
+        width: 700px;
+    }
 }

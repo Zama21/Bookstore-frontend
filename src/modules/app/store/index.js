@@ -5,12 +5,14 @@ import { bookReadReducer } from 'modules/books/store/bookReadSlice.js';
 import { profileApi } from 'modules/home/api/profileApi.js';
 import { myBooksApi } from 'modules/home/api/myBooksApi.js';
 import { sharedApi } from 'shared/api/sharedApi.js';
+import { homeReducer } from 'modules/home/store/homeSlice.js';
 
 export const store = configureStore({
     reducer: combineReducers({
         auth: authReducer,
         modals: modalsReducer,
         bookRead: bookReadReducer,
+        home: homeReducer,
         [profileApi.reducerPath]: profileApi.reducer,
         [myBooksApi.reducerPath]: myBooksApi.reducer,
         [sharedApi.reducerPath]: sharedApi.reducer,
