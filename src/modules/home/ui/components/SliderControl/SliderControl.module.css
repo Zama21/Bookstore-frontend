@@ -1,0 +1,20 @@
+.control {
+    cursor: pointer;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    transition-duration: 0.3s;
+}
+
+.control:hover {
+    background-color: lightgray;
+}
+
+.controlContent {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

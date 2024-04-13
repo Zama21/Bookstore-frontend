@@ -10,6 +10,7 @@ import libSvg from '../../../assets/lib.svg';
 import editSvg from '../../../assets/edit.svg';
 import { BookPublicationStatus } from 'modules/books/ui/pages/BookEditPage/components/BookPublicationStatus/BookPublicationStatus.jsx';
 import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
+import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
 
 export const MyBooksPage = () => {
     const { data: books, isLoading } = myBooksApi.useGetMyBooksQuery();
@@ -36,7 +37,7 @@ export const MyBooksPage = () => {
                     />
                 </div>
                 {isLoading ? (
-                    <p className={cls.loading}>загрузка...</p>
+                    <LoadingSpinner />
                 ) : (
                     <ul className={cls.bookList}>
                         {books.length > 0 ? (

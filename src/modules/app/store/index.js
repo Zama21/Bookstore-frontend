@@ -6,6 +6,7 @@ import { profileApi } from 'modules/home/api/profileApi.js';
 import { myBooksApi } from 'modules/home/api/myBooksApi.js';
 import { sharedApi } from 'shared/api/sharedApi.js';
 import { homeReducer } from 'modules/home/store/homeSlice.js';
+import { bookCategoriesApi } from 'modules/home/api/bookCategoriesApi.js';
 
 export const store = configureStore({
     reducer: combineReducers({
@@ -16,11 +17,13 @@ export const store = configureStore({
         [profileApi.reducerPath]: profileApi.reducer,
         [myBooksApi.reducerPath]: myBooksApi.reducer,
         [sharedApi.reducerPath]: sharedApi.reducer,
+        [bookCategoriesApi.reducerPath]: bookCategoriesApi.reducer,
     }),
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
             profileApi.middleware,
             myBooksApi.middleware,
-            sharedApi.middleware
+            sharedApi.middleware,
+            bookCategoriesApi.middleware
         ),
 });
