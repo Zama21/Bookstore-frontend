@@ -7,6 +7,7 @@ import walletSrc from '../../../assets/wallet.svg';
 import cls from './Sidebar.module.css';
 import { useSidebar } from '../../../domain/useSidebar.js';
 import { ProfilePhoto } from '../../components/ProfilePhoto/ProfilePhoto.jsx';
+import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
 
 const menuLinks = [
     {

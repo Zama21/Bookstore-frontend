@@ -7,7 +7,7 @@ export const useBookPage = () => {
     const { isAuthed } = useAuth();
     const { bookId } = useParams();
 
-    const { data } = bookBasicApi.useGetBookDataQuery(bookId);
+    const { data, isLoading } = bookBasicApi.useGetBookDataQuery(bookId);
     const [removeFromLibrary] = bookBasicApi.useRemoveFromLibraryMutation(bookId);
     const [addToLibrary] = bookBasicApi.useAddToLibraryMutation(bookId);
     const [starBook] = bookBasicApi.useStarBookMutation(bookId);
@@ -37,6 +37,7 @@ export const useBookPage = () => {
 
     return {
         data,
+        isLoading,
         bookId,
 
         control: {

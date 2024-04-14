@@ -1,4 +1,10 @@
-import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import { BookCreatePage } from 'modules/books/ui/pages/BookCreatePage/BookCreatePage.jsx';
+import BookEditPage from 'modules/books/ui/pages/BookEditPage/BookEditPage.jsx';
+import PartEditPage from 'modules/books/ui/pages/PartEditPage/PartEditPage.jsx';
+import { MyBooksPage } from 'modules/home/ui/pages/MyBooksPage/MyBooksPage.jsx';
+import { MyLibPage } from 'modules/home/ui/pages/MyLibPage/MyLibPage.jsx';
+import { MyProfilePage } from 'modules/home/ui/pages/MyProfile/MyProfile.jsx';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Role } from '../../../../auth/store/slices/authSlice.js';
 import { PrivateRoute } from '../../../../auth/ui/components/PrivateRoute/PrivateRoute.jsx';
 import { LoginPage } from '../../../../auth/ui/pages/LoginPage/LoginPage.jsx';
@@ -6,17 +12,12 @@ import { RegPage } from '../../../../auth/ui/pages/RegPage/RegPage.jsx';
 import { BookPage } from '../../../../books/ui/pages/BookPage/BookPage.jsx';
 import { BookReadPage } from '../../../../books/ui/pages/BookReadPage/BookReadPage.jsx';
 import { HomePage } from '../../../../home/ui/pages/HomePage/HomePage.jsx';
-import BookEditPage from 'modules/books/ui/pages/BookEditPage/BookEditPage.jsx';
-import PartEditPage from 'modules/books/ui/pages/PartEditPage/PartEditPage.jsx';
-import { MyLibPage } from 'modules/home/ui/pages/MyLibPage/MyLibPage.jsx';
-import { MyBooksPage } from 'modules/home/ui/pages/MyBooksPage/MyBooksPage.jsx';
-import { MyProfilePage } from 'modules/home/ui/pages/MyProfile/MyProfile.jsx';
-import { BookCreatePage } from 'modules/books/ui/pages/BookCreatePage/BookCreatePage.jsx';
+import { GlobalLayout } from '../GlobalLayout/GlobalLayout.jsx';
 
 export const AppRouter = () => {
     return (
         <Routes>
-            <Route path='/'>
+            <Route path='/' element={<GlobalLayout />}>
                 {/* all users */}
                 <Route path='/'>
                     <Route path='/' element={<HomePage />} />
@@ -41,15 +42,8 @@ export const AppRouter = () => {
                     <Route path='profile' element={<MyProfilePage />} />
                     <Route path='myBooks' element={<MyBooksPage />} />
 
-                    <Route
-                        path='book/:bookId/edit'
-                        element={<BookEditPage />}
-                    />
-                    <Route
-                        path='book/:bookId/partEdit'
-                        element={<PartEditPage />}
-                    />
-
+                    <Route path='book/:bookId/edit' element={<BookEditPage />} />
+                    <Route path='book/:bookId/partEdit' element={<PartEditPage />} />
                 </Route>
 
                 {/* authed and admins */}

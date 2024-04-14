@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 body,
 html {
@@ -6,14 +6,20 @@ html {
     padding: 0;
     width: 100%;
     min-height: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     overflow-x: hidden;
 }
-
+/* 
 html {
+    overflow: hidden;
     box-sizing: border-box;
     font-size: 18px;
-}
+} */
+
+/* body {
+    height: 100%;
+    overflow-y: auto;
+} */
 
 *,
 *:before,
@@ -38,7 +44,7 @@ select {
 }
 
 button,
-input[type='submit'] {
+input[type="submit"] {
     display: inline-block;
     box-shadow: none;
     background-color: transparent;
@@ -71,13 +77,13 @@ button::-moz-focus-inner {
 .mainContent {
     width: 100%;
     flex-grow: 1;
-    padding-top: 65px;
+    padding-top: 80px;
     padding-bottom: 65px;
     background-color: #f5f5f5;
 }
 
 .wrapperPage {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding-top: 50px;
     max-width: 1000px;
 }
