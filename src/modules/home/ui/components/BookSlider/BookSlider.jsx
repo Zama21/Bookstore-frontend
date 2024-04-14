@@ -62,6 +62,7 @@ export const BookSlider = ({ books, sliceLength }) => {
                 <div className={cls.sliderIndicatorsContainer}>
                     {new Array(Math.floor(books.length / sliceLength)).fill(0).map((el, index) => (
                         <span
+                            key={index}
                             onClick={() => setPosition(index * sliceLength)}
                             className={classNames(cls.sliderIndicator, {
                                 [cls.sliderIndicatorHighlighted]: index <= position,

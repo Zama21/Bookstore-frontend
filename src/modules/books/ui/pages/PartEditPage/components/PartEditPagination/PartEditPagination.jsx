@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cls from './PartEditPagination.module.css';
 import classNames from 'classnames';
 import NumberRangeDisplay from 'shared/ui/components/NumberRangeDisplay/NumberRangeDisplay';
-import { BookEditPartApi } from 'modules/auth/api/BookEditPartApi';
+import { BookEditPartApi } from 'modules/books/api/BookEditPartApi';
 import { useNavigate } from 'react-router-dom';
 
 const PartEditPagination = ({
@@ -28,9 +28,7 @@ const PartEditPagination = ({
                     updatePageIndexValue(selected, 1);
                     setDeltaEnd(0);
                     navigate(
-                        `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${
-                            selected + 1
-                        }`
+                        `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${selected + 1}`
                     );
                 })
                 .catch(err => console.log(err));
@@ -51,9 +49,7 @@ const PartEditPagination = ({
                         setDeltaEnd(0);
 
                         navigate(
-                            `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${
-                                selected - 1
-                            }`
+                            `/book/${bookId}/partEdit?chapterNumber=${partId}&pageNumber=${selected - 1}`
                         );
                     }
                 })
@@ -75,9 +71,7 @@ const PartEditPagination = ({
                 className={classNames(cls.item, cls.delBtn, {
                     [cls.disabled]: start == end - deltaEnd,
                 })}
-                onClick={() =>
-                    start != end - deltaEnd && handleSideBtnClick('del')
-                }
+                onClick={() => start != end - deltaEnd && handleSideBtnClick('del')}
             >
                 <span className={cls.delBtn}>-</span>
             </div>
@@ -88,10 +82,7 @@ const PartEditPagination = ({
                 selected={selected}
                 firstPageIndex={firstPageIndex}
             />
-            <div
-                className={classNames(cls.item, cls.addBtn)}
-                onClick={() => handleSideBtnClick('add')}
-            >
+            <div className={classNames(cls.item, cls.addBtn)} onClick={() => handleSideBtnClick('add')}>
                 <span className={cls.addBtn}>+</span>
             </div>
         </div>

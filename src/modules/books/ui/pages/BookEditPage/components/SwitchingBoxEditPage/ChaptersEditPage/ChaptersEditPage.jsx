@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ChapterItemEditPage from './ChapterItemEditPage/ChapterItemEditPage';
 import AddChapterEditPage from './AddChapterEditPage/AddChapterEditPage';
 import stl from './ChaptersEditPage.module.css';
-import { BookEditPartApi } from 'modules/auth/api/BookEditPartApi';
+import { BookEditPartApi } from 'modules/books/api/BookEditPartApi';
 
 export default function ChaptersEditPage({ bookData }) {
     const [chapters, setChapters] = useState(bookData.parts);
@@ -21,8 +21,7 @@ export default function ChaptersEditPage({ bookData }) {
                         return { ...item, isFree: true };
                     }
                 } else {
-                    if (index < bookData.freeChaptersCount)
-                        return { ...item, isFree: true };
+                    if (index < bookData.freeChaptersCount) return { ...item, isFree: true };
                 }
                 return { ...item, isFree: false };
             });
@@ -31,13 +30,8 @@ export default function ChaptersEditPage({ bookData }) {
                 return item.id;
             });
 
-            arrPartsForOrder = isReversed
-                ? arrPartsForOrder.reverse()
-                : arrPartsForOrder;
-            BookEditPartApi.changeOrderParts(
-                arrPartsForOrder,
-                bookData.id
-            ).then(res => {
+            arrPartsForOrder = isReversed ? arrPartsForOrder.reverse() : arrPartsForOrder;
+            BookEditPartApi.changeOrderParts(arrPartsForOrder, bookData.id).then(res => {
                 setIsUpdateFirstPage(true);
             });
 
@@ -78,9 +72,7 @@ export default function ChaptersEditPage({ bookData }) {
                 updatedAt: new Date().toISOString(),
             };
 
-            isReversed
-                ? setChapters([newChapter, ...chapters])
-                : setChapters([...chapters, newChapter]);
+            isReversed ? setChapters([newChapter, ...chapters]) : setChapters([...chapters, newChapter]);
         });
     };
 
@@ -102,23 +94,14 @@ export default function ChaptersEditPage({ bookData }) {
                 </button>
             </div>
             {isErrorValidateTitle && (
-                <div className={stl.errorMessage}>
-                    Название должно содержать как минимум 3 символа.
-                </div>
+                <div className={stl.errorMessage}>Название должно содержать как минимум 3 символа.</div>
             )}
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId='chapters'>
                     {provided => (
-                        <div
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                        >
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
                             {chapters.map((chapter, index) => (
-                                <Draggable
-                                    key={index}
-                                    draggableId={`chapter-${index}`}
-                                    index={index}
-                                >
+                                <Draggable key={index} draggableId={`chapter-${index}`} index={index}>
                                     {provided => (
                                         <div
                                             ref={provided.innerRef}
@@ -128,12 +111,8 @@ export default function ChaptersEditPage({ bookData }) {
                                             <ChapterItemEditPage
                                                 {...chapter}
                                                 bookId={bookData.id}
-                                                isUpdateFirstPage={
-                                                    isUpdateFirstPage
-                                                }
-                                                setIsUpdateFirstPage={
-                                                    setIsUpdateFirstPage
-                                                }
+                                                isUpdateFirstPage={isUpdateFirstPage}
+                                                setIsUpdateFirstPage={setIsUpdateFirstPage}
                                                 deleteChapter={deleteChapter}
                                             />
                                             {provided.placeholder}

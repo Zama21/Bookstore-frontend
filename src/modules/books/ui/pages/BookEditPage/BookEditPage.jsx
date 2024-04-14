@@ -1,14 +1,12 @@
-import React from 'react';
-import stl from './BookEditPage.module.css';
-import BookViewBoxEditPage from './components/BookViewBoxEditPage/BookViewBoxEditPage';
-import { Link, useParams } from 'react-router-dom';
-import SwitchingBoxEditPage from './components/SwitchingBoxEditPage/SwitchingBoxEditPage';
-import { useBookData } from 'modules/books/domain/hooks/useBookData.js';
+import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
+import { useParams } from 'react-router-dom';
 import { BackButton } from 'shared/ui/components/BackButton/BackButton.jsx';
+import BookViewBoxEditPage from './components/BookViewBoxEditPage/BookViewBoxEditPage';
+import SwitchingBoxEditPage from './components/SwitchingBoxEditPage/SwitchingBoxEditPage';
 
 export default function BookEditPage() {
     const { bookId } = useParams();
-    const { data } = useBookData(bookId);
+    const { data } = bookBasicApi.useGetBookDataQuery(bookId);
 
     return (
         <div className='wrapperPage'>

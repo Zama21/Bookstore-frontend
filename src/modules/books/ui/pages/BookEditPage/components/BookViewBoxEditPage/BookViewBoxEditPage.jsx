@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import defaultCover from 'shared/Img/defaultCover.jpg';
-import { BookPublicationStatus } from '../BookPublicationStatus/BookPublicationStatus.jsx';
+import { BookFinishedStatus } from '../../../../components/BookFinishedStatus/BookFinishedStatus.jsx';
 import stl from './BookViewBoxEditPage.module.css';
+import { BookPublishStatus } from 'modules/books/ui/components/BookPublishStatus/BookPublishStatus.jsx';
+import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
+import { useAwarenessModal } from 'modules/modals/domain/hooks/modal-types/useAwarenessModal.js';
+import { bookEditApi } from 'modules/books/api/bookEditApi.js';
 
 export default function BookViewBoxEditPage({ bookData }) {
+    const awarenessModal = useAwarenessModal();
+    const [publishBook, publishBookResult] = bookEditApi.usePublishBookMutation();
+    const [unpublishBook, unpublishBookResult] = bookEditApi.useUnpublishBookMutation();
+
+    console.log(publishBookResult);
+
+    const handlePublishStatusToggle = () => {
+        if (bookData.isPublished) {
+            unpublishBook(bookData.id);
+        } else {
+            publishBook(bookData.id);
+        }
+    };
+
+    useEffect(() => {
+        if (publishBookResult.isSuccess) {
+        }
+    }, [publishBookResult]);
+
     return (
         <div className={`${stl.wrapper} `}>
             <div className={`${stl.column} `}>
@@ -33,7 +56,13 @@ export default function BookViewBoxEditPage({ bookData }) {
                               ))
                             : 'нет'}
                     </p>
-                    {<BookPublicationStatus status={bookData.status} />}
+                    <BookFinishedStatus status={bookData.status} />
+                    <div className={stl.bookPublishStatusControl}>
+                        <BookPublishStatus isPublished={bookData.isPublished} />
+                        <Button theme={ButtonTheme.secondary} onClick={handlePublishStatusToggle}>
+                            {bookData.isPublished ? 'Снять с публикации' : 'Опубликовать'}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

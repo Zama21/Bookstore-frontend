@@ -43,6 +43,7 @@ export const BookPage = () => {
         cost: data?.cost,
         parts: data?.parts,
         currentPart: data?.currentPart,
+        freeChaptersCount: data?.freeChaptersCount,
     };
 
     return (

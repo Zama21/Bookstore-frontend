@@ -16,8 +16,10 @@ export const BooksCategory = ({ title, books, isLoading }) => {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <LoadingSpinner />
                 </div>
-            ) : (
+            ) : books.length > 0 ? (
                 <BookSlider books={books} sliceLength={5} />
+            ) : (
+                <p>Эта категория пока пустая</p>
             )}
         </section>
     );

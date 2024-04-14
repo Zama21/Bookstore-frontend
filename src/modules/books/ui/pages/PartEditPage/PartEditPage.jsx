@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import cls from './PartEditPage.module.css';
-import FormCKEditor from 'shared/ui/components/FormComponents/FormCKEditor/FormCKEditor';
-import { Field, Formik } from 'formik';
-import * as Yup from 'yup';
-import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormButton';
-import { Form } from 'shared/ui/components/FormComponents/Form/Form';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom/dist';
-import { useBookData } from 'modules/books/domain/hooks/useBookData';
-import { FormField } from 'shared/ui/components/FormComponents/FormField/FormField';
-import PartEditPagination from './components/PartEditPagination/PartEditPagination';
+import { Formik } from 'formik';
+import { BookEditPartApi } from 'modules/books/api/BookEditPartApi';
+import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
 import { usePagination } from 'modules/books/domain/hooks/usePagination';
-import { BookEditPartApi } from 'modules/auth/api/BookEditPartApi';
-import { item } from './components/PartEditPagination/PartEditPagination.module.css';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom/dist';
+import { Form } from 'shared/ui/components/FormComponents/Form/Form';
+import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormButton';
+import FormCKEditor from 'shared/ui/components/FormComponents/FormCKEditor/FormCKEditor';
+import { FormField } from 'shared/ui/components/FormComponents/FormField/FormField';
+import * as Yup from 'yup';
+import cls from './PartEditPage.module.css';
+import PartEditPagination from './components/PartEditPagination/PartEditPagination';
 
 export default function PartEditPage() {
     const navigate = useNavigate();
@@ -21,18 +19,16 @@ export default function PartEditPage() {
     const chapterNumber = +searchParams.get('chapterNumber');
     const pageNumber = +searchParams.get('pageNumber');
 
-    const { data: dataBook } = useBookData(bookId);
-    const { data, setData, updatePageIndexValue, deletePageByIndex } =
-        usePagination({
-            bookId,
-            onError403: () => {},
-            onErrorElse: () => {},
-        });
+    const { data: dataBook } = bookBasicApi.useGetBookDataQuery(bookId);
+
+    const { data, setData, updatePageIndexValue, deletePageByIndex } = usePagination({
+        bookId,
+        onError403: () => {},
+        onErrorElse: () => {},
+    });
 
     const handleSelectItem = newPageNumber => {
-        navigate(
-            `/book/${bookId}/partEdit?chapterNumber=${chapterNumber}&pageNumber=${newPageNumber}`
-        );
+        navigate(`/book/${bookId}/partEdit?chapterNumber=${chapterNumber}&pageNumber=${newPageNumber}`);
     };
 
     function deletePage() {
@@ -41,9 +37,7 @@ export default function PartEditPage() {
 
     function savePagesToDatabase() {
         data.pages.forEach(item => {
-            BookEditPartApi.updatePage(item.id, item.content).catch(err =>
-                console.log(err)
-            );
+            BookEditPartApi.updatePage(item.id, item.content).catch(err => console.log(err));
         });
     }
 
@@ -89,10 +83,7 @@ export default function PartEditPage() {
             {data?.firstPageIndex && dataBook?.parts && (
                 <Formik
                     initialValues={{
-                        partTitle:
-                            dataBook?.parts?.find(
-                                part => part.id == chapterNumber
-                            )?.title || '',
+                        partTitle: dataBook?.parts?.find(part => part.id == chapterNumber)?.title || '',
                     }}
                     validationSchema={Yup.object({
                         partTitle: Yup.string()
@@ -102,29 +93,17 @@ export default function PartEditPage() {
                     onSubmit={(values, { setSubmitting }) => {
                         console.log('OnSubmit');
 
-                        BookEditPartApi.updateTittlePart(
-                            chapterNumber,
-                            values.partTitle
-                        );
+                        BookEditPartApi.updateTittlePart(chapterNumber, values.partTitle);
                         savePagesToDatabase();
                     }}
                 >
                     {formik => (
-                        <Form
-                            onSubmit={formik.handleSubmit}
-                            className={cls.formWrapper}
-                        >
+                        <Form onSubmit={formik.handleSubmit} className={cls.formWrapper}>
                             <h2>{dataBook?.title}</h2>
-                            <FormField
-                                name='partTitle'
-                                type='text'
-                                label={'Название главы'}
-                            />
+                            <FormField name='partTitle' type='text' label={'Название главы'} />
                             <PartEditPagination {...paginationObj} />
                             <FormCKEditor
-                                handleContentPageChange={
-                                    handleContentPageChange
-                                }
+                                handleContentPageChange={handleContentPageChange}
                                 selectedContent={getContentByIndex(pageNumber)}
                             />
                             <FormButton type='submit'>Сохранить</FormButton>
