@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Field, Formik } from 'formik';
 import { BookCoverConfig, validateBookCover } from 'modules/books/lib/validateBookCover.js';
-import { useAlertModal } from 'modules/modals/domain/hooks/modal-types/useAlertModal.js';
+import { useAlertModal } from 'modules/modals/domain/hooks/modalTypes/useAlertModal.js';
 import defaultCover from 'shared/Img/defaultCover.jpg';
 import { sharedApi } from 'shared/api/sharedApi.js';
 import { Form } from 'shared/ui/components/FormComponents/Form/Form';

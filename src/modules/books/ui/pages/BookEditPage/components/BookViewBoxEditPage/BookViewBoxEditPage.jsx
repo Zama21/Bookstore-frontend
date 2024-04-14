@@ -1,31 +1,35 @@
+import { bookEditApi } from 'modules/books/api/bookEditApi.js';
+import { BookPublishStatus } from 'modules/books/ui/components/BookPublishStatus/BookPublishStatus.jsx';
+import { useConfirmModal } from 'modules/modals/domain/hooks/modalTypes/useConfirmModal.js';
 import React, { useEffect } from 'react';
 import defaultCover from 'shared/Img/defaultCover.jpg';
+import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
 import { BookFinishedStatus } from '../../../../components/BookFinishedStatus/BookFinishedStatus.jsx';
 import stl from './BookViewBoxEditPage.module.css';
-import { BookPublishStatus } from 'modules/books/ui/components/BookPublishStatus/BookPublishStatus.jsx';
-import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
-import { useAwarenessModal } from 'modules/modals/domain/hooks/modal-types/useAwarenessModal.js';
-import { bookEditApi } from 'modules/books/api/bookEditApi.js';
+import { ConfirmModalReponse } from 'modules/modals/domain/models/modalResponse.model.js';
 
 export default function BookViewBoxEditPage({ bookData }) {
-    const awarenessModal = useAwarenessModal();
-    const [publishBook, publishBookResult] = bookEditApi.usePublishBookMutation();
-    const [unpublishBook, unpublishBookResult] = bookEditApi.useUnpublishBookMutation();
-
-    console.log(publishBookResult);
+    const confirmModal = useConfirmModal();
+    const [publishBook] = bookEditApi.usePublishBookMutation();
+    const [unpublishBook] = bookEditApi.useUnpublishBookMutation();
 
     const handlePublishStatusToggle = () => {
-        if (bookData.isPublished) {
-            unpublishBook(bookData.id);
-        } else {
-            publishBook(bookData.id);
-        }
+        confirmModal.open({
+            title: 'Подтвердите действие',
+            text: 'Вы точно хотите изменить статус публикации этой книги?',
+        });
     };
 
     useEffect(() => {
-        if (publishBookResult.isSuccess) {
+        if (confirmModal.response === ConfirmModalReponse.Yes) {
+            if (bookData.isPublished) {
+                unpublishBook(bookData.id);
+            } else {
+                publishBook(bookData.id);
+            }
+            confirmModal.close();
         }
-    }, [publishBookResult]);
+    }, [confirmModal.response]);
 
     return (
         <div className={`${stl.wrapper} `}>
@@ -36,7 +40,7 @@ export default function BookViewBoxEditPage({ bookData }) {
                 <div className={stl.bookInformation}>
                     <h1 className={stl.h1}>{bookData.title}</h1>
                     {bookData.series?.name && (
-                        <p className={stl.nonPriorityInformation} key={'series'}>
+                        <p className={stl.nonPriorityInformation}>
                             <span className={stl.metaName}>Цикл: </span>
                             <a className={stl.anchor} href='#'>
                                 {bookData.series.name}

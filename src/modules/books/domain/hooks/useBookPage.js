@@ -1,6 +1,6 @@
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
 import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
-import { useAuthModal } from 'modules/modals/domain/hooks/modal-types/useAuthModal.js';
+import { useAuthModal } from 'modules/modals/domain/hooks/modalTypes/useAuthModal.js';
 import { useParams } from 'react-router-dom';
 
 export const useBookPage = () => {
