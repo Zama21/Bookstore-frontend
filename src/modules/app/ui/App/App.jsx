@@ -3,6 +3,7 @@ import { AppRouter } from '../components/AppRouter/AppRouter.jsx';
 import GlobalFooter from '../components/GlobalFooter/GlobalFooter.jsx';
 import { GlobalHeader } from '../components/GlobalHeader/GlobalHeader.jsx';
 import { withProviders } from './withProviders.jsx';
+import { ScrollToTop } from '../components/ScrollToTop/ScrollToTop.jsx';
 
 export const App = withProviders(() => {
     return (
@@ -13,6 +14,7 @@ export const App = withProviders(() => {
             </div>
             <GlobalFooter />
             <ModalsLayer />
+            <ScrollToTop />
         </>
     );
 });
