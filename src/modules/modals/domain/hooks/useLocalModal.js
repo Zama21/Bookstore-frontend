@@ -1,5 +1,3 @@
-import { ModalTypes } from 'modules/modals/store/modalsSlice.js';
-import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ClosingAnimationDelta } from '../config.js';
 

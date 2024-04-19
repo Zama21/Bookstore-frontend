@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly "bookPublicationStatus": string;
+  readonly "BookFinishedStatus": string;
   readonly "finished": string;
   readonly "frozen": string;
   readonly "unfinished": string;

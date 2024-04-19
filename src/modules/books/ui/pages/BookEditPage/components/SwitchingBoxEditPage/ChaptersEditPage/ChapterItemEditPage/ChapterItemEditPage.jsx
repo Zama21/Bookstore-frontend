@@ -1,36 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import stl from './ChapterItemEditPage.module.css';
 import { Link } from 'react-router-dom';
+import { BookEditPartApi } from 'modules/books/api/BookEditPartApi';
+import { BookReadPageApi } from 'modules/books/api/bookReadPageApi';
 
-export default function ChapterItemEditPage({ title }) {
+function formatCustomDate(inputDate) {
+    const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+
+    const date = new Date(inputDate);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+}
+
+export default function ChapterItemEditPage({
+    id,
+    title,
+    isFree,
+    createdAt,
+    updatedAt,
+    bookId,
+    deleteChapter,
+    isUpdateFirstPage,
+    setIsUpdateFirstPage,
+}) {
+    const [pageNumber, setPageNumber] = useState(1);
+
+    useEffect(() => {
+        BookReadPageApi.gettingChapterMetaInformation(bookId, id, 0).then(res => {
+            if (res.data.firstPageIndex > res.data.lastPageIndex) {
+                BookEditPartApi.addNewPage(id, null).catch(err => console.log(err));
+            }
+            setIsUpdateFirstPage(false);
+
+            setPageNumber(res.data.firstPageIndex);
+        });
+    }, [bookId, id, isUpdateFirstPage]);
+
     return (
         <div className={stl.wrapper}>
             <div className={stl.wrapperBookPartsName}>
                 <Link to={'/'}>{title}</Link>
-                <span
-                    className={`${stl.bookPartsStatus} ${stl.bookPartsStatusSuccess}`}
-                >
+                {/* <span className={`${stl.bookPartsStatus} ${stl.bookPartsStatusSuccess}`}>
                     Опубликовано
-                </span>
+                </span> */}
             </div>
             <div className={stl.wrapperBookPartsAttr}>
-                <div className={stl.bookPartsAttrCost}>$</div>
+                <div className={stl.bookPartsAttrCost}>{isFree ? '' : '$'}</div>
                 <div className={stl.bookPartsAttrDate}>
-                    13 Дек 2022 — 13 Июн 2024
+                    {formatCustomDate(createdAt)} — {formatCustomDate(updatedAt)}
                 </div>
             </div>
             <div className={stl.bookPartsMenu}>
                 <button>&hellip;</button>
                 <div className={stl.bookPartsMenuList}>
-                    <a href='/ru/reader/kniga-b420913?c=4660853'>
+                    <a href={`/book/${bookId}/read?chapterNumber=${id}&pageNumber=${pageNumber}`}>
                         Открыть в читалке
                     </a>
-                    <a href='/account/chapter/edit?id=4660853'>
+                    <a href={`/book/${bookId}/partEdit?chapterNumber=${id}&pageNumber=${pageNumber}`}>
                         Редактировать главу
                     </a>
                     <a
                         className={stl.danger}
-                        href='/account/chapter/delete?id=4660853'
+                        onClick={() => {
+                            BookEditPartApi.deletePart(id);
+                            deleteChapter(id);
+                        }}
                     >
                         Удалить
                     </a>

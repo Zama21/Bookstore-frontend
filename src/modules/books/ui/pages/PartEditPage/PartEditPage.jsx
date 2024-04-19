@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import cls from './PartEditPage.module.css';
-import FormCKEditor from 'shared/ui/components/FormComponents/FormCKEditor/FormCKEditor';
-import { Field, Formik } from 'formik';
-import * as Yup from 'yup';
-import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormButton';
-import { Form } from 'shared/ui/components/FormComponents/Form/Form';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom/dist';
-import { useBookData } from 'modules/books/domain/hooks/useBookData';
-import { FormField } from 'shared/ui/components/FormComponents/FormField/FormField';
-import PartEditPagination from './components/PartEditPagination/PartEditPagination';
+import { Formik } from 'formik';
+import { BookEditPartApi } from 'modules/books/api/BookEditPartApi';
+import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
 import { usePagination } from 'modules/books/domain/hooks/usePagination';
-import { BookEditPartApi } from 'modules/auth/api/BookEditPartApi';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom/dist';
+import { Form } from 'shared/ui/components/FormComponents/Form/Form';
+import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormButton';
+import FormCKEditor from 'shared/ui/components/FormComponents/FormCKEditor/FormCKEditor';
+import { FormField } from 'shared/ui/components/FormComponents/FormField/FormField';
+import * as Yup from 'yup';
+import cls from './PartEditPage.module.css';
+import PartEditPagination from './components/PartEditPagination/PartEditPagination';
 
 export default function PartEditPage() {
     const navigate = useNavigate();
@@ -20,68 +19,38 @@ export default function PartEditPage() {
     const chapterNumber = +searchParams.get('chapterNumber');
     const pageNumber = +searchParams.get('pageNumber');
 
-    const { data: dataBook } = useBookData(bookId);
-    const { data, updatePageIndexValue, deletePageByIndex } = usePagination({
+    const { data: dataBook } = bookBasicApi.useGetBookDataQuery(bookId);
+
+    const { data, setData, updatePageIndexValue, deletePageByIndex } = usePagination({
         bookId,
         onError403: () => {},
         onErrorElse: () => {},
     });
 
-    const [contentData, setContentData] = useState({});
-
-    const updateContent = (id, newContent) => {
-        if (!id) return;
-
-        setContentData(prevData => ({
-            ...prevData,
-            [id]: newContent,
-        }));
-    };
-
-    useEffect(() => {
-        updateContent(...gettingContent());
-    }, [data, pageNumber]);
-
     const handleSelectItem = newPageNumber => {
         navigate(`/book/${bookId}/partEdit?chapterNumber=${chapterNumber}&pageNumber=${newPageNumber}`);
     };
 
-    const gettingContent = () => {
-        const page = data.pages.find((page, index) => {
-            return page.index === pageNumber;
-        });
-        return [page?.id, page?.content];
-    };
-    function getIdByIndex(data, index) {
-        const item = data?.find(item => item.index === index);
-        if (item) {
-            return item.id;
-        }
-        return null;
-    }
-    function deletePage(pageId) {
+    function deletePage() {
         deletePageByIndex(pageNumber);
-
-        setContentData(prev => {
-            const newContentData = { ...prev };
-            delete newContentData[pageId];
-            return newContentData;
-        });
     }
 
     function savePagesToDatabase() {
-        Object.keys(contentData).forEach(key => {
-            BookEditPartApi.updatePage(key, contentData[key]).catch(err => console.log(err));
+        data.pages.forEach(item => {
+            BookEditPartApi.updatePage(item.id, item.content).catch(err => console.log(err));
         });
     }
 
     function handleContentPageChange(content) {
-        const pageId = getIdByIndex(data.pages, pageNumber);
-
-        setContentData(prev => {
+        setData(prev => {
             return {
                 ...prev,
-                [pageId]: content,
+                pages: prev.pages.map((item, index) => {
+                    if (item.index == pageNumber) {
+                        item.content = content;
+                    }
+                    return item;
+                }),
             };
         });
     }
@@ -100,6 +69,15 @@ export default function PartEditPage() {
         deletePage,
     };
 
+    function getContentByIndex(index) {
+        for (let item of data.pages) {
+            if (item.index === index) {
+                return item.content;
+            }
+        }
+        return null;
+    }
+
     return (
         <div className='wrapperPage'>
             {data?.firstPageIndex && dataBook?.parts && (
@@ -114,6 +92,8 @@ export default function PartEditPage() {
                     })}
                     onSubmit={(values, { setSubmitting }) => {
                         console.log('OnSubmit');
+
+                        BookEditPartApi.updateTittlePart(chapterNumber, values.partTitle);
                         savePagesToDatabase();
                     }}
                 >
@@ -124,7 +104,7 @@ export default function PartEditPage() {
                             <PartEditPagination {...paginationObj} />
                             <FormCKEditor
                                 handleContentPageChange={handleContentPageChange}
-                                selectedContent={contentData?.[getIdByIndex(data.pages, pageNumber)]}
+                                selectedContent={getContentByIndex(pageNumber)}
                             />
                             <FormButton type='submit'>Сохранить</FormButton>
                         </Form>

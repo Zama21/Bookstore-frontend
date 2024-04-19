@@ -4,6 +4,7 @@ export const ModalTypes = {
     Auth: 'auth',
     Awareness: 'awareness',
     AlertModal: 'alert',
+    Confirm: 'confirm',
 };
 
 export const modalsSlice = createSlice({
@@ -14,6 +15,7 @@ export const modalsSlice = createSlice({
             isShowingClosingAnimation: false,
             currentModalType: null,
             modalParams: {},
+            response: null,
         },
     },
     reducers: {

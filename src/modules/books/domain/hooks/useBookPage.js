@@ -1,39 +1,27 @@
-import { BookPageApi } from 'modules/books/api/bookPageApi.js';
 import { useAuth } from 'modules/auth/domain/hooks/useAuth.js';
-import { useAuthModal } from 'modules/modals/domain/hooks/modal-types/useAuthModal.js';
-import { useEffect, useState } from 'react';
+import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
+import { useAuthModal } from 'modules/modals/domain/hooks/modalTypes/useAuthModal.js';
 import { useParams } from 'react-router-dom';
-import { useBookData } from './useBookData.js';
 
 export const useBookPage = () => {
-    const { isAuthed, roles } = useAuth();
+    const { isAuthed } = useAuth();
     const { bookId } = useParams();
-    const { data, setData } = useBookData(bookId);
+
+    const { data, isLoading } = bookBasicApi.useGetBookDataQuery(bookId);
+    const [removeFromLibrary] = bookBasicApi.useRemoveFromLibraryMutation(bookId);
+    const [addToLibrary] = bookBasicApi.useAddToLibraryMutation(bookId);
+    const [starBook] = bookBasicApi.useStarBookMutation(bookId);
+    const [unstarBook] = bookBasicApi.useUnstarBookMutation(bookId);
+
     const authModal = useAuthModal();
-
-    const updateAddsToLibrary = delta => {
-        setData(prev => ({
-            ...prev,
-            isInLibrary: !prev.isInLibrary,
-            addsToLibraryCount: prev?.addsToLibraryCount + delta,
-        }));
-    };
-
-    const updateBookStarred = delta => {
-        setData(prev => ({
-            ...prev,
-            isStarred: !prev.isStarred,
-            starsCount: prev?.starsCount + delta,
-        }));
-    };
 
     const toggleLibrary = () => {
         if (!isAuthed) return authModal.open();
 
         if (data.isInLibrary) {
-            BookPageApi.removeFromLibrary(bookId).then(res => updateAddsToLibrary(-1));
+            removeFromLibrary(bookId);
         } else {
-            BookPageApi.addToLibrary(bookId).then(res => updateAddsToLibrary(1));
+            addToLibrary(bookId);
         }
     };
 
@@ -41,14 +29,15 @@ export const useBookPage = () => {
         if (!isAuthed) return authModal.open();
 
         if (data.isStarred) {
-            BookPageApi.unstarBook(bookId).then(() => updateBookStarred(-1));
+            unstarBook(bookId);
         } else {
-            BookPageApi.starBook(bookId).then(() => updateBookStarred(1));
+            starBook(bookId);
         }
     };
 
     return {
         data,
+        isLoading,
         bookId,
 
         control: {

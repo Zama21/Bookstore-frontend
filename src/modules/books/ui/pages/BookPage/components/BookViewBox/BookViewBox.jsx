@@ -2,7 +2,7 @@ import React from 'react';
 import stl, { bookDate } from './BookViewBox.module.css';
 import BookSvgSelector from './svg/BookSvgSelector';
 import { Link } from 'react-router-dom';
-import { BookPublicationStatus } from '../../../BookEditPage/components/BookPublicationStatus/BookPublicationStatus.jsx';
+import { BookFinishedStatus } from '../../../../components/BookFinishedStatus/BookFinishedStatus.jsx';
 import defaultCover from 'shared/Img/defaultCover.jpg';
 
 function formatDate(date) {
@@ -39,6 +39,7 @@ export default function BookViewBox({
     cost,
     parts,
     currentPart,
+    freeChaptersCount,
 }) {
     createdAt = formatDate(new Date(createdAt));
     updatedAt = formatDate(new Date(updatedAt));
@@ -68,7 +69,12 @@ export default function BookViewBox({
                 {`${currentPage > 1 ? 'Продолжить' : 'Читать'}`}
             </Link>
             {cost > 0 && (
-                <div className={`${stl.bookBtnForRead} ${stl.buy}`}>{`Подписка ${cost} RUB`}</div>
+                <div
+                    style={{ marginTop: '10px', marginBottom: 0, textAlign: 'center', fontSize: '18px' }}
+                >
+                    <p>Бесплатных глав - {freeChaptersCount}</p>
+                    <div className={`${stl.bookBtnForRead} ${stl.buy}`}>{`Подписка ${cost} RUB`}</div>
+                </div>
             )}
         </div>
     );
@@ -139,7 +145,7 @@ export default function BookViewBox({
                             </div>
                         </div>
                         <span className={stl.divider}></span>
-                        <BookPublicationStatus status={status} />
+                        <BookFinishedStatus status={status} />
                         <span className={stl.divider}></span>
                         <div className={stl.lifeCycleOfBook}>
                             <p className={stl.publicationTitle}>Публикация</p>

@@ -6,7 +6,7 @@ export const myBooksApi = createApi({
     endpoints: builder => ({
         getMyBooks: builder.query({
             queryFn: () => axiosInstance.get('/books/my'),
-            providesTags: ['Books'],
+            providesTags: ['MyBooks'],
         }),
         createBook: builder.mutation({
             queryFn: createBookData => {
@@ -18,7 +18,7 @@ export const myBooksApi = createApi({
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
             },
-            invalidatesTags: ['Books'],
+            invalidatesTags: ['MyBooks'],
         }),
         editBook: builder.mutation({
             queryFn: ({ bookId, editBookData }) => {
@@ -30,6 +30,7 @@ export const myBooksApi = createApi({
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
             },
+            invalidatesTags: ['MyBooks'],
         }),
     }),
 });

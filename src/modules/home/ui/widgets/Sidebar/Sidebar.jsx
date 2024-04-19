@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import defaultProfile from '../../../../../shared/Img/default-profile.png';
 import walletSrc from '../../../assets/wallet.svg';
 import cls from './Sidebar.module.css';
+import { useSidebar } from '../../../domain/useSidebar.js';
+import { ProfilePhoto } from '../../components/ProfilePhoto/ProfilePhoto.jsx';
+import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
 
 const menuLinks = [
     {
@@ -29,15 +32,16 @@ const menuLinks = [
     },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({ show }) => {
     const userData = useUserData();
+    const sidebar = useSidebar();
     const { isLoading, data, isError, isSuccess } = profileApi.useGetProfileQuery();
 
     return (
         <div
             className={classNames(cls.sidebar, {
-                [cls.sidebarHidden]: isLoading || isError,
-                [cls.sidebarShown]: isSuccess,
+                [cls.sidebarHidden]: isLoading || isError || !sidebar.isShown,
+                [cls.sidebarShown]: isSuccess && sidebar.isShown,
             })}
         >
             <div className={cls.balanceBlock}>
@@ -49,7 +53,7 @@ export const Sidebar = () => {
             </div>
             <div className={cls.profileBlock}>
                 <div className={cls.profile}>
-                    <img src={defaultProfile} alt='profile img' />
+                    <ProfilePhoto />
                     <p className={cls.username}>{userData.username}</p>
                 </div>
                 <ul className={cls.menu}>

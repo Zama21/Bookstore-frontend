@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { ClosingAnimationDelta } from '../config.js';
 
-export const useGlobalModal = modalType => {
+export const useGlobalModal = (modalType, options) => {
     const dispatch = useDispatch();
-    const { isOpen, currentModalType } = useSelector(state => state.modals.data);
+    const { isOpen, currentModalType, response } = useSelector(state => state.modals.data);
 
     return {
         open(params) {
@@ -16,6 +16,7 @@ export const useGlobalModal = modalType => {
                     isOpen: true,
                     modalParams: params ?? {},
                     currentModalType: modalType,
+                    response: null,
                 })
             );
         },
@@ -30,9 +31,12 @@ export const useGlobalModal = modalType => {
                         currentModalType: null,
                         isShowingClosingAnimation: false,
                         modalParams: {},
+                        response: null,
                     })
                 );
             }, ClosingAnimationDelta);
         },
+
+        response,
     };
 };

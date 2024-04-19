@@ -1,19 +1,20 @@
-.bookPublicationStatus {
+.BookFinishedStatus {
     justify-content: flex-start;
     align-items: center;
     border-radius: 10px;
+    padding: 0 8px;
 }
-.bookPublicationStatus.finished {
+.BookFinishedStatus.finished {
     color: #fff;
     background: #6fbd49;
 }
 
-.bookPublicationStatus.unfinished {
+.BookFinishedStatus.unfinished {
     color: #fff;
     background: #1d7fd3;
 }
 
-.bookPublicationStatus.frozen {
+.BookFinishedStatus.frozen {
     color: #fff;
     background: #999999;
 }

@@ -12,15 +12,10 @@ export default function SwitchingBox({ description, title }) {
 
     switch (SelectedSection) {
         case 'annotation':
-            content = (
-                <Annotation
-                    description={description}
-                    title={title}
-                ></Annotation>
-            );
+            content = <Annotation description={description} title={title}></Annotation>;
             break;
         case 'rewards':
-            content = '/* ваш код ergtrhtrhyh*/';
+            content = 'Награды';
             break;
     }
     return (
@@ -28,21 +23,13 @@ export default function SwitchingBox({ description, title }) {
             <div className={`flxRow`}>
                 <button
                     onClick={() => handleClick('annotation')}
-                    className={`${
-                        SelectedSection == 'annotation'
-                            ? activeClassForBtn
-                            : stl.SwitchBox
-                    }`}
+                    className={`${SelectedSection == 'annotation' ? activeClassForBtn : stl.SwitchBox}`}
                 >
                     Аннотация
                 </button>
                 <button
                     onClick={() => handleClick('rewards')}
-                    className={`${
-                        SelectedSection == 'rewards'
-                            ? activeClassForBtn
-                            : stl.SwitchBox
-                    }`}
+                    className={`${SelectedSection == 'rewards' ? activeClassForBtn : stl.SwitchBox}`}
                 >
                     Награды
                 </button>

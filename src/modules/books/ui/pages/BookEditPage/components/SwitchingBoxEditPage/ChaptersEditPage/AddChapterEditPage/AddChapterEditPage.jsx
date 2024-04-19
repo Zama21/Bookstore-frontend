@@ -3,10 +3,14 @@ import stl from './AddChapterEditPage.module.css';
 
 const MAX_LENGTH = 30;
 
-export default function AddChapterEditPage({ onAddChapter }) {
+export default function AddChapterEditPage({
+    onAddChapter,
+    setIsErrorValidateTitle,
+}) {
     const [title, setTitle] = useState('');
 
     const handleTitleChange = e => {
+        setIsErrorValidateTitle(false);
         if (!(e.target.value.length <= MAX_LENGTH)) return;
         setTitle(e.target.value);
     };

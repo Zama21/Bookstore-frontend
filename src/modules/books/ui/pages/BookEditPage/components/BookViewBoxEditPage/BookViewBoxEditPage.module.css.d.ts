@@ -1,6 +1,7 @@
 declare const styles: {
   readonly "anchor": string;
   readonly "bookInformation": string;
+  readonly "bookPublishStatusControl": string;
   readonly "column": string;
   readonly "columnSameWidth": string;
   readonly "h1": string;

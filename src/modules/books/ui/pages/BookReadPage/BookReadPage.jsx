@@ -1,5 +1,5 @@
+import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
 import { BookReadPageApi } from 'modules/books/api/bookReadPageApi';
-import { useBookData } from 'modules/books/domain/hooks/useBookData';
 import { useFontSize } from 'modules/books/domain/hooks/useFontSize.js';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Comments from 'shared/ui/components/Comments/Comments';
@@ -77,7 +77,7 @@ export const BookReadPage = () => {
     const { bookId } = useParams();
     const { fontSize, increaseFontSize, decreaseFontSize } = useFontSize();
 
-    const { data: dataBook } = useBookData(bookId);
+    const { data: dataBook } = bookBasicApi.useGetBookDataQuery(bookId);
 
     const [searchParams] = useSearchParams();
     const chapterNumber = searchParams.get('chapterNumber');

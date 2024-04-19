@@ -7,9 +7,10 @@ import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
 import defaultCover from 'shared/Img/defaultCover.jpg';
 import searchSvg from '../../../assets/search.svg';
 import libSvg from '../../../assets/lib.svg';
-import editSvg from '../../../assets/lib.svg';
-import { BookPublicationStatus } from 'modules/books/ui/pages/BookEditPage/components/BookPublicationStatus/BookPublicationStatus.jsx';
+import editSvg from '../../../assets/edit.svg';
+import { BookFinishedStatus } from 'modules/books/ui/components/BookFinishedStatus/BookFinishedStatus.jsx';
 import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
+import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
 
 export const MyBooksPage = () => {
     const { data: books, isLoading } = myBooksApi.useGetMyBooksQuery();
@@ -36,7 +37,7 @@ export const MyBooksPage = () => {
                     />
                 </div>
                 {isLoading ? (
-                    <p className={cls.loading}>загрузка...</p>
+                    <LoadingSpinner />
                 ) : (
                     <ul className={cls.bookList}>
                         {books.length > 0 ? (
@@ -83,7 +84,7 @@ export const MyBooksPage = () => {
                                         >
                                             Перейти
                                         </Button>
-                                        <BookPublicationStatus status={book.status} />
+                                        <BookFinishedStatus status={book.status} />
                                     </div>
                                 </li>
                             ))

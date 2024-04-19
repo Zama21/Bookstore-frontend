@@ -1,0 +1,16 @@
+.status {
+    border-radius: 10px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+    transition: all 0.3s linear;
+    min-width: 180px;
+}
+
+.status.isPublished {
+    background-color: #6fbd49;
+}
+
+.status.isNotPublished {
+    background-color: #1d7fd3;
+}
