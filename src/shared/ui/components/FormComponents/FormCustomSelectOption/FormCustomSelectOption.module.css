@@ -1,15 +1,16 @@
 .container {
     position: relative;
     display: block;
-    width: 100%;
+    /* width: 100%; */
     margin: 10px 6px;
 }
 .header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     position: relative;
     margin-top: 5px;
-    padding: 12px 20px;
+    padding: 12px 12px;
     border-radius: 6px;
     width: 100%;
     min-height: 30px;
