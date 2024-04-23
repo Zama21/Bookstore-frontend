@@ -2,8 +2,8 @@ declare const styles: {
   readonly "backdrop": string;
   readonly "close": string;
   readonly "modal": string;
-  readonly "slide-Top": string;
-  readonly "slide-down": string;
+  readonly "modal-slide-down": string;
+  readonly "modal-slide-up": string;
 };
 export = styles;
 
