@@ -12,7 +12,7 @@ export const BookSlider = ({ books, sliceLength }) => {
     const navigate = useNavigate();
 
     const slideRight = () => {
-        setPosition(pos => {
+        setPosition((pos) => {
             if (pos + sliceLength < books.length) {
                 return pos + sliceLength;
             } else {
@@ -22,7 +22,7 @@ export const BookSlider = ({ books, sliceLength }) => {
     };
 
     const slideLeft = () => {
-        setPosition(pos => {
+        setPosition((pos) => {
             if (pos - sliceLength >= 0) {
                 return pos - sliceLength;
             } else {
@@ -31,7 +31,7 @@ export const BookSlider = ({ books, sliceLength }) => {
         });
     };
 
-    const handleBookClick = bookId => navigate(`/book/${bookId}`);
+    const handleBookClick = (bookId) => navigate(`/book/${bookId}`);
 
     return (
         <div className={cls.slider}>
@@ -43,7 +43,7 @@ export const BookSlider = ({ books, sliceLength }) => {
                         width: `${sliceLength * BookItemWidth}px`,
                     }}
                 >
-                    {books.map(book => (
+                    {books.map((book) => (
                         <div
                             className={cls.bookContainer}
                             key={book.id}
@@ -60,7 +60,7 @@ export const BookSlider = ({ books, sliceLength }) => {
                 </div>
 
                 <div className={cls.sliderIndicatorsContainer}>
-                    {new Array(Math.floor(books.length / sliceLength) + 1).fill(0).map((el, index) => (
+                    {new Array(Math.ceil(books.length / sliceLength)).fill(0).map((el, index) => (
                         <span
                             key={index}
                             onClick={() => setPosition(index * sliceLength)}

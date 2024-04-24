@@ -34,7 +34,7 @@ export const bookBasicApi = createApi({
             queryFn: (bookId) => axiosInstance.post(`/books/${bookId}/star`),
             async onQueryStarted(bookId, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                    bookBasicApi.util.updateQueryData('getBookData', bookId.toString(), (draft) => {
+                    bookBasicApi.util.updateQueryData('getBookData', bookId, (draft) => {
                         draft.isStarred = true;
                     })
                 );
@@ -47,7 +47,7 @@ export const bookBasicApi = createApi({
             queryFn: (bookId) => axiosInstance.post(`/books/${bookId}/unstar`),
             async onQueryStarted(bookId, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                    bookBasicApi.util.updateQueryData('getBookData', bookId.toString(), (draft) => {
+                    bookBasicApi.util.updateQueryData('getBookData', bookId, (draft) => {
                         draft.isStarred = false;
                     })
                 );
