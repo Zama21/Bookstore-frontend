@@ -18,7 +18,8 @@ export const Button = ({
 }) => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
+    const handleClick = e => {
+        e.stopPropagation();
         if (linkTo) {
             navigate(linkTo);
         } else {

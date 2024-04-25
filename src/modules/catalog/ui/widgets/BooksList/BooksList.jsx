@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDebonuce } from 'shared/hooks/useDebounce.js';
 import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
 import Pagination from 'shared/ui/components/Pagination/Pagination.jsx';
-import { BooksListItem } from '../../components/BooksListItem/BooksListItem.jsx';
+import { BooksListItem } from '../../../../books/ui/components/BooksListItem/BooksListItem.jsx';
 import cls from './BooksList.module.css';
 
 const DebounceTimeMs = 500;
@@ -17,6 +17,13 @@ export const BooksList = () => {
     const debouncedFilters = useDebonuce(filters, DebounceTimeMs, JSON.stringify(filters));
 
     const [fetchPagesQuery, { isLoading, isUninitialized, data }] = catalogApi.useLazySearchQuery();
+
+    useEffect(() => {
+        // document.documentElement.scrollTo({
+        //     behavior: 'smooth',
+        //     top: 0,
+        // });
+    }, [selectedPage]);
 
     useEffect(() => {
         setSelected(1);
@@ -43,7 +50,7 @@ export const BooksList = () => {
                         className={cls.pagination}
                         onSelect={handlePageSelect}
                         start={1}
-                        end={data.pagesCount}
+                        end={Math.max(data.pagesCount, 1)}
                         selected={selectedPage}
                     />
                 </>

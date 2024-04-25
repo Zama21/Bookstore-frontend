@@ -25,3 +25,19 @@
     border-radius: 6px;
     /* border: 1px solid black; */
 }
+
+.otherFiltersValue {
+    font-weight: 500;
+}
+
+@media (max-width: 840px) {
+    .filtersPanel {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .otherFilters {
+        justify-content: center;
+    }
+}

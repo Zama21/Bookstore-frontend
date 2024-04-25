@@ -9,6 +9,16 @@ html {
     font-family: "Roboto Condensed", sans-serif;
     overflow-x: hidden;
 }
+
+/* html {
+    overflow: hidden;
+}
+
+body {
+    overflow-y: auto;
+    max-height: 100%;
+} */
+
 /* 
 html {
     overflow: hidden;

@@ -1,11 +1,10 @@
-import React from 'react';
-import cls from './FiltersPanel.module.css';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { BookStatusTextMap } from 'modules/books/lib/bookStatusMap.js';
 import { catalogActions } from 'modules/catalog/store/catalogSlice.js';
 import { useLocalModal } from 'modules/modals/domain/hooks/useLocalModal.js';
-import { FiltersModal } from '../FiltersModal/FiltersModal.jsx';
+import { useDispatch, useSelector } from 'react-redux';
 import { SearchInput } from 'shared/ui/components/SearchInput/SearchInput.jsx';
+import { FiltersModal } from '../FiltersModal/FiltersModal.jsx';
+import cls from './FiltersPanel.module.css';
 
 export const FiltersPanel = () => {
     const dispatch = useDispatch();
@@ -21,15 +20,27 @@ export const FiltersPanel = () => {
             />
 
             <div className={cls.otherFilters} onClick={filtersModal.open}>
-                <p>Жанры: {filters.genres?.join(' ') ?? 'любые'}</p>
-                <p>Статус: {filters.bookStatus !== undefined ? filters.bookStatus : 'любой'}</p>
+                <p>
+                    Жанры:{' '}
+                    <span className={cls.otherFiltersValue}>{filters.genres?.join(' ') ?? 'любые'}</span>
+                </p>
+                <p>
+                    Статус:{' '}
+                    <span className={cls.otherFiltersValue}>
+                        {filters.bookStatus !== undefined
+                            ? BookStatusTextMap[filters.bookStatus]
+                            : 'любой'}
+                    </span>
+                </p>
                 <p>
                     Цена:{' '}
-                    {filters.price?.min || filters.price?.max
-                        ? `${filters.price?.min ? 'от ' + filters.price?.min : ''} ${
-                              filters.price?.max ? 'до ' + filters.price?.max : ''
-                          } руб`
-                        : 'любая'}
+                    <span className={cls.otherFiltersValue}>
+                        {filters.price?.min || filters.price?.max
+                            ? `${filters.price?.min ? 'от ' + filters.price?.min : ''} ${
+                                  filters.price?.max ? 'до ' + filters.price?.max : ''
+                              } руб`
+                            : 'любая'}
+                    </span>
                 </p>
             </div>
 

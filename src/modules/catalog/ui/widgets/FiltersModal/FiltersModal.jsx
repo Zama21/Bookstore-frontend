@@ -1,15 +1,13 @@
-import Modal from 'modules/modals/ui/Components/Modals/BaseModals/Modal/Modal.jsx';
-import cls from './FiltersModal.module.css';
-import { sharedApi } from 'shared/api/sharedApi.js';
-import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
-import { useDispatch } from 'react-redux';
-import { catalogActions } from 'modules/catalog/store/catalogSlice.js';
-import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption.jsx';
-import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
 import { BookStatusTextMap } from 'modules/books/lib/bookStatusMap.js';
-import { useSelector } from 'react-redux';
+import { catalogActions } from 'modules/catalog/store/catalogSlice.js';
+import Modal from 'modules/modals/ui/Components/Modals/BaseModals/Modal/Modal.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { sharedApi } from 'shared/api/sharedApi.js';
 import { Button } from 'shared/ui/components/Button/Button.jsx';
+import CustomSelectOption from 'shared/ui/components/CustomSelectOption/CustomSelectOption.jsx';
+import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
 import { PriceFilter, PriceFilterNoValue } from '../../components/PriceFilter/PriceFilter.jsx';
+import cls from './FiltersModal.module.css';
 
 export const FiltersModal = props => {
     const dispatch = useDispatch();
@@ -17,11 +15,17 @@ export const FiltersModal = props => {
     const filters = useSelector(state => state.catalog.filters);
 
     const handleGenreUpdate = genre => {
-        dispatch(catalogActions.setFilters({ genres: [genre] }));
+        dispatch(catalogActions.setFilters({ genres: genre ? [genre] : undefined }));
     };
 
     const handleBookStatusUpdate = bookStatus => {
-        dispatch(catalogActions.setFilters({ bookStatus }));
+        dispatch(
+            catalogActions.setFilters({
+                bookStatus: Object.keys(BookStatusTextMap).find(
+                    key => BookStatusTextMap[key] === bookStatus
+                ),
+            })
+        );
     };
 
     const handlePriceUpdate = ({ min, max }) => {
@@ -48,7 +52,7 @@ export const FiltersModal = props => {
                             label='Жанр'
                             options={genres.map(genres => genres.name)}
                             onChange={handleGenreUpdate}
-                            defaultValue={'любой'}
+                            defaultValue={filters.genres?.[0] ?? 'любой'}
                             containerClassName={cls.selector}
                             IsClearSelection={true}
                             clearSelectionText={'любой'}
@@ -57,7 +61,7 @@ export const FiltersModal = props => {
                             label='Статус'
                             options={Object.values(BookStatusTextMap)}
                             onChange={handleBookStatusUpdate}
-                            defaultValue={'любой'}
+                            defaultValue={BookStatusTextMap[filters.bookStatus] ?? 'любой'}
                             containerClassName={cls.selector}
                             IsClearSelection={true}
                             clearSelectionText={'любой'}

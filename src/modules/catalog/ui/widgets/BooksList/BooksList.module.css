@@ -8,6 +8,7 @@
 .booksList {
     overflow-y: auto;
     flex: 1;
+    max-height: 500px;
 }
 
 .pagination {
