@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { BookEditPartApi } from 'modules/books/api/BookEditPartApi';
 import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
-import { usePagination } from 'modules/books/domain/hooks/usePagination';
+import { useReadPagination } from 'modules/books/domain/hooks/useReadPagination';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom/dist';
 import { Form } from 'shared/ui/components/FormComponents/Form/Form';
 import { FormButton } from 'shared/ui/components/FormComponents/FormButton/FormButton';
@@ -21,7 +21,7 @@ export default function PartEditPage() {
 
     const { data: dataBook } = bookBasicApi.useGetBookDataQuery(bookId);
 
-    const { data, setData, updatePageIndexValue, deletePageByIndex } = usePagination({
+    const { data, setData, updatePageIndexValue, deletePageByIndex } = useReadPagination({
         bookId,
         onError403: () => {},
         onErrorElse: () => {},

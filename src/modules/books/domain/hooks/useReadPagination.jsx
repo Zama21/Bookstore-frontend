@@ -2,7 +2,7 @@ import { BookReadPageApi } from 'modules/books/api/bookReadPageApi.js';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export const usePagination = ({ bookId, onError403, onErrorElse }) => {
+export const useReadPagination = ({ bookId, onError403, onErrorElse }) => {
     const [data, setData] = useState({
         firstPageIndex: null,
         lastPageIndex: null,
@@ -34,12 +34,7 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
     useEffect(() => {
         if (isBookPageLoaded(pageNumber)) return;
 
-        BookReadPageApi.gettingPageRange(
-            bookId,
-            pageNumber,
-            pageNumber,
-            pageNumber
-        )
+        BookReadPageApi.gettingPageRange(bookId, pageNumber, pageNumber, pageNumber)
             .then(res => {
                 setData(prev => {
                     return {
@@ -69,10 +64,7 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
                 ...prev,
                 pages: prev.pages.map(page => ({
                     ...page,
-                    index:
-                        page.index > thresholdIndex
-                            ? page.index + delta
-                            : page.index,
+                    index: page.index > thresholdIndex ? page.index + delta : page.index,
                 })),
             };
         });
@@ -89,8 +81,7 @@ export const usePagination = ({ bookId, onError403, onErrorElse }) => {
     return {
         data,
         setData,
-        updatePageIndexValue: (thresholdIndex, delta) =>
-            updatePageIndexValue(thresholdIndex, delta),
+        updatePageIndexValue: (thresholdIndex, delta) => updatePageIndexValue(thresholdIndex, delta),
         deletePageByIndex: indexToDelete => deletePageByIndex(indexToDelete),
     };
 };

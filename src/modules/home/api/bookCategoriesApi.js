@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { axiosInstance } from 'shared/api/apiInstance.js';
 
 export const bookCategoriesApi = createApi({
-    reducerPath: 'bookCategories',
+    reducerPath: 'bookCategoriesApi',
     endpoints: builder => ({
         getTop: builder.query({
             queryFn: () => axiosInstance.get('/books/category/top'),

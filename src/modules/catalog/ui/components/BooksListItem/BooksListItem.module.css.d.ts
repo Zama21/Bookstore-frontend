@@ -8,10 +8,8 @@ declare const styles: {
   readonly "bookItemStatItem": string;
   readonly "bookItemStats": string;
   readonly "bookItemTitle": string;
-  readonly "bookList": string;
   readonly "editButton": string;
   readonly "loading": string;
-  readonly "searchContainer": string;
   readonly "searchInput": string;
   readonly "searchSvg": string;
 };

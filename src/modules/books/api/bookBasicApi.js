@@ -2,17 +2,17 @@ import { axiosInstance } from 'shared/api/apiInstance.js';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 export const bookBasicApi = createApi({
-    reducerPath: 'bookBasic',
-    endpoints: (builder) => ({
+    reducerPath: 'bookBasicApi',
+    endpoints: builder => ({
         getBookData: builder.query({
-            queryFn: (bookId) => axiosInstance.get(`/books/${bookId}`),
+            queryFn: bookId => axiosInstance.get(`/books/${bookId}`),
             providesTags: (result, error, bookId) => [{ type: 'Book', id: bookId }],
         }),
         removeFromLibrary: builder.mutation({
-            queryFn: (bookId) => axiosInstance.post(`/books/${bookId}/removeFromLibrary`),
+            queryFn: bookId => axiosInstance.post(`/books/${bookId}/removeFromLibrary`),
             async onQueryStarted(bookId, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                    bookBasicApi.util.updateQueryData('getBookData', bookId, (draft) => {
+                    bookBasicApi.util.updateQueryData('getBookData', bookId, draft => {
                         draft.isInLibrary = false;
                     })
                 );
@@ -20,10 +20,10 @@ export const bookBasicApi = createApi({
             },
         }),
         addToLibrary: builder.mutation({
-            queryFn: (bookId) => axiosInstance.post(`/books/${bookId}/addToLibrary`),
+            queryFn: bookId => axiosInstance.post(`/books/${bookId}/addToLibrary`),
             async onQueryStarted(bookId, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                    bookBasicApi.util.updateQueryData('getBookData', bookId, (draft) => {
+                    bookBasicApi.util.updateQueryData('getBookData', bookId, draft => {
                         draft.isInLibrary = true;
                     })
                 );
@@ -31,24 +31,25 @@ export const bookBasicApi = createApi({
             },
         }),
         starBook: builder.mutation({
-            queryFn: (bookId) => axiosInstance.post(`/books/${bookId}/star`),
+            queryFn: bookId => axiosInstance.post(`/books/${bookId}/star`),
             async onQueryStarted(bookId, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                    bookBasicApi.util.updateQueryData('getBookData', bookId, (draft) => {
+                    bookBasicApi.util.updateQueryData('getBookData', bookId, draft => {
                         draft.isStarred = true;
+                        draft.starsCount++;
                     })
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
-            // invalidatesTags: [''],
             // invalidatesTags: (result, error, bookId) => [{ type: 'Book', id: bookId }],
         }),
         unstarBook: builder.mutation({
-            queryFn: (bookId) => axiosInstance.post(`/books/${bookId}/unstar`),
+            queryFn: bookId => axiosInstance.post(`/books/${bookId}/unstar`),
             async onQueryStarted(bookId, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                    bookBasicApi.util.updateQueryData('getBookData', bookId, (draft) => {
+                    bookBasicApi.util.updateQueryData('getBookData', bookId, draft => {
                         draft.isStarred = false;
+                        draft.starsCount--;
                     })
                 );
                 queryFulfilled.catch(patchResult.undo);

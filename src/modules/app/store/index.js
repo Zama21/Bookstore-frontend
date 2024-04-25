@@ -9,6 +9,8 @@ import { homeReducer } from 'modules/home/store/homeSlice.js';
 import { bookCategoriesApi } from 'modules/home/api/bookCategoriesApi.js';
 import { bookEditApi } from 'modules/books/api/bookEditApi.js';
 import { bookBasicApi } from 'modules/books/api/bookBasicApi.js';
+import { catalogReducer } from 'modules/catalog/store/catalogSlice.js';
+import { catalogApi } from 'modules/catalog/api/catalogApi.js';
 
 export const store = configureStore({
     reducer: combineReducers({
@@ -16,12 +18,14 @@ export const store = configureStore({
         modals: modalsReducer,
         bookRead: bookReadReducer,
         home: homeReducer,
+        catalog: catalogReducer,
         [profileApi.reducerPath]: profileApi.reducer,
         [myBooksApi.reducerPath]: myBooksApi.reducer,
         [sharedApi.reducerPath]: sharedApi.reducer,
         [bookCategoriesApi.reducerPath]: bookCategoriesApi.reducer,
         [bookEditApi.reducerPath]: bookEditApi.reducer,
         [bookBasicApi.reducerPath]: bookBasicApi.reducer,
+        [catalogApi.reducerPath]: catalogApi.reducer,
     }),
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(
@@ -30,6 +34,7 @@ export const store = configureStore({
             sharedApi.middleware,
             bookCategoriesApi.middleware,
             bookEditApi.middleware,
-            bookBasicApi.middleware
+            bookBasicApi.middleware,
+            catalogApi.middleware
         ),
 });

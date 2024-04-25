@@ -125,7 +125,7 @@ export default function BookViewBox({
                             <span>{starsCount}</span>
                         </div>
                         <div className={stl.ratingContainer}>
-                            <p>Рейтинг</p>
+                            <p>Награды</p>
                             <p className='flxVrt'>
                                 <BookSvgSelector nameSvg='starRating'></BookSvgSelector>
                                 <span>{rewardsCount}</span>

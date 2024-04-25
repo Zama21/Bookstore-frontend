@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify';
-import { usePagination } from 'modules/books/domain/hooks/usePagination';
+import { useReadPagination } from 'modules/books/domain/hooks/useReadPagination';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReadingPagination from '../ReadingPagination/ReadingPagination';
@@ -22,17 +22,10 @@ const byeContent = (
     </>
 );
 
-const BookReader = ({
-    bookId,
-    fontSize,
-    pageNumber,
-    selectedPart,
-    parts,
-    dataBook,
-}) => {
+const BookReader = ({ bookId, fontSize, pageNumber, selectedPart, parts, dataBook }) => {
     const navigate = useNavigate();
     const [content, setContent] = useState(null);
-    const { data } = usePagination({
+    const { data } = useReadPagination({
         bookId,
         onError403: () => {
             setContent(byeContent);
@@ -46,9 +39,9 @@ const BookReader = ({
     const navigateToCurrentReadingPage = () => {
         if (parts.length === 0) return;
         navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                dataBook.currentPart?.id ?? parts[0]?.id
-            }&pageNumber=${dataBook.currentPage ?? 1}`
+            `/book/${bookId}/read?chapterNumber=${dataBook.currentPart?.id ?? parts[0]?.id}&pageNumber=${
+                dataBook.currentPage ?? 1
+            }`
         );
     };
 
@@ -57,15 +50,13 @@ const BookReader = ({
     }, [data.pages, pageNumber]);
 
     const handleSelectItem = (newPageNumber, deltaPart = 0, deltaPage = 0) => {
-        const currentPartIndex = parts.findIndex(
-            part => part.id === selectedPart
-        );
+        const currentPartIndex = parts.findIndex(part => part.id === selectedPart);
         // console.log(parts);
         // console.log(currentPartIndex, deltaPart);
         navigate(
-            `/book/${bookId}/read?chapterNumber=${
-                parts[currentPartIndex + deltaPart].id
-            }&pageNumber=${newPageNumber + deltaPage}`
+            `/book/${bookId}/read?chapterNumber=${parts[currentPartIndex + deltaPart].id}&pageNumber=${
+                newPageNumber + deltaPage
+            }`
         );
     };
 

@@ -1,16 +1,19 @@
-import { BasePageLayout } from 'modules/home/ui/pages/BasePageLayout/BasePageLayout.jsx';
-import { Link, useNavigate } from 'react-router-dom';
-import cls from './MyBooksPage.module.css';
-import { myBooksApi } from 'modules/home/api/myBooksApi.js';
-import { useState } from 'react';
-import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
-import defaultCover from 'shared/Img/defaultCover.jpg';
-import searchSvg from '../../../assets/search.svg';
-import libSvg from '../../../assets/lib.svg';
-import editSvg from '../../../assets/edit.svg';
 import { BookFinishedStatus } from 'modules/books/ui/components/BookFinishedStatus/BookFinishedStatus.jsx';
-import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
+import { myBooksApi } from 'modules/home/api/myBooksApi.js';
+import { BasePageLayout } from 'modules/home/ui/pages/BasePageLayout/BasePageLayout.jsx';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import defaultCover from 'shared/Img/defaultCover.jpg';
+import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
 import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
+import { SearchInput } from 'shared/ui/components/SearchInput/SearchInput.jsx';
+import editSvg from '../../../assets/edit.svg';
+import libSvg from 'shared/Img/lib.svg';
+import starSvg from 'shared/Img/star.svg';
+
+import cls from './MyBooksPage.module.css';
+
+const DescriptionLimit = 250;
 
 export const MyBooksPage = () => {
     const { data: books, isLoading } = myBooksApi.useGetMyBooksQuery();
@@ -26,16 +29,11 @@ export const MyBooksPage = () => {
                 &#65291; Добавить книгу
             </Button>
             <div>
-                <div className={cls.searchContainer}>
-                    <img className={cls.searchSvg} src={searchSvg} alt='search' />
-                    <input
-                        className={cls.searchInput}
-                        value={filterText}
-                        onChange={e => setFilterText(e.target.value)}
-                        type='text'
-                        placeholder='искать по названию'
-                    />
-                </div>
+                <SearchInput
+                    value={filterText}
+                    onChange={value => setFilterText(value)}
+                    placeholder='искать по названию'
+                />
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : (
@@ -59,13 +57,20 @@ export const MyBooksPage = () => {
                                         <div className={cls.bookItemDescription}>
                                             <p>
                                                 {book.description &&
-                                                    book.description.substring(0, 250) + '...'}
+                                                    book.description.substring(0, DescriptionLimit) +
+                                                        (book.description > DescriptionLimit
+                                                            ? '...'
+                                                            : '')}
                                             </p>
                                         </div>
                                         <div className={cls.bookItemStats}>
                                             <div className={cls.bookItemStatItem}>
                                                 <img src={libSvg} alt='adds to lib' />
-                                                <span>{book.addsToLibraryCount}</span>
+                                                <span>{book.bookStat?.addsToLibraryCount ?? 0}</span>
+                                            </div>
+                                            <div className={cls.bookItemStatItem}>
+                                                <img src={starSvg} alt='adds to lib' />
+                                                <span>{book.bookStat?.starsCount ?? 0}</span>
                                             </div>
                                         </div>
                                     </div>
