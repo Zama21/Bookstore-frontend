@@ -2,7 +2,7 @@
     position: fixed;
     transition: 0.2s;
     width: 100%;
-    padding: 6px;
+    padding: 6px 10px;
 
     min-height: 65px;
     height: 65px;

@@ -2,32 +2,29 @@ import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
 import React from 'react';
 import stl from './BookFinishedStatus.module.css';
 import BookSvgSelector from '../../pages/BookPage/components/BookViewBox/svg/BookSvgSelector.jsx';
+import { BookStatusTextMap } from 'modules/books/lib/bookStatusMap.js';
+import classNames from 'classnames';
 
 export const BookFinishedStatus = ({ status }) => {
-    switch (status) {
-        case BookStatus.Finished:
-            return (
-                <div className={`${stl.BookFinishedStatus} ${stl.finished}  flxRow`}>
-                    <BookSvgSelector nameSvg='tick'></BookSvgSelector>
-                    <span>Полный текст</span>
-                </div>
-            );
-        case BookStatus.Unfinished:
-            return (
-                <div className={`${stl.BookFinishedStatus} ${stl.unfinished}  flxRow`}>
-                    <BookSvgSelector nameSvg='unfinished'></BookSvgSelector>
-                    <span>В процессе</span>
-                </div>
-            );
-        case BookStatus.Frozen:
-            return (
-                <div className={`${stl.BookFinishedStatus} ${stl.frozen}  flxRow`}>
-                    <BookSvgSelector nameSvg='snowflake'></BookSvgSelector>
-                    <span>Заморожена</span>
-                </div>
-            );
-        default:
-            console.error(`Not existing status "${status}"`);
-            return <></>;
+    if (!BookStatusTextMap[status]) {
+        console.error(`Not existing status "${status}"`);
+        return <></>;
     }
+
+    return (
+        <div
+            className={classNames(
+                stl.BookFinishedStatus,
+                {
+                    [stl.finished]: status === BookStatus.Finished,
+                    [stl.unfinished]: status === BookStatus.Unfinished,
+                    [stl.frozen]: status === BookStatus.Frozen,
+                },
+                'flxRow'
+            )}
+        >
+            <BookSvgSelector nameSvg='tick'></BookSvgSelector>
+            <span>{BookStatusTextMap[status]}</span>
+        </div>
+    );
 };

@@ -1,0 +1,166 @@
+.searchSvg {
+    width: 20px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 8px;
+}
+
+.addBookButton {
+    padding: 10px;
+    margin: 10px;
+    /* border: 1px solid black; */
+    /* border-radius: 6px; */
+}
+
+.addBookButton:hover {
+    /* background-color: lightgray; */
+}
+
+.bookItem {
+    cursor: pointer;
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.365);
+    transition: all 0.3s ease;
+}
+
+.bookItem:hover .bookItemImg {
+    transform: scale(1.05);
+}
+
+.bookItem:hover {
+    filter: drop-shadow(1px 2px 3px black);
+}
+
+.bookItem:hover .bookItemTitle {
+    text-decoration: underline;
+}
+
+.bookItemCenterPart {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    /* margin-right: 20px; */
+}
+
+.bookItemCenterPart {
+}
+
+.bookItemImg {
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    width: 100px;
+    height: 140px;
+    background-position: center;
+    background-size: cover;
+}
+
+.titleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.bookItemTitle {
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bookItemDescription {
+    margin-top: 8px;
+    overflow: hidden;
+    padding-bottom: 5px;
+    color: #484848;
+    border-bottom: 1px solid black;
+}
+
+.bookItemDescription p {
+    font-weight: 400;
+    font-size: 16px;
+    word-break: break-all;
+}
+
+.loading {
+}
+
+.editButton {
+}
+
+.bookStatWrapper {
+    display: flex;
+    align-items: center;
+    /* gap: 100px; */
+    margin-top: 10px;
+
+    justify-content: space-between;
+}
+
+.bookItemStats {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.bookItemStatItem {
+    display: flex;
+}
+
+.bookItemStatItem > img {
+    width: 20px;
+}
+
+.bookItemStatItem > span {
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    margin-left: 2px;
+}
+
+.genres {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.genres > li {
+    background: rgb(255, 122, 78);
+    padding: 6px;
+    color: white;
+    border-radius: 6px;
+}
+
+.freeBook {
+    /* background-color: #6fbd49; */
+    /* color: #fff; */
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 3px 10px;
+    /* margin: 10px; */
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 500;
+    /* background-color: gray; */
+}
+
+.bookItemEditPart {
+    /* width: 150px; */
+}
+
+.bookItemEditPartButton {
+    min-width: 200px;
+}

@@ -1,21 +1,16 @@
-import { BasePageLayout } from 'modules/home/ui/pages/BasePageLayout/BasePageLayout.jsx';
-import { Link, useNavigate } from 'react-router-dom';
-import cls from './MyBooksPage.module.css';
 import { myBooksApi } from 'modules/home/api/myBooksApi.js';
+import { BasePageLayout } from 'modules/home/ui/pages/BasePageLayout/BasePageLayout.jsx';
 import { useState } from 'react';
-import { Button, ButtonTheme } from 'shared/ui/components/Button/Button.jsx';
-import defaultCover from 'shared/Img/defaultCover.jpg';
-import searchSvg from '../../../assets/search.svg';
-import libSvg from '../../../assets/lib.svg';
-import editSvg from '../../../assets/edit.svg';
-import { BookFinishedStatus } from 'modules/books/ui/components/BookFinishedStatus/BookFinishedStatus.jsx';
-import { BookStatus } from 'modules/books/domain/enums/bookStatus.js';
+import { Button } from 'shared/ui/components/Button/Button.jsx';
 import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
+import { SearchInput } from 'shared/ui/components/SearchInput/SearchInput.jsx';
+
+import { BooksListItem } from 'modules/books/ui/components/BooksListItem/BooksListItem.jsx';
+import cls from './MyBooksPage.module.css';
 
 export const MyBooksPage = () => {
     const { data: books, isLoading } = myBooksApi.useGetMyBooksQuery();
     const [filterText, setFilterText] = useState('');
-    const navigate = useNavigate();
 
     const filterBook = book => book.title.toLowerCase().includes(filterText.toLowerCase());
     const booksFiltered = books?.filter(filterBook) ?? [];
@@ -26,67 +21,18 @@ export const MyBooksPage = () => {
                 &#65291; Добавить книгу
             </Button>
             <div>
-                <div className={cls.searchContainer}>
-                    <img className={cls.searchSvg} src={searchSvg} alt='search' />
-                    <input
-                        className={cls.searchInput}
-                        value={filterText}
-                        onChange={e => setFilterText(e.target.value)}
-                        type='text'
-                        placeholder='искать по названию'
-                    />
-                </div>
+                <SearchInput
+                    value={filterText}
+                    onChange={value => setFilterText(value)}
+                    placeholder='искать по названию'
+                />
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : (
                     <ul className={cls.bookList}>
                         {books.length > 0 ? (
                             booksFiltered.map(book => (
-                                <li className={cls.bookItem} key={book.id}>
-                                    <div
-                                        className={cls.bookItemImg}
-                                        style={{
-                                            backgroundImage: `url(${book.coverSrc ?? defaultCover})`,
-                                        }}
-                                    />
-                                    <div className={cls.bookItemCenterPart}>
-                                        <p
-                                            className={cls.bookItemTitle}
-                                            onClick={() => navigate(`/book/${book.id}`)}
-                                        >
-                                            {book.title}
-                                        </p>
-                                        <div className={cls.bookItemDescription}>
-                                            <p>
-                                                {book.description &&
-                                                    book.description.substring(0, 250) + '...'}
-                                            </p>
-                                        </div>
-                                        <div className={cls.bookItemStats}>
-                                            <div className={cls.bookItemStatItem}>
-                                                <img src={libSvg} alt='adds to lib' />
-                                                <span>{book.addsToLibraryCount}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={cls.bookItemRightPart}>
-                                        <Button
-                                            theme={ButtonTheme.secondary}
-                                            linkTo={`/book/${book.id}/edit`}
-                                            imgSrc={editSvg}
-                                        >
-                                            Редактировать
-                                        </Button>
-                                        <Button
-                                            theme={ButtonTheme.secondary}
-                                            linkTo={`/book/${book.id}`}
-                                        >
-                                            Перейти
-                                        </Button>
-                                        <BookFinishedStatus status={book.status} />
-                                    </div>
-                                </li>
+                                <BooksListItem key={book.id} book={book} showEditBlock={true} />
                             ))
                         ) : (
                             <p>Книг пока нет</p>

@@ -1,21 +1,13 @@
 import { useAuth } from 'modules/auth/domain/hooks/useAuth';
 import { useBookPage } from 'modules/books/domain/hooks/useBookPage.js';
-import TableContents from '../../../../../shared/ui/components/TableСontents/TableСontents';
+import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
 import BookViewBox from './components/BookViewBox/BookViewBox';
 import SwitchingBox from './components/SwitchingBox/SwitchingBox';
-import stlTableContents from './stl/TableContents.module.css';
-import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
-
-// const tableContentsObj = {
-//     defaultValue: 'title',
-//     data: ['арбуз', 'глава2', 'kio rio'],
-//     stl: stlTableContents,
-// };
+import { BackButton } from 'shared/ui/components/BackButton/BackButton.jsx';
 
 export const BookPage = () => {
     const { data, isLoading, control, bookId, showAuthModal } = useBookPage();
     const { isAuthed } = useAuth();
-    // console.log(data);
 
     const dataSwitchingBox = {
         description: data?.description,
@@ -49,22 +41,14 @@ export const BookPage = () => {
 
     return (
         <>
-            <div className='wrapperPage'>
+            <div className=''>
+                <BackButton />
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : (
                     <>
                         <BookViewBox {...dataBookViewBox} />
-                        {/* <TableContents {...tableContentsObj}></TableContents> */}
                         <SwitchingBox {...dataSwitchingBox}></SwitchingBox>
-                        {/* <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis labore
-                            iusto, nesciunt recusandae fugiat quo ipsum cumque et laudantium provident
-                            pariatur fugit quibusdam nemo debitis assumenda aperiam minus voluptatibus
-                            quam. Rerum sequi voluptatibus perferendis inventore omnis corporis
-                            consequuntur cumque adipisci quia exercitationem iste commodi corrupti
-                            voluptatum, debitis mollitia aperiam
-                        </p> */}
                     </>
                 )}
             </div>

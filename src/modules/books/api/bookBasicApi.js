@@ -2,11 +2,15 @@ import { axiosInstance } from 'shared/api/apiInstance.js';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 export const bookBasicApi = createApi({
-    reducerPath: 'bookBasic',
+    reducerPath: 'bookBasicApi',
     endpoints: builder => ({
+        getMyLibrary: builder.query({
+            queryFn: () => axiosInstance.get('/books/myLibrary'),
+            providesTags: ['MyLibBooks'],
+        }),
         getBookData: builder.query({
             queryFn: bookId => axiosInstance.get(`/books/${bookId}`),
-            providesTags: ['Book'],
+            providesTags: (result, error, bookId) => [{ type: 'Book', id: bookId }],
         }),
         removeFromLibrary: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/${bookId}/removeFromLibrary`),
@@ -18,6 +22,7 @@ export const bookBasicApi = createApi({
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
+            invalidatesTags: ['MyLibBooks'],
         }),
         addToLibrary: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/${bookId}/addToLibrary`),
@@ -29,6 +34,7 @@ export const bookBasicApi = createApi({
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
+            invalidatesTags: ['MyLibBooks'],
         }),
         starBook: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/${bookId}/star`),
@@ -36,10 +42,12 @@ export const bookBasicApi = createApi({
                 const patchResult = dispatch(
                     bookBasicApi.util.updateQueryData('getBookData', bookId, draft => {
                         draft.isStarred = true;
+                        draft.starsCount++;
                     })
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
+            // invalidatesTags: (result, error, bookId) => [{ type: 'Book', id: bookId }],
         }),
         unstarBook: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/${bookId}/unstar`),
@@ -47,10 +55,12 @@ export const bookBasicApi = createApi({
                 const patchResult = dispatch(
                     bookBasicApi.util.updateQueryData('getBookData', bookId, draft => {
                         draft.isStarred = false;
+                        draft.starsCount--;
                     })
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
+            // invalidatesTags: (result, error, bookId) => [{ type: 'Book', id: bookId }],
         }),
     }),
 });

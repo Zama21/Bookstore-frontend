@@ -3,6 +3,7 @@
     align-items: center;
     border-radius: 10px;
     padding: 0 8px;
+    min-width: 150px;
 }
 .BookFinishedStatus.finished {
     color: #fff;

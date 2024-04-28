@@ -3,7 +3,7 @@ import { axiosInstance } from 'shared/api/apiInstance.js';
 import { bookBasicApi } from './bookBasicApi.js';
 
 export const bookEditApi = createApi({
-    reducerPath: 'bookEdit',
+    reducerPath: 'bookEditApi',
     endpoints: builder => ({
         publishBook: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/write/${bookId}/publish`),

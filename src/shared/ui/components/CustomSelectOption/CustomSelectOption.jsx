@@ -21,6 +21,8 @@ export default function CustomSelectOption({
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(defaultValue ?? 'Выберете значение');
+    const isTogglingRef = useRef(false);
+
     useEffect(() => {
         setSelectedOption(defaultValue);
     }, [defaultValue]);
@@ -37,7 +39,13 @@ export default function CustomSelectOption({
     };
 
     useEffect(() => {
-        const handleBlur = () => setIsOpen(false);
+        const handleBlur = () => {
+            if (isTogglingRef.current) {
+                isTogglingRef.current = false;
+            } else {
+                setIsOpen(false);
+            }
+        };
         window.addEventListener('click', handleBlur);
         return () => {
             window.removeEventListener('click', handleBlur);
@@ -48,7 +56,8 @@ export default function CustomSelectOption({
         <div
             className={classNames(cls.container, containerClassName)}
             onClick={e => {
-                e.stopPropagation();
+                // e.stopPropagation();
+                isTogglingRef.current = true;
                 setIsOpen(!isOpen);
             }}
         >

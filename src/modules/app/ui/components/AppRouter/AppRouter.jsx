@@ -13,6 +13,7 @@ import { BookPage } from '../../../../books/ui/pages/BookPage/BookPage.jsx';
 import { BookReadPage } from '../../../../books/ui/pages/BookReadPage/BookReadPage.jsx';
 import { HomePage } from '../../../../home/ui/pages/HomePage/HomePage.jsx';
 import { GlobalLayout } from '../GlobalLayout/GlobalLayout.jsx';
+import { CatalogPage } from 'modules/catalog/ui/pages/CatalogPage/CatalogPage.jsx';
 
 export const AppRouter = () => {
     return (
@@ -21,6 +22,7 @@ export const AppRouter = () => {
                 {/* all users */}
                 <Route path='/'>
                     <Route path='/' element={<HomePage />} />
+                    <Route path='/catalog' element={<CatalogPage />} />
 
                     <Route path='auth'>
                         <Route path='reg' element={<RegPage />} />

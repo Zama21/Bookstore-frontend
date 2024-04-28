@@ -1,0 +1,20 @@
+.priceFilter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.priceFilterPart {
+    width: 40%;
+    text-align: center;
+}
+
+.priceFilterPart input {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.priceFilterPart > span {
+    margin: 0 6px;
+}

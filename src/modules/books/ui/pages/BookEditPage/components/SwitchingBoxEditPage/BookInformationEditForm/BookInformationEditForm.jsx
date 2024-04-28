@@ -146,7 +146,7 @@ export default function BookInformationEditForm(props) {
                                     name='cycleName'
                                     label='Название цикла'
                                     containerClassName={stl.containerInlineClassName}
-                                    IsClearSelection='true'
+                                    IsClearSelection={true}
                                     clearSelectionText='Галя, у нас отмена!'
                                 />
                             )}
@@ -158,7 +158,7 @@ export default function BookInformationEditForm(props) {
                                         name='genre1'
                                         label={'Жанр 1'}
                                         containerClassName={stl.containerInlineClassName}
-                                        IsClearSelection='true'
+                                        IsClearSelection={true}
                                         clearSelectionText='Галя, у нас отмена!'
                                     />
                                     {formik.values.genre1 != '' && (
@@ -169,7 +169,7 @@ export default function BookInformationEditForm(props) {
                                             name='genre2'
                                             label={'Жанр 2'}
                                             containerClassName={stl.containerInlineClassName}
-                                            IsClearSelection='true'
+                                            IsClearSelection={true}
                                             clearSelectionText='Галя, у нас отмена!'
                                         />
                                     )}
@@ -183,7 +183,7 @@ export default function BookInformationEditForm(props) {
                                             name='genre3'
                                             label={'Жанр 3'}
                                             containerClassName={stl.containerInlineClassName}
-                                            IsClearSelection='true'
+                                            IsClearSelection={true}
                                             clearSelectionText='Галя, у нас отмена!'
                                         />
                                     )}

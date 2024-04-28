@@ -1,7 +1,7 @@
 export const guestNavLinks = [
     {
         title: 'Каталог',
-        to: '/some',
+        to: '/catalog',
     },
     {
         title: 'Вход',
@@ -15,6 +15,6 @@ export const guestNavLinks = [
 export const privateNavLinks = [
     {
         title: 'Каталог',
-        to: '/some',
+        to: '/catalog',
     },
 ];
