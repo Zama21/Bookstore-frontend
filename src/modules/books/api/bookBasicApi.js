@@ -4,6 +4,10 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 export const bookBasicApi = createApi({
     reducerPath: 'bookBasicApi',
     endpoints: builder => ({
+        getMyLibrary: builder.query({
+            queryFn: () => axiosInstance.get('/books/myLibrary'),
+            providesTags: ['MyLibBooks'],
+        }),
         getBookData: builder.query({
             queryFn: bookId => axiosInstance.get(`/books/${bookId}`),
             providesTags: (result, error, bookId) => [{ type: 'Book', id: bookId }],
@@ -18,6 +22,7 @@ export const bookBasicApi = createApi({
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
+            invalidatesTags: ['MyLibBooks'],
         }),
         addToLibrary: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/${bookId}/addToLibrary`),
@@ -29,6 +34,7 @@ export const bookBasicApi = createApi({
                 );
                 queryFulfilled.catch(patchResult.undo);
             },
+            invalidatesTags: ['MyLibBooks'],
         }),
         starBook: builder.mutation({
             queryFn: bookId => axiosInstance.post(`/books/${bookId}/star`),

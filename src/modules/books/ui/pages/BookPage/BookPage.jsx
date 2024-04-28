@@ -3,6 +3,7 @@ import { useBookPage } from 'modules/books/domain/hooks/useBookPage.js';
 import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
 import BookViewBox from './components/BookViewBox/BookViewBox';
 import SwitchingBox from './components/SwitchingBox/SwitchingBox';
+import { BackButton } from 'shared/ui/components/BackButton/BackButton.jsx';
 
 export const BookPage = () => {
     const { data, isLoading, control, bookId, showAuthModal } = useBookPage();
@@ -40,7 +41,8 @@ export const BookPage = () => {
 
     return (
         <>
-            <div className='wrapperPage'>
+            <div className=''>
+                <BackButton />
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : (
