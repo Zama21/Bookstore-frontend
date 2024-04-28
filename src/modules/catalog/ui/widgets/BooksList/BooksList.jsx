@@ -1,5 +1,5 @@
 import { catalogApi } from 'modules/catalog/api/catalogApi.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDebonuce } from 'shared/hooks/useDebounce.js';
 import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinner.jsx';
@@ -12,6 +12,7 @@ const DebounceTimeMs = 500;
 export const BooksList = () => {
     const [selectedPage, setSelected] = useState(1);
     const handlePageSelect = pageIndex => setSelected(pageIndex);
+    const listContainerRef = useRef(null);
 
     const filters = useSelector(state => state.catalog.filters);
     const debouncedFilters = useDebonuce(filters, DebounceTimeMs, JSON.stringify(filters));
@@ -19,10 +20,9 @@ export const BooksList = () => {
     const [fetchPagesQuery, { isLoading, isUninitialized, data }] = catalogApi.useLazySearchQuery();
 
     useEffect(() => {
-        // document.documentElement.scrollTo({
-        //     behavior: 'smooth',
-        //     top: 0,
-        // });
+        listContainerRef.current?.scrollTo({
+            top: 0,
+        });
     }, [selectedPage]);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export const BooksList = () => {
                 <LoadingSpinner />
             ) : (
                 <>
-                    <ul className={cls.booksList}>
+                    <ul className={cls.booksList} ref={listContainerRef}>
                         {data.books.map(book => (
                             <BooksListItem key={book.id} book={book} />
                         ))}
