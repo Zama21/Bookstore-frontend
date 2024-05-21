@@ -4,6 +4,7 @@ import { LoadingSpinner } from 'shared/ui/components/LoadingSpinner/LoadingSpinn
 import BookViewBox from './components/BookViewBox/BookViewBox';
 import SwitchingBox from './components/SwitchingBox/SwitchingBox';
 import { BackButton } from 'shared/ui/components/BackButton/BackButton.jsx';
+import stl from './BookPage.module.css';
 
 export const BookPage = () => {
     const { data, isLoading, control, bookId, showAuthModal } = useBookPage();
@@ -41,7 +42,7 @@ export const BookPage = () => {
 
     return (
         <>
-            <div className=''>
+            <div className={stl.bookPage}>
                 <BackButton />
                 {isLoading ? (
                     <LoadingSpinner />

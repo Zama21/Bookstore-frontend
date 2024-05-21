@@ -83,9 +83,9 @@ export const BookReadPage = () => {
     const chapterNumber = searchParams.get('chapterNumber');
     const pageNumber = searchParams.get('pageNumber');
 
-    const handleSelection = title => {
-        const chapter = dataBook.parts.find(item => item.title === title);
-        BookReadPageApi.gettingChapterMetaInformation(bookId, chapter.id, 0).then(res => {
+    const handleSelection = (title) => {
+        const chapter = dataBook.parts.find((item) => item.title === title);
+        BookReadPageApi.gettingChapterMetaInformation(bookId, chapter.id, 0).then((res) => {
             navigate(
                 `/book/${bookId}/read?chapterNumber=${chapter.id}&pageNumber=${res.data.firstPageIndex}`
             );
@@ -112,10 +112,10 @@ export const BookReadPage = () => {
                     <div className={stl.WrapperTableContentsAndBtn}>
                         {dataBook.parts.length > 0 ? (
                             <CustomSelectOption
-                                options={dataBook.parts.map(item => item.title)}
+                                options={dataBook.parts.map((item) => item.title)}
                                 onChange={handleSelection}
                                 defaultValue={
-                                    dataBook.parts.find(part => part.id == chapterNumber)?.title
+                                    dataBook.parts.find((part) => part.id == chapterNumber)?.title
                                 }
                                 containerClassName={stlCustomSelectOption.container}
                             />
